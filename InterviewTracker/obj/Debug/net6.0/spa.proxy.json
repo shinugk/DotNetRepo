@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44488",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\SKI75\\Desktop\\DOTNET\\DotNetRepo\\InterviewTracker\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}
