@@ -1,0 +1,5 @@
+# Ignore build output folders
+InterviewTracker/bin/
+InterviewTracker/obj/
+InterviewTrackerTest/bin/
+InterviewTrackerTest/obj/
