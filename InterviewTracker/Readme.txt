@@ -9,4 +9,16 @@
     	<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 -Added a NUnit Test Project from a template in a same solution
 
--Hello
+-dotnet add package Microsoft.AspNetCore.JsonPatch 
+dotnet add package AspNetCore.Security.CAS 
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection 
+dotnet add package Microsoft.EntityFrameworkCore.Design 
+dotnet add package Swashbuckle.AspNetCore 
+dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson  
+dotnet add package Morcatko.AspNetCore.JsonMergePatch.SystemText
+dotnet add package Microsoft.EntityFrameworkCore.Relational
+dotnet add package AutoMapper 
+dotnet add package Microsoft.EntityFrameworkCore.InMemory 
+dotnet add package Pomelo.EntityFrameworkCore.MySql 
+dotnet add package Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft 
+dotnet add package Microsoft.AspNetCore.OData     I want to download these packages for .net version 6 
