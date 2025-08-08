@@ -20,10 +20,19 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+//TODO: Do we need this? Will other platform services be considered different origins if they make calls from their UI directly to our service?
+app.UseCors("AllowOrigin");
+
+app.UseSession(new SessionOptions()
+{
+    IdleTimeout = TimeSpan.FromMinutes(60)
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+//This is for dev env
+app.MapControllers().AllowAnonymous();
 
 app.MapFallbackToFile("index.html");
 
