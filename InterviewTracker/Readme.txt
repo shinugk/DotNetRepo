@@ -8,3 +8,5 @@
     	<SpaProxyServerUrl>https://localhost:44488</SpaProxyServerUrl>
     	<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 -Added a NUnit Test Project from a template in a same solution
+
+-Hello
