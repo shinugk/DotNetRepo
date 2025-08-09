@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InterviewTracker.Controllers
 {
 
-    [AllowAnonymous]
+    //[AllowAnonymous]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class DbHealthCheckController : ControllerBase
