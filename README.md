@@ -31,16 +31,25 @@ Packages Explanation & Purpose
 If you omit the version, dotnet will automatically pull the latest compatible release for .NET 8.
 
 9) CLI commands (all in one)
-* dotnet add package Microsoft.AspNetCore.JsonPatch --framework net8.0
-* dotnet add package AspNetCore.Security.CAS --framework net8.0
-* dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --framework net8.0
-* dotnet add package Microsoft.EntityFrameworkCore.Design --framework net8.0
-* dotnet add package Swashbuckle.AspNetCore --framework net8.0
-* dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --framework net8.0
-* dotnet add package Morcatko.AspNetCore.JsonMergePatch.SystemText --framework net8.0
-* dotnet add package Microsoft.EntityFrameworkCore.Relational --framework net8.0
-* dotnet add package AutoMapper --framework net8.0
-* dotnet add package Microsoft.EntityFrameworkCore.InMemory --framework net8.0
-* dotnet add package Pomelo.EntityFrameworkCore.MySql --framework net8.0
-* dotnet add package Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft --framework net8.0
-* dotnet add package Microsoft.AspNetCore.OData --framework net8.0
+	* dotnet add package Microsoft.AspNetCore.JsonPatch --framework net8.0
+	* dotnet add package AspNetCore.Security.CAS --framework net8.0
+	* dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --framework net8.0
+	* dotnet add package Microsoft.EntityFrameworkCore.Design --framework net8.0
+	* dotnet add package Swashbuckle.AspNetCore --framework net8.0
+	* dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --framework net8.0
+	* dotnet add package Morcatko.AspNetCore.JsonMergePatch.SystemText --framework net8.0
+	* dotnet add package Microsoft.EntityFrameworkCore.Relational --framework net8.0
+	* dotnet add package AutoMapper --framework net8.0
+	* dotnet add package Microsoft.EntityFrameworkCore.InMemory --framework net8.0
+	* dotnet add package Pomelo.EntityFrameworkCore.MySql --framework net8.0
+	* dotnet add package Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft --framework net8.0
+	* dotnet add package Microsoft.AspNetCore.OData --framework net8.0
+
+10) Configure DB for both InMemory and Disk in DbConfigure.cs
+11) Install dotnet ef tools for migrations commands
+	* dotnet tool install --global dotnet-ef
+12) Create Intial Migration after configuring DB and create sample table and test
+    * dotnet ef migrations add InitialCreate
+	* dotnet ef database update
+
+
