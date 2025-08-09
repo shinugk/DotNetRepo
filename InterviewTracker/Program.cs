@@ -1,4 +1,10 @@
+using InterviewTracker.Database;
+
 var builder = WebApplication.CreateBuilder(args);
+
+bool isDev = true;
+////Below Middleware used for Http logging
+//builder.Services.AddHttpLogger(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -14,6 +20,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.ConfigureDatabase(builder.Configuration, isDev);
 
 
 //-------------------------------------------------------------------------------
