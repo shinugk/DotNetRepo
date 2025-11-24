@@ -54,7 +54,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 
 13) Creating a new console app for AI integration
     https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
-    steps:
+    * steps:
     		* created a new console project under main solution
             * Go to the manage NuGet package in Project view and browse for OpenAI
             * Install the OpenAI package (if you want to use this package in other project, pls add the dependecy in .csproj file)
