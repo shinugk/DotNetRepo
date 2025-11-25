@@ -58,6 +58,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
     	* created a new console project under main solution
         * Go to the manage NuGet package in Project view and browse for OpenAI
         * Install the OpenAI package (if you want to use this package in other project, pls add the dependecy in .csproj file)
+        * OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started
     	* follow the steps mentioned in https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
     	* run the console app (check GitHub token is added as said in use this model link in above url
      
