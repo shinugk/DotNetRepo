@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
     <PackageReference Include="Morcatko.AspNetCore.JsonMergePatch.SystemText" Version="6.0.4" />
+    <PackageReference Include="OpenAI" Version="2.7.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft" Version="8.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />

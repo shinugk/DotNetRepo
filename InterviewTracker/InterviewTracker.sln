@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewTracker", "Intervi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewTrackerTest", "..\InterviewTrackerTest\InterviewTrackerTest.csproj", "{AC9F37A1-AD23-ABF0-DD3E-9DB64899B606}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppAI", "..\ConsoleAppAI\ConsoleAppAI.csproj", "{C2E35EDD-09C8-45BF-A3FE-A644D02D33E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AC9F37A1-AD23-ABF0-DD3E-9DB64899B606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC9F37A1-AD23-ABF0-DD3E-9DB64899B606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC9F37A1-AD23-ABF0-DD3E-9DB64899B606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2E35EDD-09C8-45BF-A3FE-A644D02D33E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2E35EDD-09C8-45BF-A3FE-A644D02D33E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2E35EDD-09C8-45BF-A3FE-A644D02D33E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2E35EDD-09C8-45BF-A3FE-A644D02D33E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
