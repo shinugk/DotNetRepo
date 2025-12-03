@@ -9,7 +9,7 @@ public class OpenAIDemo()
     public static void Run()  //If it is static method we can directly call this method using classname.method in other class
     {
         var endpoint = new Uri("https://models.github.ai/inference");
-        var credential = "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"; //System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+        var credential = ""; //System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
         var model = "openai/gpt-4.1";
 
         var openAIOptions = new OpenAIClientOptions()
