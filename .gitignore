@@ -1,4 +1,6 @@
 # Ignore build output folders
+ConsoleAppAI/bin/
+ConsoleAppAI/obj/
 InterviewTracker/bin/
 InterviewTracker/obj/
 InterviewTrackerTest/bin/
