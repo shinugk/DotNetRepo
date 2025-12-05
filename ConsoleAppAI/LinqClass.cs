@@ -818,7 +818,7 @@ namespace ConsoleAppAI
 
             //Add an unmatched student to demonstrate Right Join
             //Deepak's DepartmentId = 10 → No department with Id 10 exists.
-            students.Add(new Student { Id = 6, Name = "Deepak", Age = 22, DepartmentId = 10 });
+            students.Add(new Student { Id = 7, Name = "Abhi", Age = 22, DepartmentId = 10 });
 
             var rightJoin1 = from stud in students
                              join dept in departments
@@ -1228,10 +1228,10 @@ namespace ConsoleAppAI
             ///Adds one element to the END of a sequence
             var updatedList = students.Append(new Student
             {
-                Id = 6,
-                Name = "Deepak",
+                Id = 10,
+                Name = "Suresh",
                 Age = 22,
-                DepartmentId = 1
+                DepartmentId = 10
             });
             //Note: Append does not modify original list, it returns a new sequence.
 
@@ -1239,10 +1239,10 @@ namespace ConsoleAppAI
             //Adds one element to the START of a sequence.
             var updatedList1 = students.Prepend(new Student
             {
-                Id = 0,
+                Id = 11,
                 Name = "Admin",
                 Age = 30,
-                DepartmentId = 0
+                DepartmentId = 11
             });
 
             Console.WriteLine("------Zip()-------");
