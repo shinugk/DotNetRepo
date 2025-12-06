@@ -1499,6 +1499,668 @@ namespace ConsoleAppAI
              */
             #endregion
 
+
+
+
+
+            #region SOLID PRINCIPLES
+            /*
+            SOLID represents five design principles that help create maintainable, scalable, and testable software systems.
+            */
+            #endregion
+
+            #region 1) S — SINGLE RESPONSIBILITY PRINCIPLE (SRP)
+            /*
+            -A class should have only one reason to change. Meaning → A class should do one job and do it well.
+            - In a Web API project, SRP helps keep controllers, services, repositories, and helpers clean, testable, and easy to maintain.
+
+
+            🔥 WHY SRP IS IMPORTANT IN WEBAPI?
+            Because it prevents:
+                ❌ God classes
+                ❌ Fat controllers
+                ❌ Business logic inside controllers
+                ❌ Difficult-to-test code
+                ❌ Code duplication
+
+            Instead, it promotes:
+                ✔ Clean architecture
+                ✔ Better testability
+                ✔ Easier debugging
+                ✔ Reusable services
+
+
+
+            ❌ BAD EXAMPLE: SRP VIOLATION IN WEBAPI
+            ---------------------------------------------------------------
+            [ApiController]
+            [Route("api/[controller]")]
+            public class UsersController : ControllerBase
+            {
+                [HttpPost("register")]
+                public IActionResult Register(User user)
+                {
+                    // 1. Validate user
+                    if (string.IsNullOrEmpty(user.Email))
+                        return BadRequest("Email required");
+
+                    // 2. Save to database
+                    using var db = new AppDbContext();
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    // 3. Send welcome email
+                    var smtp = new SmtpClient();
+                    smtp.Send("admin@site.com", user.Email, "Welcome", "Hello!");
+
+                    // 4. Log activity
+                    File.AppendAllText("logs.txt", $"New user: {user.Email}");
+
+                    return Ok("User Registered");
+                }
+            }
+            ----------------------------------------------------------------------
+            ❌ Problems:
+            - Validation logic
+            - Database logic
+            - Email sending logic
+            - File logging
+            - Hard to test
+            - Hard to maintain
+            💥 Violates SRP badly.
+
+
+
+
+            ✅ GOOD EXAMPLE: APPLYING SRP IN WEBAPI
+            -------------------------------------------------------------------------------
+            We split responsibilities into:
+                Controller → Accept requests
+                Service → Business logic
+                Repository → Database logic
+                EmailService → Email operations
+                LoggerService → Logging
+
+            1️) Controller (only handles HTTP requests)
+            -------------------------------------------------- ✔ Single responsibility: Accept input + return HTTP response.
+            [ApiController]
+            [Route("api/[controller]")]
+            public class UsersController : ControllerBase
+            {
+                private readonly IUserService _service;
+
+                public UsersController(IUserService service)
+                {
+                    _service = service;
+                }
+
+                [HttpPost("register")]
+                public IActionResult Register(User user)
+                {
+                    _service.RegisterUser(user);
+                    return Ok("User Registered");
+                }
+            }
+
+
+            2️) Service Layer (business logic)
+            ----------------------------------------------- ✔ Handles only business flow. ✔ No HTTP logic.
+            public interface IUserService
+            {
+                void RegisterUser(User user);
+            }
+
+            public class UserService : IUserService
+            {
+                private readonly IUserRepository _repo;
+                private readonly IEmailService _email;
+                private readonly IAppLogger _logger;
+
+                public UserService(IUserRepository repo, IEmailService email, IAppLogger logger)
+                {
+                    _repo = repo;
+                    _email = email;
+                    _logger = logger;
+                }
+
+                public void RegisterUser(User user)
+                {
+                    _repo.Add(user);                               <---- This is handled in repository for db operations _context.savechanges();
+                    _email.SendWelcomeEmail(user.Email);           <--- This is handled in Email Service
+                    _logger.Log($"User registered: {user.Email}");
+                }
+            }
+
+
+            3) Email Service
+            ------------------------------------------------ ✔ Only email responsibility.
+            public interface IEmailService
+            {
+                void SendWelcomeEmail(string to);
+            }
+
+            public class EmailService : IEmailService
+            {
+                public void SendWelcomeEmail(string to)
+                {
+                    // send email logic
+                }
+            }
+
+            */
+            #endregion
+
+            #region 2) O — Open/Closed Principle (OCP)
+            /*
+            - Classes should be open for extension but closed for modification.
+            - Meaning →
+                ✔ You should be able to add new features
+                ❌ Without changing existing working code
+
+            - This prevents bugs and makes the app scalable.
+
+
+
+            🎯 WHY OCP IS IMPORTANT IN .NET?
+            --------------------------------------------------
+            - Avoids modifying stable, tested code
+            - Helps add new features safely
+            - Avoids if/else, switch explosions
+            - Works perfectly with interfaces + dependency injection
+
+
+
+            ❌ BAD EXAMPLE (VIOLATES OCP)
+            ---------------------------------------------  Example: A logger that needs to support File, Database, Email, Cloud etc.
+            public class Logger
+            {
+                public void Log(string message, string type)
+                {
+                    if (type == "file")
+                    {
+                        File.WriteAllText("log.txt", message);
+                    }
+                    else if (type == "db")
+                    {
+                        SaveToDatabase(message);
+                    }
+                    else if (type == "email")
+                    {
+                        SendEmail(message);
+                    }
+                }
+            }
+            ❌ PROBLEMS:
+            - Every time we add a new log type (SMS, Azure, Kafka),
+            - we must modify this class → breaks OCP.
+            - Hard to maintain
+            - Hard to test
+            - Too many conditions
+
+
+
+
+            ✅ GOOD EXAMPLE (FOLLOWS OCP)
+            ----------------------------------------------- We use interfaces and polymorphism.
+            STEP 1: CREATE AN ABSTRACTION
+            ----------------------------------------
+            public interface ILogger
+            {
+                void Log(string message);
+            }
+
+
+            STEP 2: CREATE SEPARATE IMPLEMENTATIONS
+            --------------------------------------------
+            FILE LOGGER:
+            public class FileLogger : ILogger
+            {
+                public void Log(string message)
+                {
+                    File.WriteAllText("log.txt", message);
+                }
+            }
+
+            DATABASE LOGGER:
+            public class DbLogger : ILogger
+            {
+                public void Log(string message)
+                {
+                    // Save log to database
+                }
+            }
+
+            EMAIL LOGGER (NEW FEATURE ADDED LATER):
+            public class EmailLogger : ILogger
+            {
+                public void Log(string message)
+                {
+                    // send email
+                }
+            }
+
+            ➡ NOTICE: WE ADDED A NEW LOGGER WITHOUT MODIFYING ANY OLD CODE.
+                       THIS IS EXACTLY OCP.
+
+
+            STEP 3: USE THE ABSTRACTION IN THE WEBAPI CONTROLLER
+            ----------------------------------------------------------     The controller does not care which logger is used.
+            [ApiController]
+            [Route("api/[controller]")]
+            public class OrdersController : ControllerBase
+            {
+                private readonly ILogger _logger;
+
+                public OrdersController(ILogger logger)
+                {
+                    _logger = logger;
+                }
+
+                [HttpGet]
+                public IActionResult GetOrders()
+                {
+                    _logger.Log("Orders fetched");
+                    return Ok("Order List");
+                }
+            }
+
+            
+            STEP 4: CONFIGURE DEPENDENCY INJECTION (PROGRAM.CS)
+            -----------------------------------------------------
+                builder.Services.AddScoped<ILogger, FileLogger>();
+            ➡ Use DB logger instead:
+                builder.Services.AddScoped<ILogger, DbLogger>();
+            ➡ Add the new Email Logger:
+                builder.Services.AddScoped<ILogger, EmailLogger>();
+            NO CHANGES to the controller or existing loggers.
+            This is Open for extension, Closed for modification.
+
+            🎯 SO WHICH LOGGER GETS CALLED?
+            It depends on what is registered: 1️ If you register FileLogger: it gets called
+
+
+            | Concept    | Meaning                                       |
+            | ---------- | --------------------------------------------- |
+            | Open       | You can extend behavior by adding new classes |
+            | Closed     | You don't modify existing code                |
+
+             */
+            #endregion
+
+            #region 3) L - Liskov Substitution Principle (LSP)
+            /*
+            Definition : A child class should be usable in place of its parent class without breaking the system.
+            Meaning:
+            ✔ If class B inherits A,
+            ✔ You should be able to use B anywhere A is expected,
+            ❌ without errors, exceptions, or changed behavior.
+
+            🔥 WHY LSP IS IMPORTANT?
+            Because violating LSP leads to:
+                ❌ Unexpected exceptions
+                ❌ Broken polymorphism
+                ❌ Confusing behaviors
+                ❌ Fragile API design
+            LSP ensures:
+                ✔ Reliable inheritance
+                ✔ Clean architecture
+                ✔ Predictable behavior
+                ✔ Safely usable base classes
+
+
+            ❌ BAD EXAMPLE (VIOLATES LSP):
+            -------------------------------------------
+            public class UserRepository                              <-----WE HAVE A BASE REPOSITORY
+            {
+                public virtual void Add(User user)
+                {
+                    // Save to DB
+                }
+            }
+
+            public class ReadOnlyUserRepository : UserRepository          <------NOW SOMEONE CREATES A READ-ONLY REPOSITORY BY INHERITING THIS
+            {
+                public override void Add(User user)
+                {
+                    throw new NotImplementedException("Cannot add user");
+                }
+            }
+            ----------------------------------------------
+            ❌ PROBLEM:
+            ANYWHERE YOU USE:
+                UserRepository repo = new ReadOnlyUserRepository();
+                repo.Add(user); // CRASHES!
+            This violates LSP because child class behaves differently from parent.
+
+
+
+
+            ✅ CORRECT DESIGN (FOLLOWS LSP)
+            ------------------------------------------- Split responsibilities using interfaces:
+
+            STEP 1: SEPARATE READ AND WRITE CONTRACTS
+            -------------------------------------------------
+            public interface IReadRepository<T>
+            {
+                T Get(int id);
+            }
+
+            public interface IWriteRepository<T>
+            {
+                void Add(T entity);
+            }
+
+
+            STEP 2: IMPLEMENT THEM PROPERLY
+            -----------------------------------------------                              Read-only repository (implements only read)
+            public class ReadOnlyUserRepository : IReadRepository<User>
+            {
+                public User Get(int id)
+                {
+                    return new User { Id = id };
+                }
+            }
+
+            public class UserRepository  : IReadRepository<User>, IWriteRepository<User>       Full repository (implements read + write)
+            {
+                public User Get(int id)
+                {
+                    // return from DB
+                    return new User { Id = id };
+                }
+
+                public void Add(User entity)
+                {
+                    // save to DB
+                }
+            }
+
+            🧠 WHY DOES THIS FOLLOW LSP?
+            Because now:
+            - ReadOnlyUserRepository is never forced to implement Add()
+            - No overridden method throws unexpected exceptions
+            - No child class breaks behavior of parent
+            - Calling code is predictable and safe
+
+             */
+            #endregion
+
+            #region 4) I — Interface Segregation Principle (ISP)
+            /*
+            Definition:
+            - Don’t force a class to implement methods it does not need. Instead, create smaller, specific interfaces.
+
+            🎯 Why ISP Matters in C# .NET?
+            Because:
+                ❌ Large interfaces force classes to implement unused methods
+                ❌ Violates SRP
+                ❌ Makes testing harder
+                ❌ Makes code fragile
+                ❌ Breaks LSP
+
+            ISP keeps interfaces:
+                ✔ Small
+                ✔ Focused
+                ✔ Easy to implement
+                ✔ Easy to test
+                ✔ Easy to extend
+
+
+
+            ❌ BAD EXAMPLE (VIOLATES ISP)
+            -------------------------------------------    Suppose you create one big interface for notifications
+            public interface INotificationService
+            {
+                void SendEmail(string email);
+                void SendSms(string phoneNumber);
+                void SendPush(string deviceId);
+            }
+
+
+            public class EmailService : INotificationService      Now a class that only sends email is forced to implement methods it does NOT need
+            {
+                public void SendEmail(string email)
+                {
+                    // send email
+                }
+
+                public void SendSms(string phoneNumber)
+                {
+                    throw new NotImplementedException();
+                }
+
+                public void SendPush(string deviceId)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            ---------------------------------------------------------
+            ❌ Problems:
+            - Unused methods
+            - Throws exceptions → violates LSP
+            - Hard to test
+            - Hard to maintain
+
+
+
+
+
+            ✅ GOOD EXAMPLE (FOLLOWS ISP)
+            ----------------------------------------------    Split the large interface into smaller, purpose-based interfaces.
+            STEP 1: CREATE FOCUSED INTERFACES
+            ----------------------------------------------
+            public interface IEmailService
+            {
+                void SendEmail(string email);
+            }
+
+            public interface ISmsService
+            {
+                void SendSms(string phoneNumber);
+            }
+
+            public interface IPushService
+            {
+                void SendPush(string deviceId);
+            }
+
+            
+            STEP 2: IMPLEMENT ONLY WHAT IS NEEDED
+            -----------------------------------------------
+            Email service:
+            public class EmailService : IEmailService
+            {
+                public void SendEmail(string email)
+                {
+                    // send email
+                }
+            }
+
+            SMS service:
+            public class SmsService : ISmsService
+            {
+                public void SendSms(string phoneNumber)
+                {
+                    // send SMS
+                }
+            }
+
+            Push service:
+            public class PushNotificationService : IPushService
+            {
+                public void SendPush(string deviceId)
+                {
+                    // send push notification
+                }
+            }
+
+
+            STEP 3: USE ONLY RELEVANT INTERFACES IN CONTROLLERS
+            -----------------------------------------------------------
+            public class AccountController : ControllerBase
+            {
+                private readonly IEmailService _email;
+
+                public AccountController(IEmailService email)
+                {
+                    _email = email;
+                }
+
+                [HttpPost("register")]
+                public IActionResult Register(User user)
+                {
+                    _email.SendEmail(user.Email);
+                    return Ok("User registered");
+                }
+            }
+
+            ✔ The controller only depends on what it needs.
+            ✔ No unused methods.
+            ✔ Clean architecture.
+
+
+
+             */
+            #endregion
+
+            #region 5) D — Dependency Inversion Principle (DIP)
+            /*
+            Definition: High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces).
+            AND
+            Abstractions should not depend on details, Details should depend on abstractions.
+            - Use interfaces instead of concrete classes, and inject dependencies using DI.
+
+
+            🎯 WHY DIP IS IMPORTANT IN .NET?
+            Without DIP:
+                ❌ Your controllers tightly depend on concrete services
+                ❌ Hard to replace services (ex: PayPal → Stripe)
+                ❌ Difficult to unit test
+                ❌ Hard to scale
+                ❌ More bugs
+            With DIP:
+                ✔ Loosely coupled code
+                ✔ Swappable implementations
+                ✔ Better testability
+                ✔ Clean architecture
+                ✔ Works perfectly with .NET Dependency Injection (DI)
+
+
+
+
+            ❌ BAD EXAMPLE (VIOLATES DIP)
+            --------------------------------------------------      Controller directly depends on a CONCRETE class:
+            public class PaymentController : ControllerBase
+            {
+                private readonly PaypalPaymentService _payment;
+
+                public PaymentController()
+                {
+                    _payment = new PaypalPaymentService();
+                }
+
+                [HttpPost]
+                public IActionResult Pay()
+                {
+                    _payment.Pay();
+                    return Ok();
+                }
+            }
+            ----------------------------------------------------
+            ❌ Problems:
+            - Controller is hardcoded to PayPal
+            - Can't change to Stripe or RazorPay without modifying controller
+            - Not testable
+            - Not extendable
+
+            This violates DIP because high-level module (controller) depends on low-level module (PaypalPaymentService).
+
+
+
+
+            ✅ GOOD EXAMPLE (FOLLOWS DIP)
+            --------------------------------------------------
+            STEP 1: CREATE AN ABSTRACTION (INTERFACE)
+            ---------------------------------------------------
+            public interface IPaymentService
+            {
+                void Pay();
+            }
+
+            STEP 2: CONCRETE IMPLEMENTATIONS DEPEND ON THE ABSTRACTION
+            ---------------------------------------------------------
+            PayPal implementation:
+            public class PaypalPaymentService : IPaymentService
+            {
+                public void Pay()
+                {
+                    // PayPal logic
+                }
+            }
+
+            Stripe implementation:
+            public class StripePaymentService : IPaymentService
+            {
+                public void Pay()
+                {
+                    // Stripe logic
+                }
+            }
+            ✔ Now concrete classes depend on interface, not controller.
+
+
+            STEP 3: CONTROLLER DEPENDS ON THE ABSTRACTION (NOT IMPLEMENTATION)
+            -------------------------------------------------------------------
+            public class PaymentController : ControllerBase
+            {
+                private readonly IPaymentService _payment;
+
+                public PaymentController(IPaymentService payment)
+                {
+                    _payment = payment;
+                }
+
+                [HttpPost]
+                public IActionResult Pay()
+                {
+                    _payment.Pay();
+                    return Ok("Payment Successful");
+                }
+            }
+
+            ✔ No direct dependency on PayPal or Stripe
+            ✔ Controller is stable and clean
+            ✔ Follows DIP perfectly
+
+
+            STEP 4: WIRE THE IMPLEMENTATION IN PROGRAM.CS
+            ------------------------------------------------------
+            Use PayPal:
+                builder.Services.AddScoped<IPaymentService, PaypalPaymentService>();
+            Switch to Stripe (without editing controller!)
+                builder.Services.AddScoped<IPaymentService, StripePaymentService>();
+
+
+
+
+            ✔ No controller changes
+            ✔ No code modifications
+            ✔ Only configuration changes
+            - This is Dependency Inversion + Dependency Injection working together.
+
+             */
+            #endregion
+
+            //| Principle | Meaning                                      | WebAPI Example                                           |
+            //| --------- | -------------------------------------------- | -------------------------------------------------------- |
+            //| SRP       | One responsibility per class                 | Controller → Service → Repository separation             |
+            //| OCP       | Extend without modifying                     | New loggers without editing existing code                |
+            //| LSP       | Child class should not break parent behavior | Separate read/write repositories                         |
+            //| ISP       | Small, focused interfaces                    | EmailService + SmsService instead of large INotification |
+            //| DIP       | Depend on abstractions                       | Use interfaces + dependency injection                    |
+
+
+
         }
     }
 }
