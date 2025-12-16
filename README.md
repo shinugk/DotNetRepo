@@ -52,7 +52,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
     * dotnet ef migrations add InitialCreate
 	* dotnet ef database update
 
-----------------------------------AI INTEGRATION DEMO CONSOLE APP--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 13) Creating a new console app for AI integration
     https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
     * steps:
