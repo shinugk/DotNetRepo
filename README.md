@@ -52,6 +52,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
     * dotnet ef migrations add InitialCreate
 	* dotnet ef database update
 
+----------------------------------AI INTEGRATION DEMO CONSOLE APP--------------------------------------------------------------
 13) Creating a new console app for AI integration
     https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
     * steps:
@@ -61,6 +62,9 @@ If you omit the version, dotnet will automatically pull the latest compatible re
         * OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started
     	* follow the steps mentioned in https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
     	* run the console app (check GitHub token is added as said in use this model link in above url
+---------------------------------------------------------------------------------------------------------------------------------
+
+
      
             
 
