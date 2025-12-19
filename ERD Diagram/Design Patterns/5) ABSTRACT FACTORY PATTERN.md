@@ -116,3 +116,13 @@ NOTE:
   - You want to ensure compatibility
       (e.g., LightButton must match LightCheckbox)
   - You want to switch families easily (Light → Dark)
+ 
+ FACTORY METHOD VS ABSTRACT FACTORY
+ ----------------------------------------------------------------------------------
+ | Feature    | Factory Method                | Abstract Factory                |
+ | ---------- | ----------------------------- | ------------------------------- |
+ | Creates    | One object                    | Many related objects            |
+ | Structure  | One factory method            | Factory of factories            |
+ | Use Case   | Decide which object to create | Create related object families  |
+ | Example    | ShapeFactory → Circle/Square  | ThemeFactory → Button, Checkbox |
+ | Complexity | Simple                        | More complex                    |
