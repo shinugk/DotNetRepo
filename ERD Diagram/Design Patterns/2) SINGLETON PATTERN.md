@@ -49,8 +49,8 @@ You restrict object creation and provide a single, global access point.
 ```
       Usage:
       Logger.Instance.Log("Hello");       <--Only one Logger instance exists.
-
-
+-------------------------------------------------------------------------------
+   
 - IMPLEMENTATION #2 — USING .NET DEPENDENCY INJECTION (ASP.NET CORE)
   - In ASP.NET Core, you never manually write Singletons.
   - Instead, you register them in DI:
@@ -69,6 +69,7 @@ You restrict object creation and provide a single, global access point.
           }
       }
 ```
+-------------------------------------------------------------------------------------
 
   🔍 WHEN SHOULD YOU USE SINGLETON?
   ---------------------------------------------------------------------------
