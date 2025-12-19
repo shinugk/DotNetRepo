@@ -52,13 +52,15 @@ You restrict object creation and provide a single, global access point.
 -------------------------------------------------------------------------------
    
 - IMPLEMENTATION #2 — USING .NET DEPENDENCY INJECTION (ASP.NET CORE)
+```
   - In ASP.NET Core, you never manually write Singletons.
   - Instead, you register them in DI:
     - builder.Services.AddSingleton<ILogService, LogService>();          <------ register in Program.cs
   - The framework ensures:
     - Only one instance of LogService exists
     - Same instance is injected everywhere
-      **Example**:
+```
+  Example:
 ```
       public class HomeController : ControllerBase
       {
