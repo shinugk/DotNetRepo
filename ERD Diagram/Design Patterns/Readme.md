@@ -1,3 +1,5 @@
+Categories of design patterns:
+---------------------------------------------
  1) CREATIONAL PURPOSE
     ```
      * How and when objects are created
