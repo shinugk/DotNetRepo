@@ -57,7 +57,7 @@
    - Email sending logic
    - File logging
    - Hard to test
-   - Hard to maintain
+   - Hard to maintain <br>
  💥 Violates SRP badly.
 
 
@@ -97,7 +97,8 @@
 
  2️) Service Layer (business logic) 
  --------------------------------------------------------------
- ✔ Handles only business flow. ✔ No HTTP logic.
+ ✔ Handles only business flow. <br>
+ ✔ No HTTP logic.
  ```
  public interface IUserService
  {
@@ -124,12 +125,12 @@
          _logger.Log($"User registered: {user.Email}");
      }
  }
-```
+``` 
 
 
-3) Email Service
------------------------------------------------ 
- ✔ Only email responsibility.
+**3) Email Service**
+----------------------------------------------------------------------
+✔ Only email responsibility.
 ```
  public interface IEmailService
  {
