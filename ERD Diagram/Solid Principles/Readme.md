@@ -9,3 +9,5 @@ SOLID represents five design principles that help create maintainable, scalable,
 | LSP       | Child class should not break parent behavior | Separate read/write repositories                         |
 | ISP       | Small, focused interfaces                    | EmailService + SmsService instead of large INotification |
 | DIP       | Depend on abstractions                       | Use interfaces + dependency injection                    |
+
+<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/6616e2bc-73d9-47f3-a900-07a9d41ed259" />
