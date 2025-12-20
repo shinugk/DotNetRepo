@@ -1,3 +1,7 @@
+
+SOLID represents five design principles that help create maintainable, scalable, and testable software systems.
+
+
 | Principle | Meaning | WebAPI Example |
 | --------- | -------------------------------------------- | -------------------------------------------------------- |
 | SRP | One responsibility per class                 | Controller → Service → Repository separation             |
