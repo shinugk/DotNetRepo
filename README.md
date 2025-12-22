@@ -94,7 +94,8 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 
 14) Created User(changed as per OAuth requirements), Employer and HrDetail Models and configured validation using both data annotation and fluent api.
 15) Create migration (update the database with these tables)
-16) 
+	- dotnet ef migrations add CreateUserEmployerHrDetail
+	- dotnet ef database update
 
 
 <details>
