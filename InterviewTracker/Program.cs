@@ -40,6 +40,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//db middleware to configure database
 builder.Services.ConfigureDatabase(builder.Configuration, isDev);
 
 
