@@ -1,16 +1,90 @@
+using InterviewTracker.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace InterviewTracker.Models
 {
     public class ITrackerDbContext: DbContext
     {
-        public ITrackerDbContext(DbContextOptions<ITrackerDbContext> options) : base(options) { }
+        private readonly ILogger<ITrackerDbContext> _logger;
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-           
-        //}
+        public ITrackerDbContext(DbContextOptions<ITrackerDbContext> options, ILogger<ITrackerDbContext> logger = null) : base(options) 
+        {
+            _logger = logger;
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //CLEAN OPTION TO USE IEntityTypeConfiguration<T> using FluentAPI
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //modelBuilder.ApplyConfiguration(new EmployerConfiguration());
+            //modelBuilder.ApplyConfiguration(new HRDetailConfiguration());
+
+
+            //FLUENT API : Direct configure here
+            /* ---------------- USER ---------------- */
+            // Unique Google user
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.googleId)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.email)
+                .IsUnique();
+
+
+            /* ---------------- USER -> EMPLOYER (One-to-Many) ---------------- */
+            modelBuilder.Entity<Employer>()
+                .HasOne(e => e.user)
+                .WithMany(u => u.employers)
+                .HasForeignKey(e => e.userId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            /* ---------------- EMPLOYER -> HRDETAIL (One-to-One) ---------------- */
+            modelBuilder.Entity<Employer>()
+                .HasOne(e => e.hrDetail)
+                .WithOne(h => h.employer)
+                .HasForeignKey<HRDetail>(h => h.employerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            /* ---------------- COLUMN TYPES ---------------- */
+            modelBuilder.Entity<Employer>()
+                .Property(e => e.offerLetter)
+                .HasColumnType("longblob");
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.resume)
+                .HasColumnType("longblob");
+
+        }
+
+
+        //DEFINE COLUMN NAMES HERE --> THIS TAKES PRIORITY
         DbSet<Names> Names { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<Employer> Employers { get; set; }
+        DbSet<HRDetail> HrDetails { get; set; }
     }
 }
+
+
+/*
+ Why Fluent API Is Mandatory Here:
+----------------------------------------------------------
+| Requirement               | Annotation?  | Fluent API   |
+| ------------------------- | -----------  | ----------   |
+| Unique Email              | No           | Yes          |
+| Unique Phone              | No           | Yes          |
+| One-to-One mapping        | No           | Yes          |
+| Cascade delete            | No           | Yes          |
+| Check constraints         | No           | Yes          |
+| DB column type (longblob) | No           | Yes          |
+
+
+Rule of Thumb:
+------------------------------------------
+- Use Data Annotations for validation & basic mapping
+- Use Fluent API for relationships, constraints, indexes & DB behavior
+ 
+ */
