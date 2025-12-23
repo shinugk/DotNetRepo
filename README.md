@@ -106,289 +106,15 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 <br>
 <br>
 
-**IMPLEMENTING OAUTH**
-----------------------------------
-**1️⃣ Authentication Architecture (Correct Way)**
-- ✅ Recommended flow (Industry Standard)
-- Google OAuth 2.0 → Your API issues JWT
-```
-Browser
-   ↓
-Google OAuth Login
-   ↓
-Google returns ID Token
-   ↓
-Your API validates token
-   ↓
-Your API creates / finds user in DB
-   ↓
-Your API issues JWT (your system)
-   ↓
-Client uses JWT for all API calls
-
-
-👉 Never rely on Google token for authorization
-👉 Use your own JWT for all protected endpoints
-
-```
-🔐 Authentication Strategy (Correct Approach):
------------------------------------------------------------------
-We will use HYBRID AUTH:
-| Purpose           | Tech             |
-| ----------------- | ---------------- |
-| Identity          | Google OAuth 2.0 |
-| API Authorization | JWT              |
-| User ownership    | `UserId` FK      |
-
-🪪 Step 1: What Google Gives You
--------------------------------------------
-After Google login, you get an ID Token containing:
-```
-{
-  "sub": "1092384729384729384",
-  "email": "user@gmail.com",
-  "name": "Jaith Kolkarni",
-  "picture": "https://..."
-}
-```
-⚠️ IMPORTANT:
-- sub is Google User ID
-- It is unique and never changes
-- This is what you must store
-
-🧩 Step 2: Modify Your User Model (VERY IMPORTANT)
-----------------------------------------------------
-- Your current User model is not OAuth-ready.
-- ❌ Problem with current model
-	- Requires Age, PhoneNumber, Resume
-	- Google doesn’t give these at login
-	- Login would fail
-
-🎤 Interview-Ready Explanation (VERY IMPORTANT)
------------------------------------------------------------
-“We use Google OAuth for authentication and issue our own JWT for authorization.
-The Google sub claim uniquely identifies the user and is stored in our database.
-All employers are linked via UserId, ensuring strict data ownership.”
-
-✅ Final Summary
--------------------------
-| Concern        | Solution           |
-| -------------- | ------------------ |
-| Google login   | OAuth 2.0          |
-| API auth       | JWT                |
-| User identity  | Google `sub`       |
-| Data ownership | FK (`UserId`)      |
-| Validation     | Enums + Fluent API |
-| Security       | Claims-based       |
-
 <br>
 <br>
 
 
-Implementation:
----------------------
-✅ High-Level Architecture (Why this flow exists)
-- 🔑 Google = Identity Provider
-- 🔐 Your API = Authorization Server
+
+
 <br>
-
-- Google only proves WHO the user is.
-- Your API decides WHAT the user can do.
 <br>
-
-That’s why
-- ❌ Never authorize using Google token
-- ✅ Always issue your own JWT
-            
-1️⃣ Google OAuth Login (Frontend Responsibility)
------------------------------------------------
-What happens
-- User clicks “Login with Google”
-- Google authenticates user
-- Google returns ID Token (JWT)
-
-What ID Token contains:
-```
-{
-  "sub": "109872364987236498723",
-  "email": "user@gmail.com",
-  "email_verified": true,
-  "name": "Jaith Kolkarni",
-  "picture": "https://...",
-  "iss": "https://accounts.google.com",
-  "aud": "YOUR_GOOGLE_CLIENT_ID"
-}
-```
-**📌 Frontend sends this ID Token to your API**
-
-2️⃣ API Endpoint: Accept Google ID Token
---------------------------------------------
-```
-POST /api/auth/google
-Authorization: Bearer <google_id_token>
-```
-
-3️⃣ Validate Google ID Token (VERY IMPORTANT)
------------------------------------------------
-Why?
-- ❌ Anyone can send a fake token
-- ✅ You must validate it cryptographically
-
-Install package: 
-	- `dotnet add package Google.Apis.Auth`
-
-**Token validation service:**
-```
-using Google.Apis.Auth;
-
-public class GoogleTokenValidator
-{
-    public async Task<GoogleJsonWebSignature.Payload> ValidateAsync(string token)
-    {
-        var settings = new GoogleJsonWebSignature.ValidationSettings
-        {
-            Audience = new[] { "YOUR_GOOGLE_CLIENT_ID" }
-        };
-
-        return await GoogleJsonWebSignature.ValidateAsync(token, settings);
-    }
-}
-```
-What validation checks
-	- ✔ Token signature
-	- ✔ Issuer = Google
-	- ✔ Audience = your app
-	- ✔ Token not expired
-
-4️⃣ Create or Find User in Database
--------------------------------------------------
-🔁 This is where your system starts owning the user
-🔴 IMPORTANT CHANGE
-- No password
-- User is identified by GoogleId
-
-**🔁 Create or find user logic**
-```
-var payload = await _googleValidator.ValidateAsync(googleToken);
-
-var user = await _context.Users
-    .FirstOrDefaultAsync(u => u.GoogleId == payload.Subject);
-
-if (user == null)
-{
-    user = new User
-    {
-        GoogleId = payload.Subject,
-        Email = payload.Email,
-        FullName = payload.Name,
-        ProfilePicture = payload.Picture
-    };
-
-    _context.Users.Add(user);
-    await _context.SaveChangesAsync();
-}
-```
-**✅ User now exists in YOUR system**
-
-5️⃣ Issue YOUR OWN JWT (Most Important Step)
----------------------------------------------------
-Why not Google token?
-- Short lived
-- Audience = Google
-- Cannot add roles / permissions
-- Security risk
-
-JWT Claims (Your System)
-```
-{
-  "sub": "12",
-  "email": "user@gmail.com",
-  "role": "User"
-}
-```
-JWT Creation Code
-```
-public string GenerateJwt(User user)
-{
-    var claims = new[]
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        new Claim(ClaimTypes.Role, user.Role)
-    };
-
-    var key = new SymmetricSecurityKey(
-        Encoding.UTF8.GetBytes(_jwtSettings.Secret));
-
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    var token = new JwtSecurityToken(
-        issuer: _jwtSettings.Issuer,
-        audience: _jwtSettings.Audience,
-        claims: claims,
-        expires: DateTime.UtcNow.AddHours(2),
-        signingCredentials: creds
-    );
-
-    return new JwtSecurityTokenHandler().WriteToken(token);
-}
-```
-API Response: 
-```
-{
-  "accessToken": "YOUR_SYSTEM_JWT"
-}
-```
-
-6️⃣ Secure Your API Using JWT
---------------------------------------
-Configure JWT Authentication
-```
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwt.Issuer,
-            ValidAudience = jwt.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwt.Secret))
-        };
-    });
-```
-Protect Endpoints:
-```
-[Authorize]
-[HttpPost("employers")]
-public async Task<IActionResult> CreateEmployer(EmployerDto dto)
-{
-    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-    var employer = new Employer
-    {
-        CompanyName = dto.CompanyName,
-        UserId = userId
-    };
-
-    _context.Employers.Add(employer);
-    await _context.SaveChangesAsync();
-
-    return Ok();
-}
-```
-- ✔ Only logged-in user can create employers
-- ✔ Employers are scoped to user
-
-🎯 Interview-Ready Summary
-------------------------------------------------------
-“We use Google OAuth for identity verification.
-After validating the Google ID token, we create or fetch the user in our database and issue our own JWT.
-All authorization is handled using our JWT, not Google’s token.”
-
+<br
 
 Why we are using Google.Apis.Auth: Difference
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -430,3 +156,393 @@ What it does exactly:
 - ✔ Verifies token is not expired
 - ✔ Verifies token audience (client_id)
 - ✔ Extracts user identity claims
+
+
+<br>
+<br>
+<br>
+
+Created new Angular app under same dotnet project:
+----------------------------------------------------------
+- create new folder ng2-app and run `ng new ClientAppIT`
+  - selected scss (superset of css) as stylesheet format
+- To integrate the Google SDK for OAuth token generation in an Angular application
+   you should use the official Google Identity Services library for JavaScript, which handles the OAuth 2.0 flow securely. 
+- This process involves configuring your Google Cloud project, installing the necessary library in your Angular app, and implementing a callback function to handle the ID or access token response.
+
+**updated the angular version from Angular16 to Angular20:**
+-------------------------------------------------------------
+1. **Update Globally**
+- First, update your global Angular CLI to the latest version: 
+	- `npm uninstall -g @angular/cli`
+	- `npm install -g @angular/cli@latest`
+
+2. **Follow the Incremental Path**
+- Run the following commands in your project folder to move through each major version. For each step, verify that your application still builds
+- To Angular 17:
+	- `ng update @angular/core@17 @angular/cli@17`
+- To Angular 18:
+	- `ng update @angular/core@18 @angular/cli@18`
+- To Angular 19:
+	- `ng update @angular/core@19 @angular/cli@19`
+- To Angular 20 (Latest):
+	- `ng update @angular/core@20 @angular/cli@20`
+
+3. **Update Other Dependencies**
+- If you use other official packages like Angular Material, update them alongside the core packages: `ng update @angular/material@20`
+- Peer Dependency Issues: If you encounter errors like the one you saw previously, you may need to add the --force or --legacy-peer-deps flag, though it is better to update libraries to their compatible versions first.
+
+Configure Your Google Cloud Project 
+--------------------------------------------------
+- Go to the Google API Console.
+- Select an existing project or create a new one.
+- Navigate to APIs & Services > Credentials and click Create Credentials > OAuth client ID.
+- Select Web application as the Application type.
+- In the Authorized JavaScript origins field, add your Angular app's URL (e.g., http://localhost:4200 for local development).
+- Click Create and save your Client ID. 
+
+
+**angular-oauth2-oidc for Angular integration with Google OAuth 2.0 / OpenID Connect.**
+---------------------------------------------------------------------------------------------
+Below is a full industry-standard explanation, end-to-end, mapped exactly to your flow and your .NET Web API + Angular use case.
+
+✅ Final Architecture (Industry Standard)
+```
+Angular App
+   ↓
+Google OAuth Login (OIDC)
+   ↓
+Google returns ID Token
+   ↓
+Angular sends ID Token to .NET API
+   ↓
+.NET validates Google ID Token
+   ↓
+.NET creates / finds User in DB
+   ↓
+.NET issues its OWN JWT
+   ↓
+Angular stores JWT
+   ↓
+Angular calls protected APIs using JWT
+```
+
+**🚨 Important rule (as you mentioned):**
+- ❌ Never use Google token for authorization
+- ✅ Always use your own JWT for APIs
+
+1️⃣ Why angular-oauth2-oidc? (Answering your question)
+---------------------------------------------------------
+❓ Can we use angular-oauth2-oidc?
+- 👉 YES — this is the recommended Angular approach
+
+❓ Why this library?
+- Because it:
+	- Fully supports OAuth 2.0 + OpenID Connect
+- Handles:
+	- Google login
+	- Redirects
+	- Token parsing
+	- Silent refresh
+	- Is framework-agnostic and production-ready
+	- This is the same library used in enterprise Angular apps.
+
+- 🔑 Google = Identity Provider
+- 🔐 Your API = Authorization Server
+
+- Google only proves WHO the user is.
+- Your API decides WHAT the user can do.
+
+That’s why
+- ❌ Never authorize using Google token
+- ✅ Always issue your own JWT
+            
+1️⃣ Google OAuth Login (Frontend Responsibility)
+-----------------------------------------------
+What happens
+- User clicks “Login with Google”
+- Google authenticates user
+- Google returns ID Token (JWT)
+
+What ID Token contains:
+```
+{
+  "sub": "109872364987236498723",
+  "email": "user@gmail.com",
+  "email_verified": true,
+  "name": "Jaith Kolkarni",
+  "picture": "https://...",
+  "iss": "https://accounts.google.com",
+  "aud": "YOUR_GOOGLE_CLIENT_ID"
+}
+```
+**📌 Frontend sends this ID Token to your API**
+- 2️⃣ API Endpoint: Accept Google ID Token
+- 3️⃣ Validate Google ID Token (VERY IMPORTANT)
+- 4️⃣ Create or Find User in Database
+- 5️⃣ Issue YOUR OWN JWT (Most Important Step)
+- 6️⃣ Secure Your API Using JWT
+
+
+🎯 Interview-Ready Summary
+------------------------------------------------------
+“We use Google OAuth for identity verification.
+After validating the Google ID token, we create or fetch the user in our database and issue our own JWT.
+All authorization is handled using our JWT, not Google’s token.”
+
+
+
+
+2️⃣ Angular Setup (Step-by-Step)
+--------------------------------------
+2.1 Install package
+```
+npm install angular-oauth2-oidc
+```
+
+2.2 Configure OAuth in Angular
+auth.config.ts
+```
+import { AuthConfig } from 'angular-oauth2-oidc';
+
+export const authConfig: AuthConfig = {
+  issuer: 'https://accounts.google.com',
+  redirectUri: window.location.origin,
+  clientId: 'GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+  scope: 'openid profile email',
+  strictDiscoveryDocumentValidation: false,
+};
+
+2.3 Auth Service (Angular)
+auth.service.ts
+import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authConfig } from './auth.config';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+
+  constructor(
+    private oauthService: OAuthService,
+    private http: HttpClient
+  ) {
+    this.configure();
+  }
+
+  private configure() {
+    this.oauthService.configure(authConfig);
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+  }
+
+  loginWithGoogle() {
+    this.oauthService.initLoginFlow();
+  }
+
+  logout() {
+    localStorage.removeItem('jwt');
+    this.oauthService.logOut();
+  }
+
+  async exchangeTokenWithBackend() {
+    const idToken = this.oauthService.getIdToken();
+
+    return this.http.post<any>(
+      'https://localhost:5001/api/auth/google',
+      { idToken }
+    ).subscribe(res => {
+      localStorage.setItem('jwt', res.jwt);
+    });
+  }
+}
+```
+
+2.4 Login Button (Angular Component)
+```
+<button (click)="login()">Login with Google</button>
+
+login() {
+  this.authService.loginWithGoogle();
+}
+```
+
+2.5 Call Backend After Login
+In AppComponent or AuthCallbackComponent:
+```
+ngOnInit() {
+  if (this.oauthService.hasValidIdToken()) {
+    this.authService.exchangeTokenWithBackend();
+  }
+}
+```
+
+3️⃣ .NET Web API – Google Token Validation
+-----------------------------------------------------------
+3.1 Why Google.Apis.Auth
+ It is different from `Microsoft.AspNetCore.Authentication.Google`
+
+Package	Used for
+- `Microsoft.AspNetCore.Authentication.Google`	MVC / Razor login
+- `Google.Apis.Auth`	✅ Validate Google ID token in APIs
+👉 We use Google.Apis.Auth because Angular logs in, not .NET
+
+3.2 Install package (.NET)
+dotnet add package Google.Apis.Auth
+
+3.3 Auth Controller
+AuthController.cs
+```
+[ApiController]
+[Route("api/auth")]
+public class AuthController : ControllerBase
+{
+    private readonly AppDbContext _context;
+    private readonly IJwtService _jwtService;
+
+    public AuthController(AppDbContext context, IJwtService jwtService)
+    {
+        _context = context;
+        _jwtService = jwtService;
+    }
+
+    [HttpPost("google")]
+    public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto dto)
+    {
+        var payload = await GoogleJsonWebSignature.ValidateAsync(dto.IdToken);
+
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == payload.Email);
+
+        if (user == null)
+        {
+            user = new User
+            {
+                Email = payload.Email,
+                Name = payload.Name,
+                GoogleId = payload.Subject,
+                ProfilePicture = payload.Picture
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        var jwt = _jwtService.GenerateToken(user);
+
+        return Ok(new { jwt });
+    }
+}
+```
+
+3.4 DTO
+```
+public class GoogleLoginDto
+{
+    public string IdToken { get; set; }
+}
+```
+
+4️⃣ Data Model Changes (Very Important)
+--------------------------------------------
+✅ Updated User Entity
+```
+public class User
+{
+    public int Id { get; set; }
+
+    [Required]
+    public string GoogleId { get; set; }
+
+    [Required, EmailAddress]
+    public string Email { get; set; }
+
+    [Required]
+    public string Name { get; set; }
+
+    public string ProfilePicture { get; set; }
+
+    public ICollection<Employer> Employers { get; set; }
+}
+```
+
+🔑 Why this change?
+- Password ❌ (Google handles auth)
+- GoogleId used as external identity
+- Email is unique
+
+5️⃣ Issue Your OWN JWT (Core Rule)
+-------------------------------------
+JWT contains:
+```
+{
+  "sub": "123",
+  "email": "user@gmail.com",
+  "name": "John Doe"
+}
+```
+👉 This JWT is:
+- Short-lived
+- Signed by your API
+- Used for authorization
+
+6️⃣ Protect Employer APIs
+-------------------------------------
+```
+[Authorize]
+[HttpPost]
+public async Task<IActionResult> AddEmployer(Employer employer)
+{
+    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+    employer.UserId = userId;
+
+    _context.Employers.Add(employer);
+    await _context.SaveChangesAsync();
+
+    return Ok();
+}
+```
+✔ Ensures each user accesses only their data
+
+7️⃣ Angular JWT Interceptor
+-------------------------------------
+```
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
+      });
+    }
+
+    return next.handle(req);
+  }
+}
+```
+
+8️⃣ Why This Flow Is Industry Standard
+-----------------------------------
+- ✅ SPA controls login
+- ✅ Backend controls authorization
+- ✅ Google = Identity Provider
+- ✅ JWT = API Security
+- ✅ No vendor lock-in
+
+🏁 Final Summary
+--------------------------------------
+| Layer    | Responsibility           |
+| -------- | ------------------------ |
+| Angular  | Google Login             |
+| Google   | Identity verification    |
+| .NET API | User creation + JWT      |
+| JWT      | Authorization            |
+| DB       | User → Employers mapping |
+
+
+
+<br>
+<br>
+
