@@ -209,6 +209,7 @@ STEP 1. Configure Your Google Cloud Project
 
 STEP 2. `angular-oauth2-oidc` for Angular integration with Google OAuth 2.0 / OpenID Connect.
 -------------------------------------------------------------------------------------------------
+Before this learn what is OAuth2.0 and OIDC
 🚨 Important rule:
 - ❌ Never use Google token for authorization
 - ✅ Always use your own JWT for APIs
