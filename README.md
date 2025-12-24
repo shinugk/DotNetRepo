@@ -1,4 +1,4 @@
-🎯 Project Use Case (Restated Clearly)
+🎯 Project Use Case:
 --------------------------------------------
 - A user logs in using Google OAuth 2.0
 - After login:
@@ -24,6 +24,7 @@ Google OAuth Server
 Client (Authorized requests)
 ```
 
+STEPS FOLLOWED:
 ----------------------------------------------------------------------
 1) Created New project from template .NET Core WebAPI
 2) Copied ClientApp from another project 
@@ -98,9 +99,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 	- dotnet ef database update
 
 
-<details>
-<summary> Implementing OAuth </summary>
-</details>
+
 
 <br>
 <br>
