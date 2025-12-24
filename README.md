@@ -112,38 +112,14 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 
 
 
-<br>
-<br>
-<br
 
-Why we are using Google.Apis.Auth: Difference
+
+**Why we are using `Google.Apis.Auth` instead of `Microsoft.AspNetCore.Authentication.Google` package Difference**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 | Package                                          | Purpose                                                    | Used In                            |
 | ------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------- |
 | **`Microsoft.AspNetCore.Authentication.Google`** | Implements **Google login as middleware** (redirect-based) | MVC / Razor / Server-rendered apps |
 | **`Google.Apis.Auth`**                           | **Validates Google ID Tokens**                             | REST APIs, SPA, Mobile apps        |
-
-Why Microsoft.AspNetCore.Authentication.Google is ❌ NOT used here:
-------------------------------------------------------------
-This package is designed for this flow:
-```
-Browser → Your MVC App → Redirect to Google → Redirect back
-```
-It:
-- Uses cookies
-- Handles HTTP redirects
-- Assumes server-side UI
-- Stores auth state in ASP.NET cookies
-
-❌ Problems for your use case
-You are building:
-- ✅ .NET Web API
-- ✅ JWT-based auth
-- ✅ Angular / React / Mobile client
-- ❌ No server-side UI
-- ❌ No cookies
-➡️ Therefore, this package is NOT suitable.
-
 
 Why Google.Apis.Auth is ✅ CORRECT for your use case
 --------------------------------------------------
@@ -192,20 +168,13 @@ Created new Angular app under same dotnet project:
 - If you use other official packages like Angular Material, update them alongside the core packages: `ng update @angular/material@20`
 - Peer Dependency Issues: If you encounter errors like the one you saw previously, you may need to add the --force or --legacy-peer-deps flag, though it is better to update libraries to their compatible versions first.
 
-Configure Your Google Cloud Project 
---------------------------------------------------
-- Go to the Google API Console.
-- Select an existing project or create a new one.
-- Navigate to APIs & Services > Credentials and click Create Credentials > OAuth client ID.
-- Select Web application as the Application type.
-- In the Authorized JavaScript origins field, add your Angular app's URL (e.g., http://localhost:4200 for local development).
-- Click Create and save your Client ID. 
 
+<br>
+<br>
+<br>
 
-**angular-oauth2-oidc for Angular integration with Google OAuth 2.0 / OpenID Connect.**
----------------------------------------------------------------------------------------------
-Below is a full industry-standard explanation, end-to-end, mapped exactly to your flow and your .NET Web API + Angular use case.
-
+IMPLEMENNTING AUTHENTICATION Google OAuth for Identity and Own Jwt for Protecting API's:
+--------------------------------------------------------------
 ✅ Final Architecture (Industry Standard)
 ```
 Angular App
@@ -227,16 +196,25 @@ Angular stores JWT
 Angular calls protected APIs using JWT
 ```
 
-**🚨 Important rule (as you mentioned):**
+STEP 1. Configure Your Google Cloud Project 
+--------------------------------------------------
+- Go to the Google API Console.
+- Select an existing project or create a new one.
+- Navigate to APIs & Services > Credentials and click Create Credentials > OAuth client ID. (https://console.cloud.google.com/auth/clients)
+- Select Web application as the Application type.
+- In the Authorized JavaScript origins field, add your Angular app's URL (e.g., http://localhost:4200 for local development).
+- In the Authorized redirect URIs, added two URL http://localhost:4200/app and http://localhost:4200
+- Click Create and save your Client ID. 
+
+
+STEP 2. `angular-oauth2-oidc` for Angular integration with Google OAuth 2.0 / OpenID Connect.
+-------------------------------------------------------------------------------------------------
+🚨 Important rule:
 - ❌ Never use Google token for authorization
 - ✅ Always use your own JWT for APIs
 
-1️⃣ Why angular-oauth2-oidc? (Answering your question)
+Why angular-oauth2-oidc library? 
 ---------------------------------------------------------
-❓ Can we use angular-oauth2-oidc?
-- 👉 YES — this is the recommended Angular approach
-
-❓ Why this library?
 - Because it:
 	- Fully supports OAuth 2.0 + OpenID Connect
 - Handles:
@@ -257,7 +235,7 @@ That’s why
 - ❌ Never authorize using Google token
 - ✅ Always issue your own JWT
             
-1️⃣ Google OAuth Login (Frontend Responsibility)
+Google OAuth Login (Frontend Responsibility)
 -----------------------------------------------
 What happens
 - User clicks “Login with Google”
@@ -276,201 +254,296 @@ What ID Token contains:
   "aud": "YOUR_GOOGLE_CLIENT_ID"
 }
 ```
-**📌 Frontend sends this ID Token to your API**
-- 2️⃣ API Endpoint: Accept Google ID Token
-- 3️⃣ Validate Google ID Token (VERY IMPORTANT)
-- 4️⃣ Create or Find User in Database
-- 5️⃣ Issue YOUR OWN JWT (Most Important Step)
-- 6️⃣ Secure Your API Using JWT
+**📌 Frontend sends this ID Token to your API and next stpes**
+-  API Endpoint: Accept Google ID Token
+-  Validate Google ID Token (VERY IMPORTANT)
+-  Create or Find User in Database
+-  Issue YOUR OWN JWT (Most Important Step)
+-  Secure Your API Using JWT
 
 
 🎯 Interview-Ready Summary
 ------------------------------------------------------
-“We use Google OAuth for identity verification.
-After validating the Google ID token, we create or fetch the user in our database and issue our own JWT.
-All authorization is handled using our JWT, not Google’s token.”
+- We use Google OAuth for identity verification.
+- After validating the Google ID token, we create or fetch the user in our database and issue our own JWT.
+- All authorization is handled using our JWT, not Google’s token.”
 
 
 
-
-2️⃣ Angular Setup (Step-by-Step)
+STEP 3. Angular Setup which installs library and also how to get IdToken after login and send it to .NET(Step-by-Step)
 --------------------------------------
-2.1 Install package
+3.1 Install package
 ```
 npm install angular-oauth2-oidc
 ```
 
-2.2 Configure OAuth in Angular
-auth.config.ts
+3.2 Configure OAuth in Angular
+auth.config.ts -> where we enter google cloud console client configurations
 ```
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
+  clientId: '250228091409-kugdd045lkeh9i8uvrkuhaa28vc7jr4r.apps.googleusercontent.com', //'GOOGLE_CLIENT_ID' from https://console.cloud.google.com/auth/clients/250228091409-kugdd045lkeh9i8uvrkuhaa28vc7jr4r.apps.googleusercontent.com?project=itracker-468520
   redirectUri: window.location.origin,
-  clientId: 'GOOGLE_CLIENT_ID.apps.googleusercontent.com',
   scope: 'openid profile email',
   strictDiscoveryDocumentValidation: false,
 };
 
-2.3 Auth Service (Angular)
-auth.service.ts
+```
+
+3.3 Auth Service (Angular)
+auth.service.ts -> which implements google login using importing OAuthService
+```
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from './auth.config';
-import { HttpClient } from '@angular/common/http';
+import { from, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
+  
 export class AuthService {
 
   constructor(
-    private oauthService: OAuthService,
+    private oauth: OAuthService,
     private http: HttpClient
   ) {
-    this.configure();
-  }
-
-  private configure() {
-    this.oauthService.configure(authConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauth.configure(authConfig);
+    this.oauth.loadDiscoveryDocument();
   }
 
   loginWithGoogle() {
-    this.oauthService.initLoginFlow();
+    this.oauth.initLoginFlow();
+  }
+
+  handleLoginCallback() {
+  console.log("URI-"+window.location.origin);   <--- this should be what you give in google cloud console loalhost:4200
+  return from(this.oauth.tryLoginImplicitFlow()).pipe(
+    switchMap(() => {
+      const idToken = this.oauth.getIdToken();
+
+      if (!idToken) {
+        return of(null);
+      }
+
+      return this.http.post<any>(
+        'https://localhost:7257/api/auth/google',
+        { idToken }
+      );
+    })
+  );
+}
+
+  storeJwt(jwt: string) {
+    localStorage.setItem('jwt', jwt);
   }
 
   logout() {
-    localStorage.removeItem('jwt');
-    this.oauthService.logOut();
+    localStorage.clear();
   }
 
-  async exchangeTokenWithBackend() {
-    const idToken = this.oauthService.getIdToken();
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('jwt');
+  }
+}
 
-    return this.http.post<any>(
-      'https://localhost:5001/api/auth/google',
-      { idToken }
-    ).subscribe(res => {
-      localStorage.setItem('jwt', res.jwt);
-    });
+```
+
+3.4 Login Component (Angular Component)
+```
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Core/AuthComponent/auth.service';
+
+@Component({
+  selector: 'app-login',
+  imports: [],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+})
+export class LoginComponent {
+
+   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.authService.handleLoginCallback().subscribe(res => {
+    if (res?.token) {
+      this.authService.storeJwt(res.token);
+      this.router.navigate(['/app']);           <-- After it logins successfuly using google oauth it redirects to this url
+    }
+  });
+  }
+
+  login() {
+    this.authService.loginWithGoogle();
   }
 }
 ```
-
-2.4 Login Button (Angular Component)
 ```
-<button (click)="login()">Login with Google</button>
-
-login() {
-  this.authService.loginWithGoogle();
-}
+<div class="login-container">
+  <h2>Login</h2>
+  <button (click)="login()">Sign in with Google</button>
+</div>
 ```
+- And aslo created auth.guard.ts which navigates to login page if user is not logged in -> Applied this guard to all routes in app-routing.module.ts
 
-2.5 Call Backend After Login
-In AppComponent or AuthCallbackComponent:
-```
-ngOnInit() {
-  if (this.oauthService.hasValidIdToken()) {
-    this.authService.exchangeTokenWithBackend();
-  }
-}
-```
 
-3️⃣ .NET Web API – Google Token Validation
+STEP 4. .NET Web API – Google Token Validation
 -----------------------------------------------------------
-3.1 Why Google.Apis.Auth
- It is different from `Microsoft.AspNetCore.Authentication.Google`
+4.1 Install Google.Apis.Auth
+- In Cmd `dotnet add package Google.Apis.Auth` -> Validate Google ID token in APIs
+- It is different from `Microsoft.AspNetCore.Authentication.Google` it is used for MVC / Razor login
 
-Package	Used for
-- `Microsoft.AspNetCore.Authentication.Google`	MVC / Razor login
-- `Google.Apis.Auth`	✅ Validate Google ID token in APIs
-👉 We use Google.Apis.Auth because Angular logs in, not .NET
-
-3.2 Install package (.NET)
-dotnet add package Google.Apis.Auth
-
-3.3 Auth Controller
-AuthController.cs
-```
-[ApiController]
-[Route("api/auth")]
-public class AuthController : ControllerBase
-{
-    private readonly AppDbContext _context;
-    private readonly IJwtService _jwtService;
-
-    public AuthController(AppDbContext context, IJwtService jwtService)
-    {
-        _context = context;
-        _jwtService = jwtService;
-    }
-
-    [HttpPost("google")]
-    public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto dto)
-    {
-        var payload = await GoogleJsonWebSignature.ValidateAsync(dto.IdToken);
-
-        var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Email == payload.Email);
-
-        if (user == null)
-        {
-            user = new User
-            {
-                Email = payload.Email,
-                Name = payload.Name,
-                GoogleId = payload.Subject,
-                ProfilePicture = payload.Picture
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-        }
-
-        var jwt = _jwtService.GenerateToken(user);
-
-        return Ok(new { jwt });
-    }
-}
-```
-
-3.4 DTO
+4.2 Auth Controller
+DTO
 ```
 public class GoogleLoginDto
 {
     public string IdToken { get; set; }
 }
 ```
-
-4️⃣ Data Model Changes (Very Important)
---------------------------------------------
-✅ Updated User Entity
-```
-public class User
-{
-    public int Id { get; set; }
-
-    [Required]
-    public string GoogleId { get; set; }
-
-    [Required, EmailAddress]
-    public string Email { get; set; }
-
-    [Required]
-    public string Name { get; set; }
-
-    public string ProfilePicture { get; set; }
-
-    public ICollection<Employer> Employers { get; set; }
-}
+AuthController.cs
 ```
 
-🔑 Why this change?
-- Password ❌ (Google handles auth)
-- GoogleId used as external identity
-- Email is unique
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+        private readonly ITrackerDbContext _db;
+        private readonly JwtTokenService _jwtService;
+                       
+        public AuthController(ITrackerDbContext db, JwtTokenService jwtService)
+        {
+            _db = db;
+            _jwtService = jwtService;
+        }
 
-5️⃣ Issue Your OWN JWT (Core Rule)
+        [HttpPost("google")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)  <-- Receive IdToken from Angular app  POST -> /api/auth/google 
+        {
+            // 1️) Validate Google ID Token
+            var payload = await ValidateGoogleToken(request.IdToken);
+            if (payload == null)
+                return Unauthorized("Invalid Google token");
+
+            // 2️) Find or create user
+            var user = _db.Users.SingleOrDefault(u => u.email == payload.Email);
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    email = payload.Email,
+                    name = payload.Name,
+                    googleId = payload.Subject
+                };
+
+                _db.Users.Add(user);
+                await _db.SaveChangesAsync();
+            }
+
+            // 3️) Issue YOUR JWT
+            var jwt = _jwtService.GenerateToken(user);
+
+            return Ok(new
+            {
+                token = jwt
+            });
+        }
+
+
+        private async Task<GoogleJsonWebSignature.Payload?> ValidateGoogleToken(string idToken)   <-- Validating googleId method
+        {
+            try
+            {
+                return await GoogleJsonWebSignature.ValidateAsync(idToken);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+```
+
+STPE 5. NET Generating Own JWT token for protecting API's (after validating IdToken from OAuth)
+----------------------------------------------------------------------------------------------------
+In appSettings.json
+```
+  "Jwt": {
+    "Key": "THIS_IS_A_VERY_SECRET_KEY_12345_AndItShouldBeAtleast32Characters",
+    "Issuer": "InterviewTrackerApi",
+    "Audience": "ITAngularApp"
+  }
+```
+JwtTokenService.cs this is to issue our own jwt token after validating googleId token
+```
+ public class JwtTokenService
+ {
+     private readonly IConfiguration _config;
+
+     public JwtTokenService(IConfiguration config)
+     {
+         _config = config;
+     }
+
+     public string GenerateToken(User user)
+     {
+         var claims = new[]
+         {
+         new Claim(JwtRegisteredClaimNames.Sub, user.id.ToString()),
+         new Claim(JwtRegisteredClaimNames.Email, user.email),
+         new Claim("name", user.name)
+         };
+
+         var key = new SymmetricSecurityKey(
+             Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+         );
+
+         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+         var token = new JwtSecurityToken(
+             issuer: _config["Jwt:Issuer"],
+             audience: _config["Jwt:Audience"],
+             claims: claims,
+             expires: DateTime.UtcNow.AddHours(2),
+             signingCredentials: creds
+         );
+
+         return new JwtSecurityTokenHandler().WriteToken(token);
+     }
+ }
+```
+In Program.cs
+```
+// Add authentication: this generates jwt token for protecting api's after validating googleid token
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+// This is for Authorization (when you use [Authorize] in controller)
+builder.Services.AddAuthorization();
+
+and
+
+app.UseAuthentication();
+app.UseAuthorization();
+```
+
+Issue Your OWN JWT (Core Rule)
 -------------------------------------
 JWT contains:
 ```
@@ -485,7 +558,7 @@ JWT contains:
 - Signed by your API
 - Used for authorization
 
-6️⃣ Protect Employer APIs
+STEP.6 Protect All other APIs for ex: Add [Authorize] to controller POST method
 -------------------------------------
 ```
 [Authorize]
@@ -504,7 +577,7 @@ public async Task<IActionResult> AddEmployer(Employer employer)
 ```
 ✔ Ensures each user accesses only their data
 
-7️⃣ Angular JWT Interceptor
+STEP.7 Angular JWT Interceptor use this above generated own JWT toke for all subsequemt requests
 -------------------------------------
 ```
 @Injectable()
@@ -523,13 +596,6 @@ export class JwtInterceptor implements HttpInterceptor {
 }
 ```
 
-8️⃣ Why This Flow Is Industry Standard
------------------------------------
-- ✅ SPA controls login
-- ✅ Backend controls authorization
-- ✅ Google = Identity Provider
-- ✅ JWT = API Security
-- ✅ No vendor lock-in
 
 🏁 Final Summary
 --------------------------------------
@@ -540,7 +606,6 @@ export class JwtInterceptor implements HttpInterceptor {
 | .NET API | User creation + JWT      |
 | JWT      | Authorization            |
 | DB       | User → Employers mapping |
-
 
 
 <br>
