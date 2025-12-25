@@ -1,6 +1,6 @@
 🎯 Project Use Case:
 --------------------------------------------
-- A user logs in using Google OAuth 2.0
+- A user logs in using Google OAuth 2.0 and also using own jwt token for secure API
 - After login:
 	- User profile is stored in our database
 	- That user can create / view / update employers
@@ -112,7 +112,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 
 
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Why we are using `Google.Apis.Auth` instead of `Microsoft.AspNetCore.Authentication.Google` package Difference**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 | Package                                          | Purpose                                                    | Used In                            |
@@ -131,7 +131,7 @@ What it does exactly:
 - ✔ Verifies token is not expired
 - ✔ Verifies token audience (client_id)
 - ✔ Extracts user identity claims
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <br>
 <br>
@@ -172,7 +172,7 @@ Created new Angular app under same dotnet project:
 <br>
 <br>
 
-IMPLEMENNTING AUTHENTICATION Google OAuth for Identity and Own Jwt for Protecting API's:
+IMPLEMENTING AUTHENTICATION Google OAuth for Identity and Own Jwt for Protecting API's:
 --------------------------------------------------------------
 ✅ Final Architecture (Industry Standard)
 ```
@@ -596,7 +596,6 @@ export class JwtInterceptor implements HttpInterceptor {
 }
 ```
 
-
 🏁 Final Summary
 --------------------------------------
 | Layer    | Responsibility           |
@@ -607,7 +606,19 @@ export class JwtInterceptor implements HttpInterceptor {
 | JWT      | Authorization            |
 | DB       | User → Employers mapping |
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <br>
 <br>
+<br>
+<br>
+
+
+
+Next Steps followed in angular
+---------------------------------------------
+- Installed Angular Material for better styling and features
+	- `ng add @angular/material` and selected Azure and Blue theme while installing
+ - 
+
 
