@@ -9,25 +9,25 @@ namespace InterviewTracker.Models
 
         [Required]
         [MaxLength(100)]
+        public string name { get; set; }
+
+        [Required]
+        [MaxLength(100)]
         public string googleId { get; set; }     // "sub" claim from Google
 
         [MaxLength(300)]
         public string? profilePictureUrl { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string name { get; set; }
-
-        [Required]
         [EmailAddress]                              //validates email format
         public string email { get; set; }           // to enforce unique constraint should be done in flunet api
 
         [Range(18, 120)]                            //Range Works with numeric types (int, decimal, double)
-        public int age { get; set; }
+        public int? age { get; set; }
 
         [MaxLength(15)]                             //MaxLength is only for strings and arrays, not numbers.
         [Phone]                                     //validates phone format
-        public string phoneNumber { get; set; }
+        public string? phoneNumber { get; set; }    //? made it nullable
 
         [MaxLength(500)]
         public string? skills {  get; set; }        // comma-separated or separate table if needed
@@ -35,7 +35,7 @@ namespace InterviewTracker.Models
         [MaxLength(120)]
         public string? currentCompany { get; set; }
 
-        public byte[] resume {  get; set; }             //You can store file path or byte[]
+        public byte[]? resume {  get; set; }             //You can store file path or byte[] //? made it nullable
 
 
 

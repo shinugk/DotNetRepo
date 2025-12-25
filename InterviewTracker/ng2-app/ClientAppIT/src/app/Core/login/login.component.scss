@@ -1,0 +1,62 @@
+/* Full page center */
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+/* Card */
+.login-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    h2 {
+        margin-bottom: 8px;
+    }
+
+    p {
+        color: #666;
+        margin-bottom: 24px;
+    }
+}
+
+/* Google button */
+.google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 500;
+
+    background: #ffffff;
+    color: #444;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        background: #f7f7f7;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

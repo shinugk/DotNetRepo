@@ -61,10 +61,10 @@ namespace InterviewTracker.Models
 
 
         //DEFINE COLUMN NAMES HERE --> THIS TAKES PRIORITY
-        DbSet<Names> Names { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<Employer> Employers { get; set; }
-        DbSet<HRDetail> HrDetails { get; set; }
+        public DbSet<Names> Names { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Employer> Employers { get; set; }
+        public DbSet<HRDetail> HrDetails { get; set; }
     }
 }
 
