@@ -1,8 +1,12 @@
-using InterviewTracker.Database;
+﻿using InterviewTracker.Database;
+using InterviewTracker.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +29,29 @@ bool isDev = true;
 //});
 //builder.Services.AddAuthorization();
 
+
+// Add authentication: this generates jwt token for protecting api's after validating googleid token
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+// This is for Authorization (when you use [Authorize] in controller)
+builder.Services.AddAuthorization();
+
+
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -42,6 +69,23 @@ builder.Services.AddSession(options =>
 
 //db middleware to configure database
 builder.Services.ConfigureDatabase(builder.Configuration, isDev);
+
+// Add CORS services (Need to come back to this)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200") // Must match your frontend URL exactly
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+//Add all services here that need in DI in any class
+builder.Services.AddScoped<JwtTokenService>();   // ✅ REQUIRED
+
+
 
 
 //-------------------------------------------------------------------------------
@@ -61,7 +105,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 //TODO: Do we need this? Will other platform services be considered different origins if they make calls from their UI directly to our service?
-app.UseCors("AllowOrigin");
+//app.UseCors("AllowOrigin");
+
+// Use the CORS policy
+app.UseCors("AllowSpecificOrigin");
 
 // (use the options configured above in AddSession)
 app.UseSession();
