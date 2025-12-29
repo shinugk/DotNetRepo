@@ -100,7 +100,7 @@ Creating a new console app for AI integration
     - created a new console project under main solution
     - Go to the manage NuGet package in Project view and browse for OpenAI
     - Install the OpenAI package (if you want to use this package in other project, pls add the dependecy in .csproj file)
-    - OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started
+    - OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started (This shows how to register using dependecy injection and using in controller)
     - follow the steps mentioned in https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
     - run the console app (check GitHub token is added as said in use this model link in above url
 
@@ -616,8 +616,24 @@ export class JwtInterceptor implements HttpInterceptor {
 
 Next Steps followed in angular
 ---------------------------------------------
+Setup Angular Material
 - Installed Angular Material for better styling and features
 	- `ng add @angular/material` and selected Azure and Blue theme while installing
- - 
+ - Import Required Material Modules
+    - Create a separate Material Module(material.module.ts): `ng generate module material` -> best practice to have all required material modules in one place
+- Import MaterialModule in AppModule(app.module.ts)
+- Add Google material symbol Icons (Font Icons) : https://fonts.google.com/icons?icon.size=24&icon.color=%23e3e3e3&icon.set=Material+Symbols&icon.style=Rounded
+  	- Open src/index.html and add inside <head>:
+	```
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+	```
+ 	- To use icon: now you can use these icons with class "material-symbols-rounded"
+    ```
+        <span class="material-symbols-rounded">home</span>
+	```
+- 
 
 
