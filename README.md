@@ -113,10 +113,6 @@ Creating a new console app for AI integration
 <br>
 
 
-
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Why we are using `Google.Apis.Auth` instead of `Microsoft.AspNetCore.Authentication.Google` package Difference**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 | Package                                          | Purpose                                                    | Used In                            |
