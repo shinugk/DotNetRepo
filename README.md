@@ -80,30 +80,29 @@ If you omit the version, dotnet will automatically pull the latest compatible re
     * `dotnet ef migrations add InitialCreate`
 	* `dotnet ef database update`
 
+14) Created User(changed as per OAuth requirements), Employer and HrDetail Models and configured validation using both data annotation and fluent api.
+15) Create migration (update the database with these tables)
+	- `dotnet ef migrations add CreateUserEmployerHrDetail`
+	- `dotnet ef database update`
+
+
+
+
 If you delete anything by mistake in sql client: Recovery option
 ----------------------------------------------------------------------
 - First delete all rows in _efmigrationhistory table
 - then run `dotnet ef database update`
 - then refresh heidisql client you will get all tables back
 
+Creating a new console app for AI integration
 -----------------------------------------------------------------------------------------------------------------------
-13) Creating a new console app for AI integration
-    https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
-    * steps:
-    	* created a new console project under main solution
-        * Go to the manage NuGet package in Project view and browse for OpenAI
-        * Install the OpenAI package (if you want to use this package in other project, pls add the dependecy in .csproj file)
-        * OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started
-    	* follow the steps mentioned in https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
-    	* run the console app (check GitHub token is added as said in use this model link in above url
----------------------------------------------------------------------------------------------------------------------------------
-
-14) Created User(changed as per OAuth requirements), Employer and HrDetail Models and configured validation using both data annotation and fluent api.
-15) Create migration (update the database with these tables)
-	- dotnet ef migrations add CreateUserEmployerHrDetail
-	- dotnet ef database update
-
-
+- steps: (https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items)
+    - created a new console project under main solution
+    - Go to the manage NuGet package in Project view and browse for OpenAI
+    - Install the OpenAI package (if you want to use this package in other project, pls add the dependecy in .csproj file)
+    - OpenAPI Readme on how to use these in .NET: https://github.com/openai/openai-dotnet/blob/main/README.md#getting-started
+    - follow the steps mentioned in https://github.com/marketplace/models/azure-openai/gpt-4-1/playground/code?prompt=List+out+grossary+items
+    - run the console app (check GitHub token is added as said in use this model link in above url
 
 
 <br>
