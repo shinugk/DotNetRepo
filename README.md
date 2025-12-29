@@ -131,7 +131,6 @@ What it does exactly:
 - ✔ Verifies token is not expired
 - ✔ Verifies token audience (client_id)
 - ✔ Extracts user identity claims
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <br>
 <br>
