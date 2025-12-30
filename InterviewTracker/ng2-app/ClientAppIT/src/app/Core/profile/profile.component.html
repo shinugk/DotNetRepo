@@ -1,0 +1,82 @@
+<div *ngIf="isLoading" class="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading && userProfile" class="profile-wrapper">
+  <!-- Header -->
+  <mat-card class="profile-header">
+    <img
+      mat-card-avatar
+      [src]="userProfile.profilePictureUrl"
+      alt="Profile Picture"
+      class="profile-avatar"
+    />
+
+    <div class="profile-title">
+      <h2>{{ userProfile.name }}</h2>
+      <p>{{ userProfile.email }}</p>
+    </div>
+
+    <span class="spacer"></span>
+
+    <button mat-raised-button color="primary">
+      <mat-icon>edit</mat-icon>
+      Edit Profile
+    </button>
+  </mat-card>
+
+  <!-- Details -->
+  <mat-card class="profile-details">
+    <mat-list>
+      <mat-list-item>
+        <div matLine>ID:</div>
+        <div matLine class="value">{{ userProfile.id }}</div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Name:</div>
+        <div matLine class="value">{{ userProfile.name }}</div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Email-Id:</div>
+        <div matLine class="value">{{ userProfile.email }}</div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Google-Id:</div>
+        <div matLine class="value">
+          {{ displayValue(userProfile.googleId) }}
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Age:</div>
+        <div matLine class="value">
+          {{ displayValue(userProfile.age) }}
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Phone:</div>
+        <div matLine class="value">
+          {{ displayValue(userProfile.phoneNumber) }}
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Company:</div>
+        <div matLine class="value">
+          {{ displayValue(userProfile.currentCompany) }}
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>Skills:</div>
+        <div matLine class="value">
+          {{ displayValue(userProfile.skills) }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

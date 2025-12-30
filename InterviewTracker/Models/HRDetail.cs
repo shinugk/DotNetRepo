@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace InterviewTracker.Models
 {
@@ -12,16 +13,17 @@ namespace InterviewTracker.Models
         public string name { get; set; }
 
         [Phone]
-        public string phoneNumber { get; set; }
+        public string? phoneNumber { get; set; }
 
         [EmailAddress]
-        public string emailId { get; set; }
+        public string? emailId { get; set; }
 
         // 🔗 Foreign Key
         [ForeignKey("employer")]                 //not needed EF automatically detect by checking navigation property
         public int employerId { get; set; }
 
         //Navigation Property (parent reference)
+        [JsonIgnore]                                    //for preventing back reference causing Infinity loop
         public Employer employer { get; set; } 
     }
 }

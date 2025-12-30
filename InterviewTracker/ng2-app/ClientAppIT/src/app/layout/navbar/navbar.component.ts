@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/Auth/auth.service';
+import { UserService } from '../../Services/user.service';
+import { UserProfile } from 'src/app/Interfaces/profile.model';
+
+@Component({
+  selector: 'app-navbar',
+  // imports: [],
+  standalone: false,
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss',
+})
+export class NavbarComponent implements OnInit{
+  profileImageUrl: string = '';
+
+  constructor(private authService: AuthService, private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.userService.getMyProfile().subscribe(res => {
+      this.profileImageUrl = res?.profilePictureUrl;
+     })
+  }
+
+  logout() {
+    this.authService.logout(); 
+    //this.router.navigate(['/login']);
+  }
+}
