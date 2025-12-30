@@ -619,7 +619,8 @@ Next Steps followed in angular
 Setup Angular Material
 - Installed Angular Material for better styling and features
 	- `ng add @angular/material` and selected Azure and Blue theme while installing
- - Import Required Material Modules
+- edit styles.css for customizing css features for whole app
+- Import Required Material Modules
     - Create a separate Material Module(material.module.ts): `ng generate module material` -> best practice to have all required material modules in one place
 - Import MaterialModule in AppModule(app.module.ts)
 - Add Google material symbol Icons (Font Icons) : https://fonts.google.com/icons?icon.size=24&icon.color=%23e3e3e3&icon.set=Material+Symbols&icon.style=Rounded
@@ -634,6 +635,7 @@ Setup Angular Material
     ```
         <span class="material-symbols-rounded">home</span>
 	```
+- for angular material global style add `"@angular/material/prebuilt-themes/indigo-pink.css"` in angular.json file under -> styles 
 - 
 
 
