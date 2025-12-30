@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <span class="logo">InterviewTracker</span>
+
+  <span class="spacer"></span>
+
+  <!-- Profile image button -->
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="avatar-button">
+    <img
+      *ngIf="profileImageUrl; else defaultIcon"
+      [src]="profileImageUrl"
+      alt="Profile"
+      class="avatar"
+    />
+
+    <ng-template #defaultIcon>
+      <mat-icon>account_circle</mat-icon>
+    </ng-template>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      Profile
+    </button>
+
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>

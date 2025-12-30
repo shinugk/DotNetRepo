@@ -8,12 +8,19 @@
 
 html {
   @include mat.theme((
+    color-scheme: light,
     color: (
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
       theme-type: light,
     ),
-    typography: Roboto,
+    typography: (
+          plain-family: Roboto,    //default application font
+          brand-family: Open Sans,
+          bold-weight: 900,
+          medium-weight: 500,
+          regular-weight: 300,
+        ),
     density: 0,
   ));
 }
@@ -37,4 +44,5 @@ body {
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

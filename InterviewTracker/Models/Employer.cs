@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using InterviewTracker.Utils.Validation;
+using System.Text.Json.Serialization;
+
 
 namespace InterviewTracker.Models
 {
@@ -22,14 +24,14 @@ namespace InterviewTracker.Models
         public string? websiteLink { get; set; }  //That ? is part of C# Nullable Reference Types (introduced in C# 8.0).
 
         //LongBlob for file storage
-        public byte[] offerLetter { get; set; }    // file path or byte[] (file path to fetch from cloud or byte[] to store in own db)
+        public byte[]? offerLetter { get; set; }    // file path or byte[] (file path to fetch from cloud or byte[] to store in own db)
        
         public decimal? ctcOffered { get; set; }
 
         [ValueOneOf(AllowedValues = $"{InterviewStatus.Selected},{InterviewStatus.NotSelected},{InterviewStatus.InProgress}")]
-        public string interviewStatus { get; set; }
+        public string? interviewStatus { get; set; }
 
-        public string location { get; set; }
+        public string? location { get; set; }
 
 
         // 🔗 Foreign Key to User
@@ -37,8 +39,8 @@ namespace InterviewTracker.Models
         public int userId { get; set; }
 
         // Navigation property (parent reference)
+        [JsonIgnore]                                       //JsonIgnore for preventing back reference & circular reference (User → Employers → User → Employers → User...) Preventing Infinity loop. //otherwise use DTO's which handles serialization. not a db change. not required to add migration
         public User user { get; set; }   
-
 
         // 🔗 Navigation: One Employer → One HR
         public HRDetail hrDetail { get; set; }

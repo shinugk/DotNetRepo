@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/Core/AuthComponent/auth.service';
+import { AuthService } from 'src/app/Auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -26,11 +26,6 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.getdbhealth();
     this.getmyprofile();
-  }
-
-  logout() {
-    this.authService.logout(); 
-    //this.router.navigate(['/login']);
   }
 
   getdbhealth()

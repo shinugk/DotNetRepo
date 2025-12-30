@@ -1,0 +1,45 @@
+.profile-wrapper {
+    max-width: 900px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+}
+
+.profile-title {
+    margin-left: 20px;
+
+    h2 {
+        margin: 0;
+        font-weight: 500;
+    }
+
+    p {
+        margin: 4px 0 0;
+        color: gray;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.profile-details {
+    padding: 10px 0;
+}
+
+.value {
+    font-weight: 500;
+}

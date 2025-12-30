@@ -1,0 +1,23 @@
+.logo {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.avatar-button {
+    padding: 0;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+// mat-icon {
+//     font-size: 32px;
+// }
