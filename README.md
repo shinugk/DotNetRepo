@@ -614,7 +614,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
 
-Next Steps followed in angular
+Next Steps followed (angular):
 ---------------------------------------------
 Setup Angular Material
 - Installed Angular Material for better styling and features
@@ -636,6 +636,12 @@ Setup Angular Material
         <span class="material-symbols-rounded">home</span>
 	```
 - for angular material global style add `"@angular/material/prebuilt-themes/indigo-pink.css"` in angular.json file under -> styles 
-- 
+
+To use Ng Grid for displaying employers list:
+-----------------------------------------------------
+- Install Ag grid for angular - `npm install --save ag-grid-community ag-grid-angular`
+- Import Ag Grid module in app.module.ts - import { AgGridModule } from 'ag-grid-angular';
+
+  
 
 
