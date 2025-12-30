@@ -12,12 +12,14 @@ import { UserProfile } from 'src/app/Interfaces/profile.model';
 })
 export class NavbarComponent implements OnInit{
   profileImageUrl: string = '';
-
+  name: string = '';
+  
   constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.getMyProfile().subscribe(res => {
       this.profileImageUrl = res?.profilePictureUrl;
+      this.name = res?.name;
      })
   }
 
