@@ -74,7 +74,7 @@ builder.Services.AddCors(cors =>
     cors.AddPolicy("AllowOrigin", opts =>
     {
         //TODO: we probably don't want this because anyone can hit the api:
-        opts.AllowAnyOrigin().AllowAnyMethod().WithHeaders("Accept", "Accept-Language", "Content-Language", "Content-Type");     
+        opts.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();     
     });
 });
 
