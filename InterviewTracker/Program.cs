@@ -3,6 +3,7 @@ using InterviewTracker.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
@@ -57,15 +58,17 @@ builder.Services.AddSession(options =>
 builder.Services.ConfigureDatabase(builder.Configuration, isDev);
 
 // Add CORS services (Need to come back to this)
+var allowedOrigins = builder.Configuration.GetSection("Frontend:Urls").Get<string[]>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:4200") // Must match your frontend URL exactly
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(allowedOrigins!)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 
 //Add all services here that need in DI in any class
@@ -86,15 +89,23 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 }
 
+//This is because we hosted ng app on render & that needs this header
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor |
+        ForwardedHeaders.XForwardedProto
+});
+
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 app.UseRouting();
 
 //TODO: Do we need this? Will other platform services be considered different origins if they make calls from their UI directly to our service?
 //app.UseCors("AllowOrigin");
 
 // Use the CORS policy
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("FrontendPolicy");
 
 // (use the options configured above in AddSession)
 app.UseSession();
@@ -107,7 +118,7 @@ app.MapControllers()/*.AllowAnonymous()*/;
 
 //app.MapGet("/", () => "Hello World!");
 
-app.MapFallbackToFile("index.html");
+//app.MapFallbackToFile("index.html");
 
 //https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio-code
 app.UseSwagger();
