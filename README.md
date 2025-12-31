@@ -649,9 +649,18 @@ To use Ng Grid for displaying employers list:
   Hosting mysql, .net app and angular:
   -------------------------------------------
   1) for mysql: created new mysql service in https://console.aiven.io/account/a58455ebf06f/project/interviewtracker555/services/mysqldb-it/overview and get connection string for .net app
-  2) Then in .Net app update these above connection string in appsetting.json and also create output folder using command
-      `dotnet build -c Release --output ./dist` which creates dll files for all projects and to run our specific app we need to run `dotnet InterviewTracker.dll`
-  3) Then go to https://app.netlify.com/ : to host .net app using github repository -> select /dist folder as output directory
+  2) Then in .Net app update these above connection string in appsetting.json
+  ```
+  "DB": {
+    "NAME": "IT-database",
+    "ITracker_InMemory_DB": false,
+    "ITracker_Connection_String": "Server=mysqldb-it-interviewtracker555.l.aivencloud.com;Port=28173;Database=defaultdb;User=avnadmin;Password=Something;SslMode=Required;",
+    "VERBOSE_LOGGING": true
+  }
+  ```
+  `dotnet build -c Release --output ./dist` which creates dll files for all projects and to run our specific app we need to run `dotnet InterviewTracker.dll`
+  3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
+  	.net app live link : https://dotnetrepo.onrender.com/swagger/index.html
   4) 
 
 
