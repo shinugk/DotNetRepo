@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environment';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit{
   getdbhealth()
   {
     this.loading = true;
-    return this.http.get<any>('https://localhost:7257/api/DbHealthCheck').subscribe({
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/DbHealthCheck`).subscribe({
       next: (res) => {
         this.healthResponse = res;
         this.loading = false;
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit{
     
   getmyprofile()
     {
-      return this.http.get<any>('https://localhost:7257/api/user/me').subscribe({
+      return this.http.get<any>(`${environment.apiBaseUrl}/api/user/me`).subscribe({
         next: (res) => {
           this.userResponse = res;
         },

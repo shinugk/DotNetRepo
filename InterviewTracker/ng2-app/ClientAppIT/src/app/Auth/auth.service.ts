@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from './auth.config';
 import { from, of, switchMap } from 'rxjs';
+import { environment } from 'src/environment';
 
 @Injectable({ providedIn: 'root' })
   
@@ -31,7 +32,7 @@ export class AuthService {
       }
 
       return this.http.post<any>(
-        'https://localhost:7257/api/auth/google',
+        `${environment.apiBaseUrl}/api/auth/google`,
         { idToken }
       );
     })

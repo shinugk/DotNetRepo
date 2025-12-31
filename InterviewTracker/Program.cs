@@ -107,29 +107,6 @@ app.MapControllers()/*.AllowAnonymous()*/;
 
 //app.MapGet("/", () => "Hello World!");
 
-//app.MapGet("/login", async context =>
-//{
-//    await context.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
-//    {
-//        RedirectUri = "/profile"
-//    });
-//});
-
-//app.MapGet("/profile", async context =>
-//{
-//    var user = context.User;
-//    if (user.Identity?.IsAuthenticated ?? false)
-//    {
-//        var email = user.FindFirst(ClaimTypes.Email)?.Value;
-//        var name = user.FindFirst(ClaimTypes.Name)?.Value;
-//        await context.Response.WriteAsync($"Logged in as {name} ({email})");
-//    }
-//    else
-//    {
-//        context.Response.Redirect("/login");
-//    }
-//});
-
 app.MapFallbackToFile("index.html");
 
 //https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio-code
