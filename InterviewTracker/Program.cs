@@ -11,23 +11,9 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 bool isDev = true;
+
 ////Below Middleware used for Http logging
 //builder.Services.AddHttpLogger(builder.Configuration);
-
-//// Add authentication
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-//})
-//.AddCookie()
-//.AddGoogle(options =>
-//{
-//    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-//    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-//    options.CallbackPath = "/api/v1/signin-google"; // Must match Google Cloud Console
-//});
-//builder.Services.AddAuthorization();
 
 
 // Add authentication: this generates jwt token for protecting api's after validating googleid token
