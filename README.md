@@ -667,6 +667,9 @@ Hosting mysql, .net app and angular:
    - Then create static site nd fill proper configuration values in settings ang give root folder and publish folder path
    - also add Client routing in Google cloud console for hosted ng app https://it-clientapp.onrender.com/
    - Then your live ng app is available at https://it-clientapp.onrender.com/
+  
+   - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth
+   - 
 
 
 
