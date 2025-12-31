@@ -661,7 +661,10 @@ Hosting mysql, .net app and angular:
   ```
 3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
   	.net app live link : https://dotnetrepo.onrender.com/swagger/index.html
-  4) 
+4) Then go to Render -> click on create static site for hosting angular app
+   - Before this create `environment.prod.ts` file and save apibaseurl inside that
+   - also run `ng build --configuration production` which creates correct output folder at DotNetRepo\InterviewTracker\ng2-app\ClientAppIT\dist\client-app-it
+ 
 
 
 
