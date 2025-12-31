@@ -85,7 +85,7 @@ If you omit the version, dotnet will automatically pull the latest compatible re
 	- `dotnet ef migrations add CreateUserEmployerHrDetail`
 	- `dotnet ef database update`
 
-
+Note: `dotnet build -c Release --output ./dist` which creates dll files for all projects and to run our specific app we need to run `dotnet InterviewTracker.dll`
 
 
 If you delete anything by mistake in sql client: Recovery option
@@ -93,6 +93,7 @@ If you delete anything by mistake in sql client: Recovery option
 - First delete all rows in _efmigrationhistory table
 - then run `dotnet ef database update`
 - then refresh heidisql client you will get all tables back
+
 
 Creating a new console app for AI integration
 -----------------------------------------------------------------------------------------------------------------------
@@ -646,10 +647,10 @@ To use Ng Grid for displaying employers list:
 
 
 
-  Hosting mysql, .net app and angular:
-  -------------------------------------------
-  1) for mysql: created new mysql service in https://console.aiven.io/account/a58455ebf06f/project/interviewtracker555/services/mysqldb-it/overview and get connection string for .net app
-  2) Then in .Net app update these above connection string in appsetting.json
+Hosting mysql, .net app and angular:
+---------------------------------------------
+1) for mysql: created new mysql service in https://console.aiven.io/account/a58455ebf06f/project/interviewtracker555/services/mysqldb-it/overview and get connection string for .net app
+2) Then in .Net app update these above connection string in appsetting.json
   ```
   "DB": {
     "NAME": "IT-database",
@@ -658,8 +659,7 @@ To use Ng Grid for displaying employers list:
     "VERBOSE_LOGGING": true
   }
   ```
-  `dotnet build -c Release --output ./dist` which creates dll files for all projects and to run our specific app we need to run `dotnet InterviewTracker.dll`
-  3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
+3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
   	.net app live link : https://dotnetrepo.onrender.com/swagger/index.html
   4) 
 
