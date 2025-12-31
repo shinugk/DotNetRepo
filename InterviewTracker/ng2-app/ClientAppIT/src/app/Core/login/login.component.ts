@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Auth/auth.service';
 
@@ -10,25 +10,17 @@ import { AuthService } from 'src/app/Auth/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+  
+export class LoginComponent implements OnInit {
 
-   constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.handleLoginCallback().subscribe(res => {
-    if (res?.token) {
-      this.authService.storeJwt(res.token);
-      this.router.navigate(['/home']);       //<-- Redirect to home oage after log in using OAuth
-    }
-    });
-    
+    this.authService.initGoogleLogin();
   }
 
   login() {
-    this.authService.loginWithGoogle();
+    this.authService.login();
   }
 
 }
