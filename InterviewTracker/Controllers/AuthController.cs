@@ -30,7 +30,17 @@ namespace InterviewTracker.Controllers
                 return Unauthorized("Invalid Google token");
 
             // 2️) Find or create user
-            var user = _db.Users.SingleOrDefault(u => u.email == payload.Email);
+            User user;
+            try
+            {
+                user = _db.Users.SingleOrDefault(u => u.email == payload.Email);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DB error:");
+                Console.WriteLine(ex);
+                return StatusCode(500, "Database error");
+            }
 
             if (user == null)
             {
