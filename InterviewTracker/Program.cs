@@ -38,7 +38,6 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddAuthorization();
 
 
-
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,20 +53,28 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-//db middleware to configure database
+//DB middleware to configure database
 builder.Services.ConfigureDatabase(builder.Configuration, isDev);
 
 // Add CORS services (Need to come back to this)
-var allowedOrigins = builder.Configuration.GetSection("Frontend:Urls").Get<string[]>();
+//var allowedOrigins = builder.Configuration.GetSection("Frontend:Urls").Get<string[]>();
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("FrontendPolicy", policy =>
+//    {
+//        policy
+//            .WithOrigins(allowedOrigins!)
+//            .AllowAnyHeader()
+//            .AllowAnyMethod();
+//    });
+//});
 
-builder.Services.AddCors(options =>
+builder.Services.AddCors(cors =>
 {
-    options.AddPolicy("FrontendPolicy", policy =>
+    cors.AddPolicy("AllowOrigin", opts =>
     {
-        policy
-            .WithOrigins(allowedOrigins!)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        //TODO: we probably don't want this because anyone can hit the api:
+        opts.AllowAnyOrigin().AllowAnyMethod().WithHeaders("Accept", "Accept-Language", "Content-Language", "Content-Type");     
     });
 });
 
@@ -98,14 +105,11 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseHttpsRedirection();
-//app.UseStaticFiles();
+
 app.UseRouting();
 
-//TODO: Do we need this? Will other platform services be considered different origins if they make calls from their UI directly to our service?
-//app.UseCors("AllowOrigin");
-
 // Use the CORS policy
-app.UseCors("FrontendPolicy");
+app.UseCors("AllowOrigin");
 
 // (use the options configured above in AddSession)
 app.UseSession();
@@ -118,7 +122,6 @@ app.MapControllers()/*.AllowAnonymous()*/;
 
 //app.MapGet("/", () => "Hello World!");
 
-//app.MapFallbackToFile("index.html");
 
 //https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio-code
 app.UseSwagger();
