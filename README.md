@@ -637,11 +637,22 @@ Setup Angular Material
 	```
 - for angular material global style add `"@angular/material/prebuilt-themes/indigo-pink.css"` in angular.json file under -> styles 
 
+
 To use Ng Grid for displaying employers list:
 -----------------------------------------------------
 - Install Ag grid for angular - `npm install --save ag-grid-community ag-grid-angular`
 - Import Ag Grid module in app.module.ts - import { AgGridModule } from 'ag-grid-angular';
 
-  
+
+
+
+  Hosting mysql, .net app and angular:
+  -------------------------------------------
+  1) for mysql: created new mysql service in https://console.aiven.io/account/a58455ebf06f/project/interviewtracker555/services/mysqldb-it/overview and get connection string for .net app
+  2) Then in .Net app update these above connection string in appsetting.json and also create output folder using command
+      `dotnet build -c Release --output ./dist` which creates dll files for all projects and to run our specific app we need to run `dotnet InterviewTracker.dll`
+  3) Then go to https://app.netlify.com/ : to host .net app using github repository -> select /dist folder as output directory
+  4) 
+
 
 
