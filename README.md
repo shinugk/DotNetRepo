@@ -664,7 +664,9 @@ Hosting mysql, .net app and angular:
 4) Then go to Render -> click on create static site for hosting angular app
    - Before this create `environment.prod.ts` file and save apibaseurl inside that
    - also run `ng build --configuration production` which creates correct output folder at DotNetRepo\InterviewTracker\ng2-app\ClientAppIT\dist\client-app-it
- 
+   - Then create static site nd fill proper configuration values in settings ang give root folder and publish folder path
+   - also add Client routing in Google cloud console for hosted ng app https://it-clientapp.onrender.com/
+   - Then your live ng app is available at https://it-clientapp.onrender.com/
 
 
 
