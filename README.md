@@ -668,7 +668,7 @@ Hosting mysql, .net app and angular:
    - also add Client routing in Google cloud console for hosted ng app https://it-clientapp.onrender.com/
    - Then your live ng app is available at https://it-clientapp.onrender.com/
   
-   - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth
+   - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth (oauth flow does not support http)
    - 
 Connect to aiven mysql from your laptop with command:
 ```
