@@ -61,6 +61,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment';
+import { Router } from '@angular/router';
 
 declare global {
   interface Window {
@@ -74,7 +75,7 @@ export class AuthService {
 
   private googleLoaded = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router:Router) {}
 
   private loadGoogleScript(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -126,7 +127,7 @@ export class AuthService {
       { idToken }
     ).subscribe(res => {
       localStorage.setItem('jwt', res.token);
-      window.location.href = '/home';
+      this.router.navigate(['/home']);   // ✅ SPA navigation
     });
   }
 
