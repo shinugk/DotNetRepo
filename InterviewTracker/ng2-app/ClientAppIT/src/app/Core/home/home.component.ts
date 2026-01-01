@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.getdbhealth();
-    this.getmyprofile();
   }
 
   getdbhealth()
@@ -44,16 +43,4 @@ export class HomeComponent implements OnInit{
       }
     });;
   }
-    
-  getmyprofile()
-    {
-      return this.http.get<any>(`${environment.apiBaseUrl}/api/user/me`).subscribe({
-        next: (res) => {
-          this.userResponse = res;
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      })
-    }
 }
