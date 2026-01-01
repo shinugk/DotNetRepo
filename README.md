@@ -670,6 +670,16 @@ Hosting mysql, .net app and angular:
   
    - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth
    - 
-
+Connect to aiven mysql from your laptop with command:
+```
+mysql ^
+  -u avnadmin ^
+  --password="AVNS_wiUbZeBycH0w2nT7r6Q" ^
+  -h mysqldb-it-interviewtracker555.l.aivencloud.com ^
+  -P 28173 ^
+  --ssl ^
+  --ssl-ca="C:\Users\SKI75\Desktop\DOTNET\cert\ca.pem" ^
+  defaultdb
+```
 
 
