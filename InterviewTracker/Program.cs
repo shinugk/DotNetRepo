@@ -1,9 +1,11 @@
 ﻿using InterviewTracker.Database;
+using InterviewTracker.Operations;
 using InterviewTracker.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
@@ -78,8 +80,11 @@ builder.Services.AddCors(cors =>
     });
 });
 
+
+
 //Add all services here that need in DI in any class
 builder.Services.AddScoped<JwtTokenService>();   // ✅ REQUIRED
+builder.Services.AddScoped<MigrationOperations>();
 
 
 
@@ -126,5 +131,8 @@ app.MapControllers()/*.AllowAnonymous()*/;
 //https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio-code
 app.UseSwagger();
 app.UseSwaggerUI();
+
+//This is to run migrations after a app startup
+app.Migrate();
 
 app.Run();

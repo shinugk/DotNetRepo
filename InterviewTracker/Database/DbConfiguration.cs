@@ -1,6 +1,7 @@
 ﻿using InterviewTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using InterviewTracker.Operations;
 
 namespace InterviewTracker.Database
 {
@@ -42,6 +43,15 @@ namespace InterviewTracker.Database
                         opt.EnableDetailedErrors();
                     }
                 });
+            }
+        }
+
+        public static void Migrate(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<MigrationOperations>();
+                context.Migrate();
             }
         }
     }

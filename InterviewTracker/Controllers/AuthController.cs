@@ -1,9 +1,10 @@
-﻿using System;
-using Google.Apis.Auth;
+﻿using Google.Apis.Auth;
 using InterviewTracker.Models;
 using InterviewTracker.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 
 namespace InterviewTracker.Controllers
@@ -33,7 +34,7 @@ namespace InterviewTracker.Controllers
             User user;
             try
             {
-                user = _db.Users.SingleOrDefault(u => u.email == payload.Email);
+                user = await _db.Users.SingleOrDefaultAsync(u => u.email == payload.Email);
             }
             catch (Exception ex)
             {
