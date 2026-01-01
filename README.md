@@ -650,27 +650,7 @@ To use Ng Grid for displaying employers list:
 Hosting mysql, .net app and angular:
 ---------------------------------------------
 1) for mysql: created new mysql service in https://console.aiven.io/account/a58455ebf06f/project/interviewtracker555/services/mysqldb-it/overview and get connection string for .net app
-2) Then in .Net app update these above connection string in appsetting.json
-  ```
-  "DB": {
-    "NAME": "IT-database",
-    "ITracker_InMemory_DB": false,
-    "ITracker_Connection_String": "Server=mysqldb-it-interviewtracker555.l.aivencloud.com;Port=28173;Database=defaultdb;User=avnadmin;Password=Something;SslMode=Required;",
-    "VERBOSE_LOGGING": true
-  }
-  ```
-3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
-  	.net app live link : https://dotnetrepo.onrender.com/swagger/index.html
-4) Then go to Render -> click on create static site for hosting angular app
-   - Before this create `environment.prod.ts` file and save apibaseurl inside that
-   - also run `ng build --configuration production` which creates correct output folder at DotNetRepo\InterviewTracker\ng2-app\ClientAppIT\dist\client-app-it
-   - Then create static site nd fill proper configuration values in settings ang give root folder and publish folder path
-   - also add Client routing in Google cloud console for hosted ng app https://it-clientapp.onrender.com/
-   - Then your live ng app is available at https://it-clientapp.onrender.com/
-  
-   - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth (oauth flow does not support http)
-   - 
-Connect to aiven mysql from your laptop with command:
+ - Connect to aiven mysql from your laptop with command:
 ```
 mysql ^
   -u avnadmin ^
@@ -681,5 +661,28 @@ mysql ^
   --ssl-ca="C:\Users\SKI75\Desktop\DOTNET\cert\ca.pem" ^
   defaultdb
 ```
+2) Then in .Net app update these above connection string in appsetting.json
+  ```
+  "DB": {
+    "NAME": "IT-database",
+    "ITracker_InMemory_DB": false,
+    "ITracker_Connection_String": "Server=mysqldb-it-interviewtracker555.l.aivencloud.com;Port=28173;Database=defaultdb;User=avnadmin;Password=Something;SslMode=Required;",
+    "VERBOSE_LOGGING": true
+  }
+  ```
+
+3) Then update the Dockerfile, which we have to give while configuring in Render app https://dashboard.render.com/web/srv-d5ae4l9r0fns7389savg and for every commit it will autodeploy and you can see the logs
+  	.net app live link : https://dotnetrepo.onrender.com/swagger/index.html
+   
+5) Then go to Render -> click on create static site for hosting angular app
+   - Before this create `environment.prod.ts` file and save apibaseurl inside that
+   - also run `ng build --configuration production` which creates correct output folder at DotNetRepo\InterviewTracker\ng2-app\ClientAppIT\dist\client-app-it
+   - Then create static site and fill proper configuration values in settings ang give root folder and publish folder path
+   - also add Client routing in Google cloud console for hosted ng app https://it-clientapp.onrender.com/
+   - Then your live ng app is available at https://it-clientapp.onrender.com/
+  
+   - In local run `ng serve --ssl` for https://localhost:4200 which works for google Oauth (oauth flow does not support http)
+   - configure redirect/rewrite rules for angular service. which loads proper page for every route
+
 
 
