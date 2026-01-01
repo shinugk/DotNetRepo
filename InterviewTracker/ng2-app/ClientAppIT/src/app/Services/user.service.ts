@@ -17,6 +17,10 @@ export class UserService {
   }
 
   getEmployersByUser(userId: number): Observable<Employer[]> {
-    return this.http.get<Employer[]>(`$${environment.apiBaseUrl}/user/${userId}`);
+    return this.http.get<Employer[]>(`${environment.apiBaseUrl}/user/${userId}`);
+  }
+
+   updateUser(id: number, payload: any): Observable<UserProfile> {
+    return this.http.patch<UserProfile>(`${environment.apiBaseUrl}/api/user/${id}`, payload);
   }
 }

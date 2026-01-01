@@ -18,13 +18,18 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ProfileComponent } from './Core/profile/profile.component';
 import { UserService } from './Services/user.service';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
     ProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +39,7 @@ import { UserService } from './Services/user.service';
     JsonPipe,
     MaterialModule,            //keeping this module separate and then importing here
     AgGridModule,               //for building Ag Grid
+    ReactiveFormsModule
   ],
   providers: [
     {

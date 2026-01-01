@@ -1,0 +1,61 @@
+<div *ngIf="isLoading" class="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading" class="edit-card">
+  <mat-card-title>Edit Profile</mat-card-title>
+
+  <form [formGroup]="form">
+    <!-- Read-only fields -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Google ID</mat-label>
+      <input matInput formControlName="googleId" />
+    </mat-form-field>
+
+    <!-- Editable fields -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" formControlName="age" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber" />
+      <mat-error *ngIf="form.get('phoneNumber')?.invalid">
+        Enter valid 10-digit number
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Current Company</mat-label>
+      <input matInput formControlName="currentCompany" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Skills</mat-label>
+      <textarea matInput rows="3" formControlName="skills"></textarea>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-stroked-button color="warn" (click)="cancel()">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="save()"
+        [disabled]="form.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</mat-card>

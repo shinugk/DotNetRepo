@@ -27,7 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     MatFormFieldModule,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ]
 })
   
