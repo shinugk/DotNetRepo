@@ -19,7 +19,7 @@ namespace InterviewTracker.Controllers
             _db = db;
         }
 
-        [Authorize]                 //<-- without adding bearer jwt token in api call it throws 401 unauthorized
+        //[Authorize]                 //<-- without adding bearer jwt token in api call it throws 401 unauthorized
         [HttpGet(Name = "db")]
         public async Task<ActionResult> CheckDbHealth()
         {

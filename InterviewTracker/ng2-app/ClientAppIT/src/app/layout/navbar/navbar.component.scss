@@ -1,5 +1,17 @@
-.logo {
-    font-size: 18px;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-logo {
+    height: 75px;
+    width: 80px;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 20px;
     font-weight: 500;
 }
 
