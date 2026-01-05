@@ -6,23 +6,8 @@
 	- That user can create / view / update employers
 	- Each employer belongs only to the logged-in user
 	- No other user can access it
-```
-Client (Angular / UI)
-        |
-        |  Google Login
-        v
-Google OAuth Server
-        |
-        |  ID Token
-        v
-.NET Web API
-        |
-        |  Validate token
-        |  Create / Fetch User
-        |  Issue JWT
-        v
-Client (Authorized requests)
-```
+
+ 
 
 STEPS FOLLOWED:
 ----------------------------------------------------------------------
@@ -172,27 +157,71 @@ Created new Angular app under same dotnet project:
 <br>
 <br>
 
-IMPLEMENTING AUTHENTICATION Google OAuth for Identity and Own Jwt for Protecting API's:
---------------------------------------------------------------
+IMPLEMENTING AUTHENTICATION Google Identity Services for login popup and Own Jwt for Protecting API's:
+-------------------------------------------------------------------------------------
 ✅ Final Architecture (Industry Standard)
 ```
-Angular App
-   ↓
-Google OAuth Login (OIDC)
-   ↓
-Google returns ID Token
-   ↓
-Angular sends ID Token to .NET API
-   ↓
-.NET validates Google ID Token
-   ↓
-.NET creates / finds User in DB
-   ↓
-.NET issues its OWN JWT
-   ↓
-Angular stores JWT
-   ↓
-Angular calls protected APIs using JWT
+┌────────────┐
+│   Browser  │
+│ (Angular)  │
+└─────┬──────┘
+      │
+      │ 1️⃣ Load Google Identity SDK
+      │    https://accounts.google.com/gsi/client
+      ▼
+┌─────────────────────────────┐
+│ Google Identity Services     │
+│ (accounts.id)               │
+└─────────┬───────────────────┘
+          │
+          │ 2️⃣ User selects Google account
+          │    (One Tap / Popup)
+          ▼
+┌─────────────────────────────┐
+│  Google Authentication      │
+│  (Handled by Google)        │
+└─────────┬───────────────────┘
+          │
+          │ 3️⃣ ID Token (JWT)
+          │    response.credential
+          ▼
+┌────────────┐
+│   Angular  │
+│   App      │
+└─────┬──────┘
+      │
+      │ 4️⃣ POST idToken
+      │    /api/auth/google
+      ▼
+┌─────────────────────────────┐
+│ .NET Web API Backend         │
+│                              │
+│ 5️⃣ Verify Google ID Token   │
+│   - Signature               │
+│   - Audience (client_id)    │
+│   - Issuer                  │
+│   - Expiry                  │
+│                              │
+│ 6️⃣ Create / Find User       │
+│                              │
+│ 7️⃣ Generate App JWT         │
+└─────────┬───────────────────┘
+          │
+          │ 8️⃣ App JWT
+          ▼
+┌────────────┐
+│   Angular  │
+│   App      │
+└─────┬──────┘
+      │
+      │ 9️⃣ Store JWT
+      │    localStorage
+      ▼
+┌─────────────────────────────┐
+│ Protected Routes & APIs     │
+│ (Authorization: Bearer JWT) │
+└─────────────────────────────┘
+
 ```
 
 STEP 1. Configure Your Google Cloud Project 
@@ -206,41 +235,126 @@ STEP 1. Configure Your Google Cloud Project
 - Click Create and save your Client ID. 
 
 
-STEP 2. `angular-oauth2-oidc` for Angular integration with Google OAuth 2.0 / OpenID Connect.
--------------------------------------------------------------------------------------------------
-Before this learn what is OAuth2.0 and OIDC and also go through https://www.youtube.com/watch?v=cyO0_Jv88-A
-🚨 Important rule:
-- ❌ Never use Google token for authorization
-- ✅ Always use your own JWT for APIs
+✅ Google Identity Services (GIS) – ID Token flow
+---------------------------------------------------
+- No authorization code
+- No redirect to Google login page
+- No backend token exchange with Google
+- Google directly gives you an ID token (JWT) in the browser
+- This is NOT OAuth Authorization Code flow.
 
-Why angular-oauth2-oidc library? 
----------------------------------------------------------
-- Because it:
-	- Fully supports OAuth 2.0 + OpenID Connect
-- Handles:
-	- Google login
-	- Redirects
-	- Token parsing
-	- Silent refresh
-	- Is framework-agnostic and production-ready
-	- This is the same library used in enterprise Angular apps.
+🧠 Big picture
+```
+User → Google JS SDK → ID Token (JWT) → Backend → Your App JWT → Login
+```
 
-- 🔑 Google = Identity Provider
-- 🔐 Your API = Authorization Server
+Step-by-step (using YOUR code)
+-------------------------------------------------
+1️⃣ Load Google Identity Services script
+```
+script.src = 'https://accounts.google.com/gsi/client';
+📌 This loads Google Identity Services SDK, not OAuth endpoints.
+No redirect happens here.
+```
 
-- Google only proves WHO the user is.
-- Your API decides WHAT the user can do.
+2️⃣ Initialize Google Sign-In
+```
+window.google.accounts.id.initialize({
+  client_id: '...',
+  callback: (response) => {
+    this.sendIdTokenToBackend(response.credential);
+  }
+});
+```
+What happens here?
+- You register your Google Client ID
+- You tell Google: “When login succeeds, give me an ID token”
+- 📌 This is frontend-only authentication
 
-That’s why
-- ❌ Never authorize using Google token
-- ✅ Always issue your own JWT
-            
-Google OAuth Login (Frontend Responsibility)
------------------------------------------------
-What happens
-- User clicks “Login with Google”
-- Google authenticates user
-- Google returns ID Token (JWT)
+3️⃣ User clicks Login → prompt()
+```
+window.google.accounts.id.prompt();
+```
+What Google does:
+- Shows: One Tap popup OR Account chooser dialog
+- User selects Google account
+- No page reload
+- No redirect
+📌 This is NOT OAuth redirect flow
+
+4️⃣ Google returns ID Token directly to browser
+```
+callback: (response) => {
+  response.credential   // ← THIS IS THE ID TOKEN (JWT)
+}
+Example ID token (JWT):
+eyJhbGciOiJSUzI1NiIsImtpZCI6Ij...
+```
+📌 This token:
+- Is signed by Google
+- Proves user identity
+  - Contains claims: sub (Google user ID), email, name, picture
+
+5️⃣ Angular sends ID token to backend
+```
+POST /api/auth/google
+{
+  "idToken": "eyJhbGciOiJSUzI1NiIs..."
+}
+```
+📌 Important:
+- Angular does NOT talk to Google anymore
+- Backend now takes responsibility
+
+6️⃣ Backend validates ID token (CRITICAL STEP)
+Your backend must:
+- Verify Google signature
+Verify:
+ - issuer = accounts.google.com
+ - audience = your client_id
+ - expiry time
+ - Extract claims
+📌 If validation fails → reject login
+
+7️⃣ Backend creates / finds user
+```
+Using claims:
+sub     → googleId
+email   → email
+name    → name
+picture → profilePictureUrl
+```
+- If user exists → login
+- If not → create new user
+
+8️⃣ Backend generates YOUR OWN JWT
+This is not Google’s token.
+Your backend creates:
+{
+  "userId": 12,
+  "email": "user@gmail.com"
+}
+Signed with your secret key.
+
+9️⃣ Angular stores app JWT
+```
+localStorage.setItem('jwt', res.token);
+this.router.navigate(['/home']);
+```
+Now: Angular guards use this JWT
+API calls include:
+Authorization: Bearer <your-jwt>
+```
+🔐 Logout behavior (important)
+logout() {
+  localStorage.removeItem('jwt');
+}
+```
+📌 This:
+- Logs out from your app
+- DOES NOT log user out of Google
+- Next login → Google auto-selects account (expected behavior)
+
 
 What ID Token contains:
 ```
@@ -261,132 +375,6 @@ What ID Token contains:
 -  Issue YOUR OWN JWT (Most Important Step)
 -  Secure Your API Using JWT
 
-
-🎯 Interview-Ready Summary
-------------------------------------------------------
-- We use Google OAuth for identity verification.
-- After validating the Google ID token, we create or fetch the user in our database and issue our own JWT.
-- All authorization is handled using our JWT, not Google’s token.”
-
-
-
-STEP 3. Angular Setup which installs library and also how to get IdToken after login and send it to .NET(Step-by-Step)
---------------------------------------
-3.1 Install package
-```
-npm install angular-oauth2-oidc
-```
-
-3.2 Configure OAuth in Angular
-auth.config.ts -> where we enter google cloud console client configurations
-```
-import { AuthConfig } from 'angular-oauth2-oidc';
-
-export const authConfig: AuthConfig = {
-  issuer: 'https://accounts.google.com',
-  clientId: '250228091409-kugdd045lkeh9i8uvrkuhaa28vc7jr4r.apps.googleusercontent.com', //'GOOGLE_CLIENT_ID' from https://console.cloud.google.com/auth/clients/250228091409-kugdd045lkeh9i8uvrkuhaa28vc7jr4r.apps.googleusercontent.com?project=itracker-468520
-  redirectUri: window.location.origin,
-  scope: 'openid profile email',
-  strictDiscoveryDocumentValidation: false,
-};
-
-```
-
-3.3 Auth Service (Angular)
-auth.service.ts -> which implements google login using importing OAuthService
-```
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { authConfig } from './auth.config';
-import { from, of, switchMap } from 'rxjs';
-
-@Injectable({ providedIn: 'root' })
-  
-export class AuthService {
-
-  constructor(
-    private oauth: OAuthService,
-    private http: HttpClient
-  ) {
-    this.oauth.configure(authConfig);
-    this.oauth.loadDiscoveryDocument();
-  }
-
-  loginWithGoogle() {
-    this.oauth.initLoginFlow();
-  }
-
-  handleLoginCallback() {
-  console.log("URI-"+window.location.origin);   <--- this should be what you give in google cloud console loalhost:4200
-  return from(this.oauth.tryLoginImplicitFlow()).pipe(
-    switchMap(() => {
-      const idToken = this.oauth.getIdToken();
-
-      if (!idToken) {
-        return of(null);
-      }
-
-      return this.http.post<any>(
-        'https://localhost:7257/api/auth/google',
-        { idToken }
-      );
-    })
-  );
-}
-
-  storeJwt(jwt: string) {
-    localStorage.setItem('jwt', jwt);
-  }
-
-  logout() {
-    localStorage.clear();
-  }
-
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('jwt');
-  }
-}
-
-```
-
-3.4 Login Component (Angular Component)
-```
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/Core/AuthComponent/auth.service';
-
-@Component({
-  selector: 'app-login',
-  imports: [],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
-})
-export class LoginComponent {
-
-   constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.authService.handleLoginCallback().subscribe(res => {
-    if (res?.token) {
-      this.authService.storeJwt(res.token);
-      this.router.navigate(['/app']);           <-- After it logins successfuly using google oauth it redirects to this url
-    }
-  });
-  }
-
-  login() {
-    this.authService.loginWithGoogle();
-  }
-}
-```
-```
-<div class="login-container">
-  <h2>Login</h2>
-  <button (click)="login()">Sign in with Google</button>
-</div>
-```
-- And aslo created auth.guard.ts which navigates to login page if user is not logged in -> Applied this guard to all routes in app-routing.module.ts
 
 
 STEP 4. .NET Web API – Google Token Validation
