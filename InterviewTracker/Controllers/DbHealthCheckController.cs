@@ -26,7 +26,7 @@ namespace InterviewTracker.Controllers
             bool canConnect = await _db.Database.CanConnectAsync();
             return Ok(new
             {
-                status = canConnect ? "Can Connect to DB YAY!" : "Cannot connect to DB",
+                status = canConnect ? "Can Connect to DB Successfully!!" : "Cannot connect to DB :(",
                 canConnect = canConnect,
                 checkedAt = DateTime.UtcNow
             });

@@ -1,0 +1,32 @@
+.db-health-container {
+    margin-top: 40px;
+    padding: 12px;
+    text-align: center;
+}
+
+/* Base style */
+.db-health {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Loading state */
+.db-health.loading {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* Success state */
+.db-health.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Error state */
+.db-health.error {
+    background-color: #fdecea;
+    color: #c62828;
+}

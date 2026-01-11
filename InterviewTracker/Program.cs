@@ -15,6 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 bool isDev = true;
 
+//This is to get string from resources file .resx (string which should be displaying to different languages user). used in Validation
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
 ////Below Middleware used for Http logging
 //builder.Services.AddHttpLogger(builder.Configuration);
 

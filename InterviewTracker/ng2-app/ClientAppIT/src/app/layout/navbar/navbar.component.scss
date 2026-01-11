@@ -1,24 +1,49 @@
+/* Toolbar should always take full width */
+mat-toolbar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 12px;
+}
+
+/* Brand section */
 .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    min-width: 0;
+    /* IMPORTANT for flex shrink */
 }
 
+/* Logo responsiveness */
 .app-logo {
-    height: 75px;
-    width: 80px;
+    height: 48px;
+    /* desktop default */
+    width: auto;
+    max-width: 48px;
     object-fit: contain;
 }
 
+/* App name text */
 .logo-text {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
+    white-space: nowrap;
 }
 
+/* Spacer pushes content right */
 .spacer {
     flex: 1 1 auto;
 }
 
+/* Username */
+.user-name {
+    margin-right: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+/* Avatar */
 .avatar-button {
     padding: 0;
 }
@@ -30,12 +55,26 @@
     object-fit: cover;
 }
 
-// mat-icon {
-//     font-size: 32px;
-// }
+/* 🔥 MOBILE FIX */
+@media (max-width: 600px) {
 
-.user-name {
-    margin-right: 10px;
-    font-weight: 500;
-    font-size: 18px;
+    mat-toolbar {
+        padding: 0 8px;
+    }
+
+    /* Reduce logo size */
+    .app-logo {
+        height: 36px;
+        max-width: 36px;
+    }
+
+    /* Hide app name on mobile */
+    .logo-text {
+        display: none;
+    }
+
+    /* Hide username on mobile */
+    .user-name {
+        display: none;
+    }
 }

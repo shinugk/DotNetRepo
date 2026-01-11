@@ -6,6 +6,8 @@ import { HomeComponent } from './Core/home/home.component';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './Core/profile/profile.component';
 import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component';
+import { EmployerAddComponent } from './Core/employer-add/employer-add.component';
+import { EmployerEditComponent } from './Core/employer-edit/employer-edit.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,16 @@ const routes: Routes = [
   {
     path: 'profile/edit',
     component: ProfileEditComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'employer/add',
+    component: EmployerAddComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'employer/edit',
+    component: EmployerEditComponent,
     canActivate: [AuthGuard]
   }
 

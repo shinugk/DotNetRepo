@@ -1,15 +1,17 @@
 <app-navbar></app-navbar>
+<app-employer-grid></app-employer-grid>
 
-<h2>Database Health Check</h2>
-<div *ngIf="loading">Checking DB status...</div>
-<div *ngIf="error" class="error">
-  {{ error }}
+<div class="db-health-container">
+  <div *ngIf="loading" class="db-health loading">
+    Checking database connection...
+  </div>
+
+  <div *ngIf="error" class="db-health error">❌ Database connection failed</div>
+
+  <div *ngIf="healthResponse && !loading && !error" class="db-health success">
+    ✅ Database connection: {{ healthResponse.status }}
+  </div>
 </div>
-
-<pre *ngIf="healthResponse"
-  >{{ healthResponse | json }}
-</pre>
-
 <!-- <span class="material-symbols-rounded"> home </span>
 <span class="material-icons">home</span>
 

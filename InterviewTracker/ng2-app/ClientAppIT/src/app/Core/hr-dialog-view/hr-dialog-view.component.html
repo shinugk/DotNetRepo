@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>HR Details</h2>
+
+<mat-dialog-content>
+  <p><strong>Name:</strong> {{ data.name || "-" }}</p>
+  <p><strong>Phone:</strong> {{ data.phoneNumber || "-" }}</p>
+  <p><strong>Email:</strong> {{ data.emailId || "-" }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

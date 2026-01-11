@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
 
 import { MaterialModule } from 'src/material/material.module';
-import { AgGridModule } from 'ag-grid-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +20,17 @@ import { UserService } from './Services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component';
+import { EmployerEditComponent } from './Core/employer-edit/employer-edit.component';
+import { EmployerGridComponent } from './Core/employer-grid/employer-grid.component';
+import { HrDialogViewComponent } from './Core/hr-dialog-view/hr-dialog-view.component'; 
+import { EmployerAddComponent } from './Core/employer-add/employer-add.component';
+// import { AgGridModule } from 'ag-grid-angular';
+// import 'ag-grid-enterprise';
+
+
+import { EmployerService } from './Services/employer.service';
+
+
 
 @NgModule({
   declarations: [
@@ -28,19 +38,22 @@ import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component
     HomeComponent,
     NavbarComponent,
     ProfileComponent,
-    NavbarComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    EmployerEditComponent,
+    EmployerGridComponent,
+    HrDialogViewComponent,
+    EmployerAddComponent
   ],
   imports: [
+    //  AgGridModule,               //for building Ag Grid
     BrowserModule,
     AppRoutingModule,
     OAuthModule.forRoot(),
     HttpClientModule,
     JsonPipe,
-    MaterialModule,            //keeping this module separate and then importing here
-    AgGridModule,               //for building Ag Grid
-    ReactiveFormsModule
-  ],
+    MaterialModule, //keeping this module separate and then importing here
+    ReactiveFormsModule,
+],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -48,7 +61,8 @@ import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component
       multi: true // ✅ VERY IMPORTANT
     },
     AuthService,
-    UserService
+    UserService,
+    EmployerService
   ],
   bootstrap: [AppComponent]
 })

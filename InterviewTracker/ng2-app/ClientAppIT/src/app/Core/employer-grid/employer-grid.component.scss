@@ -1,0 +1,75 @@
+/* Toolbar wrapper */
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    /* push button to right */
+    align-items: center;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+/* Table */
+.full-width-table {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header */
+.mat-header-row {
+    background-color: #f5f5f5;
+}
+
+.mat-header-cell {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Rows */
+.data-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.data-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Cells */
+.mat-cell {
+    padding: 12px 16px;
+}
+
+/* HR button */
+.mat-cell button[mat-button] {
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+/* Actions column */
+.mat-column-actions {
+    text-align: center;
+}
+
+/* CTC highlight – DATA ONLY */
+.mat-mdc-cell.mat-column-ctcOffered {
+    color: #199c20;
+    font-weight: 400;
+}
+
+/* Pagination */
+mat-paginator {
+    margin-top: 12px;
+    border-radius: 0 0 8px 8px;
+    background: #f2f2f8;
+}
+
+
+.hr-link {
+    color: #0b77e4;
+    font-weight: 500;
+}
+
+.hr-link:hover {
+    text-decoration: underline;
+}

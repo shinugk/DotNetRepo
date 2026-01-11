@@ -7,7 +7,7 @@ namespace InterviewTracker.Utils.Validation
     public sealed class ValueOneOfAttribute : ValidationAttribute
     {
         public string AllowedValues { get; set; }
-        public bool AllowNull { get; set; } = false;
+        public bool AllowNull { get; set; } = false;   //By default it is not allowed null on properties, if you want specifically then set it on model
 
         private readonly string _propertyName;
 

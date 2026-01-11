@@ -1,0 +1,91 @@
+<div class="page-container" *ngIf="employerForm">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2>Edit Employer</h2>
+    <p class="subtitle">Update employer and HR details</p>
+  </div>
+
+  <form [formGroup]="employerForm" class="form-container">
+    <!-- Employer Details -->
+    <mat-card class="section-card">
+      <mat-card-title>Employer Details</mat-card-title>
+
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="companyName" />
+            <mat-error *ngIf="employerForm.get('companyName')?.invalid">
+              Company Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="websiteLink" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Type</mat-label>
+            <input matInput formControlName="type" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Interview Status</mat-label>
+            <input matInput formControlName="interviewStatus" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>CTC Offered</mat-label>
+            <input matInput type="number" formControlName="ctcOffered" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- HR Details -->
+    <mat-card class="section-card" formGroupName="hrDetail">
+      <mat-card-title>HR Details</mat-card-title>
+
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>HR Name</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phoneNumber" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="emailId" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Action Buttons -->
+    <div class="action-bar">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="update()"
+        [disabled]="employerForm.invalid"
+      >
+        Update
+      </button>
+
+      <button mat-stroked-button color="warn" type="button" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

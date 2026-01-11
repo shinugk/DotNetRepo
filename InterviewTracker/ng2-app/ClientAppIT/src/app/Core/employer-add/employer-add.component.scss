@@ -1,0 +1,58 @@
+/* Page container */
+:host {
+    display: block;
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+h3 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+}
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Material form fields */
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+/* HR section spacing */
+[formGroupName="hrDetail"] {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 6px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+}
+
+/* Buttons row */
+button {
+    margin-top: 24px;
+}
+
+button+button {
+    margin-left: 12px;
+}
+
+/* Align buttons nicely */
+button-group {
+    display: flex;
+    justify-content: flex-end;
+}
