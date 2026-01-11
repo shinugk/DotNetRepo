@@ -12,6 +12,9 @@ import { Employer } from '../../Interfaces/employer.model';
   styleUrl: './employer-edit.component.scss',
 })
 export class EmployerEditComponent {
+  types = ['Service Based', 'Product Based', 'Consulting'];
+  statuses = ['Selected', 'Not Selected', 'In-Progress'];
+  
    employerForm!: FormGroup;
   employerId!: number;
 
@@ -38,7 +41,7 @@ export class EmployerEditComponent {
           location: new FormControl(data.location),
 
           hrDetail: new FormGroup({
-            name: new FormControl(data.hrDetail?.name),
+            name: new FormControl(data.hrDetail?.name,Validators.required),
             phoneNumber: new FormControl(data.hrDetail?.phoneNumber),
             emailId: new FormControl(data.hrDetail?.emailId)
           })

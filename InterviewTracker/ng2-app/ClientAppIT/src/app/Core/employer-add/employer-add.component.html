@@ -18,12 +18,20 @@
 
   <mat-form-field class="full-width">
     <mat-label>Type</mat-label>
-    <input matInput formControlName="type" />
+    <mat-select formControlName="type">
+      <mat-option value="Service Based">Service Based</mat-option>
+      <mat-option value="Product Based">Product Based</mat-option>
+      <mat-option value="Consulting">Consulting</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <mat-label>Interview Status</mat-label>
-    <input matInput formControlName="interviewStatus" />
+    <mat-select formControlName="interviewStatus">
+      <mat-option value="Selected">Selected</mat-option>
+      <mat-option value="Not Selected">Not Selected</mat-option>
+      <mat-option value="In-Progress">In-Progress</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">

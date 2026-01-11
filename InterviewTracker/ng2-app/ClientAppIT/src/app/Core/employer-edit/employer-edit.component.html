@@ -8,7 +8,7 @@
   <form [formGroup]="employerForm" class="form-container">
     <!-- Employer Details -->
     <mat-card class="section-card">
-      <mat-card-title>Employer Details</mat-card-title>
+      <mat-card-title>Employer Details:</mat-card-title>
 
       <mat-card-content>
         <div class="form-grid">
@@ -27,12 +27,20 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Type</mat-label>
-            <input matInput formControlName="type" />
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let t of types" [value]="t">
+                {{ t }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Interview Status</mat-label>
-            <input matInput formControlName="interviewStatus" />
+            <mat-select formControlName="interviewStatus">
+              <mat-option *ngFor="let t of statuses" [value]="t">
+                {{ t }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -50,13 +58,20 @@
 
     <!-- HR Details -->
     <mat-card class="section-card" formGroupName="hrDetail">
-      <mat-card-title>HR Details</mat-card-title>
+      <mat-card-title>HR Details:</mat-card-title>
 
       <mat-card-content>
         <div class="form-grid">
           <mat-form-field appearance="outline">
             <mat-label>HR Name</mat-label>
             <input matInput formControlName="name" />
+            <mat-error
+              *ngIf="
+                employerForm.get('hrDetail')?.get('name')?.hasError('required')
+              "
+            >
+              HR Name is required
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">

@@ -166,7 +166,7 @@ namespace InterviewTracker.Controllers
             };
 
             // 4️ Optional HR creation
-            if (employer.hrDetail != null)
+            if (employerdto.hrDetail != null)
             {
                 employer.hrDetail = new HRDetail
                 {

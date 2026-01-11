@@ -73,3 +73,28 @@ mat-paginator {
 .hr-link:hover {
     text-decoration: underline;
 }
+
+.status-btn {
+    font-weight: 400;
+    border-radius: 16px;
+    padding: 4px 12px;
+    cursor: default;
+}
+
+/* Green */
+.status-selected {
+    background-color: #acee97;
+    // color: #36b93c;
+}
+
+/* Red */
+.status-not-selected {
+    background-color: #fa6a6a;
+    // color: #db1d1d;
+}
+
+/* Yellow */
+.status-in-progress {
+    background-color: #f7e165;
+    // color: #eea022;
+}

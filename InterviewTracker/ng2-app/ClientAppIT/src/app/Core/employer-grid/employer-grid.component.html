@@ -49,7 +49,19 @@
   <!-- Status -->
   <ng-container matColumnDef="interviewStatus">
     <th mat-header-cell *matHeaderCellDef>Status</th>
-    <td mat-cell *matCellDef="let row">{{ row.interviewStatus || "-" }}</td>
+    <td mat-cell *matCellDef="let row">
+      <button
+        mat-button
+        class="status-btn"
+        [ngClass]="{
+          'status-selected': row.interviewStatus === 'Selected',
+          'status-not-selected': row.interviewStatus === 'Not Selected',
+          'status-in-progress': row.interviewStatus === 'In-Progress'
+        }"
+      >
+        {{ row.interviewStatus || "-" }}
+      </button>
+    </td>
   </ng-container>
 
   <!-- CTC -->

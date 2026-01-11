@@ -20,7 +20,7 @@ export class EmployerAddComponent {
     location: new FormControl(''),
 
     hrDetail: new FormGroup({
-      name: new FormControl(''),
+      name: new FormControl('',Validators.required),
       phoneNumber: new FormControl(''),
       emailId: new FormControl('')
     })
