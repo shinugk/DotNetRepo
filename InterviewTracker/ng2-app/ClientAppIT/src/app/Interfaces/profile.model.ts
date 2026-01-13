@@ -9,4 +9,7 @@ export interface UserProfile {
   skills?: string | null;
   currentCompany?: string | null;
   resume?: string | null;
+
+  resumeFileName?: string;  //Need to add this property in user model
+  hasResume?: boolean;
 }

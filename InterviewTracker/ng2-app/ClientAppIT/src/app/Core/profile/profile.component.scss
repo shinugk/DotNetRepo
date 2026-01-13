@@ -1,21 +1,26 @@
 .profile-wrapper {
     max-width: 900px;
-    margin: 20px auto;
+    margin: 24px auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
+/* 🔷 HEADER */
 .profile-header {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f5f7fa, #ffffff);
 }
 
 .profile-avatar {
-    width: 72px;
-    height: 72px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e0e0e0;
 }
 
 .profile-title {
@@ -23,23 +28,97 @@
 
     h2 {
         margin: 0;
-        font-weight: 500;
+        font-weight: 600;
     }
 
     p {
-        margin: 4px 0 0;
-        color: gray;
+        margin: 6px 0 0;
+        color: #666;
+        font-size: 14px;
     }
 }
 
 .spacer {
-    flex: 1 1 auto;
+    flex: 1;
 }
 
+/* 🔷 DETAILS */
 .profile-details {
-    padding: 10px 0;
+    padding: 24px;
+    border-radius: 16px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    row-gap: 18px;
+    column-gap: 28px;
+    align-items: center;
+}
+
+.label {
+    font-weight: 500;
+    color: #777;
 }
 
 .value {
     font-weight: 500;
+    color: #222;
+    word-break: break-word;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skills-chips mat-chip {
+    background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 12px;
+
+    padding: 4px 10px;
+    /* ↓ smaller text */
+    border-radius: 16px;
+    /* ↓ less height & width */
+    min-height: 20px;
+    /* ↓ tighter pill shape */
+    line-height: 0.5;
+    /* ↓ controls overall chip height */
+    box-shadow: 0 1px 4px rgba(63, 81, 181, 0.25);
+}
+
+.skills-chips mat-chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(63, 81, 181, 0.35);
+}
+
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .profile-title {
+        margin-left: 0;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .label {
+        font-size: 13px;
+        color: #999;
+    }
 }

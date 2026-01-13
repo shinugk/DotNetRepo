@@ -78,5 +78,61 @@ namespace InterviewTracker.Controllers
 
             return Ok(user);
         }
+
+
+
+        // POST: api/user/me/resume/upload
+        [Authorize]
+        [HttpPost("me/resume/upload")]
+        public async Task<IActionResult> UploadMyResume(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("File is required.");
+
+            if (Path.GetExtension(file.FileName).ToLower() != ".pdf")
+                return BadRequest("Only PDF files are allowed.");
+
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized();
+
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.email == email);
+            if (user == null)
+                return NotFound("User not found");
+
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+
+            user.resume = ms.ToArray();
+            //user.resumeFileName = file.FileName;
+
+            await _dbcontext.SaveChangesAsync();
+
+            return Ok("Resume uploaded successfully");
+        }
+
+        // GET: api/user/me/resume/download
+        [Authorize]
+        [HttpGet("me/resume/download")]
+        public async Task<IActionResult> DownloadMyResume()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized();
+
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.email == email);
+            if (user == null)
+                return NotFound("User not found");
+
+            if (user.resume == null)
+                return NotFound("Resume not uploaded");
+
+            return File(
+                user.resume,
+                "application/pdf",
+                /*user.resumeFileName ??*/ "resume.pdf"
+            );
+        }
+
     }
 }

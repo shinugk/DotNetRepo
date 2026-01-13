@@ -29,6 +29,7 @@ import { EmployerAddComponent } from './Core/employer-add/employer-add.component
 
 
 import { EmployerService } from './Services/employer.service';
+import { ResumePreviewDialogComponent } from './Core/resume-preview-dialog/resume-preview-dialog.component';
 
 
 
@@ -42,7 +43,8 @@ import { EmployerService } from './Services/employer.service';
     EmployerEditComponent,
     EmployerGridComponent,
     HrDialogViewComponent,
-    EmployerAddComponent
+    EmployerAddComponent,
+    ResumePreviewDialogComponent
   ],
   imports: [
     //  AgGridModule,               //for building Ag Grid

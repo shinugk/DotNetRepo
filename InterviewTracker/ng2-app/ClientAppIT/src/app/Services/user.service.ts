@@ -24,4 +24,11 @@ export class UserService {
     return this.http.patch<UserProfile>(`${environment.apiBaseUrl}/api/user/${id}`, payload);
   }
 
+  downloadResume() {
+  return this.http.get(
+    `${environment.apiBaseUrl}/api/user/me/resume/download`,
+    { responseType: 'blob' }
+  );
+}
+
 }

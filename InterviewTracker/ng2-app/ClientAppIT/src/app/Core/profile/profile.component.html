@@ -3,10 +3,10 @@
 </div>
 
 <div *ngIf="!isLoading && userProfile" class="profile-wrapper">
-  <!-- Header -->
+
+  <!-- 🔷 PROFILE HEADER -->
   <mat-card class="profile-header">
     <img
-      mat-card-avatar
       [src]="userProfile.profilePictureUrl"
       alt="Profile Picture"
       class="profile-avatar"
@@ -25,58 +25,53 @@
     </button>
   </mat-card>
 
-  <!-- Details -->
+  <!-- 🔷 PROFILE DETAILS -->
   <mat-card class="profile-details">
-    <mat-list>
-      <mat-list-item>
-        <div matLine>ID:</div>
-        <div matLine class="value">{{ userProfile.id }}</div>
-      </mat-list-item>
+    <div class="details-grid">
 
-      <mat-list-item>
-        <div matLine>Name:</div>
-        <div matLine class="value">{{ userProfile.name }}</div>
-      </mat-list-item>
+      <div class="label">User ID</div>
+      <div class="value">{{ userProfile.id }}</div>
 
-      <mat-list-item>
-        <div matLine>Email-Id:</div>
-        <div matLine class="value">{{ userProfile.email }}</div>
-      </mat-list-item>
+      <div class="label">Google ID</div>
+      <div class="value">{{ displayValue(userProfile.googleId) }}</div>
 
-      <mat-list-item>
-        <div matLine>Google-Id:</div>
-        <div matLine class="value">
-          {{ displayValue(userProfile.googleId) }}
-        </div>
-      </mat-list-item>
+      <div class="label">Age</div>
+      <div class="value">{{ displayValue(userProfile.age) }}</div>
 
-      <mat-list-item>
-        <div matLine>Age:</div>
-        <div matLine class="value">
-          {{ displayValue(userProfile.age) }}
-        </div>
-      </mat-list-item>
+      <div class="label">Phone</div>
+      <div class="value">{{ displayValue(userProfile.phoneNumber) }}</div>
 
-      <mat-list-item>
-        <div matLine>Phone:</div>
-        <div matLine class="value">
-          {{ displayValue(userProfile.phoneNumber) }}
-        </div>
-      </mat-list-item>
+      <div class="label">Company</div>
+      <div class="value">{{ displayValue(userProfile.currentCompany) }}</div>
 
-      <mat-list-item>
-        <div matLine>Company:</div>
-        <div matLine class="value">
-          {{ displayValue(userProfile.currentCompany) }}
-        </div>
-      </mat-list-item>
+      <div class="label">Skills</div>
+      <div class="value">
+      <mat-chip-listbox class="skills-chips">
+        <mat-chip *ngFor="let skill of skillList">
+          {{ skill }}
+        </mat-chip>
+      </mat-chip-listbox>
+      </div>
 
-      <mat-list-item>
-        <div matLine>Skills:</div>
-        <div matLine class="value">
-          {{ displayValue(userProfile.skills) }}
-        </div>
-      </mat-list-item>
-    </mat-list>
+      <div class="label">Resume</div>
+      <div class="value actions">
+        <button mat-stroked-button color="primary" (click)="previewResume()">
+          <mat-icon>visibility</mat-icon>
+          Preview
+        </button>
+
+        <button
+          mat-stroked-button
+          color="accent"
+          (click)="downloadResume()"
+          [disabled]="isDownloading"
+        >
+          <mat-icon>download</mat-icon>
+          Download
+        </button>
+      </div>
+
+    </div>
   </mat-card>
+
 </div>
