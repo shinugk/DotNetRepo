@@ -1,6 +1,6 @@
 🎯 Project Use Case:
 -----------------------------------------------------------------------------------
-- A user logs in using Google OAuth 2.0 and also using own jwt token for secure API
+- A user logs in using Google GIS and also using own jwt token for secure API
 - After login:
 	- User profile is stored in our database
 	- That user can create / view / update employers
