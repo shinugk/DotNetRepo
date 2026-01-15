@@ -1,5 +1,5 @@
 🎯 Project Use Case:
---------------------------------------------
+-----------------------------------------------------------------------------------
 - A user logs in using Google OAuth 2.0 and also using own jwt token for secure API
 - After login:
 	- User profile is stored in our database
@@ -7,7 +7,8 @@
 	- Each employer belongs only to the logged-in user
 	- No other user can access it
 
- 
+ URL: https://it-clientapp.onrender.com/login
+ Swagger: https://dotnetrepo.onrender.com/swagger/index.html
 
 STEPS FOLLOWED:
 ----------------------------------------------------------------------
