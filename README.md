@@ -7,7 +7,7 @@
 	- Each employer belongs only to the logged-in user
 	- No other user can access it
 
- - URL: https://it-clientapp.onrender.com/login
+ - Project URL: https://it-clientapp.onrender.com/login
  - Swagger: https://dotnetrepo.onrender.com/swagger/index.html
 
 STEPS FOLLOWED:
