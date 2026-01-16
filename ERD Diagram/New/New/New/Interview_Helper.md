@@ -13,3 +13,10 @@ Project Explaination on what tasks I did criticcally:
 - Critical Issues:
 - https://bio-rdjira.dsone.3ds.com/browse/XMAT-6553 : FD03 Vocabs not populated
 - Fixed XMCO security issues
+
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/94
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/118
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/297/diffs
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/300
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/313/diffs
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/329/diffs#62b49c23e822375756db85ef909c706cc8bf5e9a
