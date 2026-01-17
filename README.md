@@ -10,6 +10,21 @@
  - Project URL: https://it-clientapp.onrender.com/login
  - Swagger: https://dotnetrepo.onrender.com/swagger/index.html
 
+
+Features:
+-------------------------------------------------------------
+
+
+
+Tech Stack Used:
+----------------------------------------------------------------
+- C# .NET Core
+- WebAPI
+- Mariadb
+- Angular
+- EF Core
+
+
 STEPS FOLLOWED:
 ----------------------------------------------------------------------
 1) Created New project from template .NET Core WebAPI
