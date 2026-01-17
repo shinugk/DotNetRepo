@@ -11,9 +11,12 @@
  - Swagger: https://dotnetrepo.onrender.com/swagger/index.html
 
 
-Features:
+About Project:
 -------------------------------------------------------------
+Interview-Tracker is a web-based application designed to simplify and organize the job interview process for candidates. The application enables users to record and track interview details such as employer information, company type (product-based or service-based), interview levels, current interview status, and compensation details like offered CTC. Additionally, users can upload and store job offer letters for selected roles. By maintaining all interview-related information in one place, Interview-Tracker helps users monitor progress, compare opportunities, and manage their job search more effectively.
 
+Features:
+---------------------------
 
 
 Tech Stack Used:
