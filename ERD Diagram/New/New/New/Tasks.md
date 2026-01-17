@@ -5,4 +5,4 @@
 5) Update naukri and linkedin with latest updates
 6) Learn Azure
 7) Learn SignalR, Dapper
-8) 
+8) Learn Docker
