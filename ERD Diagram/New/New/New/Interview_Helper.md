@@ -34,3 +34,6 @@ Imp Merge Requests to look at:
 - https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/329/diffs#62b49c23e822375756db85ef909c706cc8bf5e9a
 - https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/329#3f5af7b19530c585ff75faa264d74b8438082519
 - https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/merge_requests/328
+
+- CI/CD in XINV:
+- https://vdshqbiogitdsy.dsone.3ds.com/BIOVIA/cispro-rnd/x-inventory/-/blob/release/1.29.0/.gitlab-ci.yml?ref_type=heads
