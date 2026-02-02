@@ -89,3 +89,19 @@
     background-color: #3f51b5;
     color: white;
 }
+
+
+.company-text {
+    font-weight: 500;
+    /* normal look, not bold */
+}
+
+.company-link {
+    font-weight: 500;
+    color: #3f51b5;
+    text-decoration: none;
+}
+
+.company-link:hover {
+    text-decoration: underline;
+}

@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 export class EmployerGridComponent implements OnInit {
   displayedColumns: string[] = [
     'companyName',
-    'websiteLink',
+    // 'websiteLink',
     'type',
     'hrDetails',
     'interviewStatus',
