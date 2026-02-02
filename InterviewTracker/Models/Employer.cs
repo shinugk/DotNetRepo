@@ -33,6 +33,22 @@ namespace InterviewTracker.Models
 
         public string? location { get; set; }
 
+        //Notes (long description) if you don't specify MaxLength() then it will be LONGTEXT
+        public string? notes { get; set; }  //VARCHAR(255) is too small for long notes, interview feedback. TEXT & LONGTEXT can store very long strings
+
+        //Date of joining (if selected)
+        [Column(TypeName = "DATE")]     // Force DB column to DATE -> If you only want to store date
+        public DateTime? dateOfJoining { get; set; }
+
+        //Offered role
+        [MaxLength(100)]
+        public string? offeredRole { get; set; }
+
+        //Interview round info
+        [MaxLength(50)]
+        public string? interviewLevel { get; set; }      // Examples: "HR", "Technical Round 1", "Technical Round 2", "Managerial"
+
+
 
         // 🔗 Foreign Key to User
         [ForeignKey("user")]                     //The string "user" must match with the name of a navigation property in the same entity class.
@@ -146,6 +162,47 @@ namespace InterviewTracker.Models
 
 
 
+    Other types to store long string
+    | Type           | Max size           |
+    |-------------- | ------------------ |
+    | `VARCHAR(255)` | 255 characters     |
+    | `TEXT`         | ~65,535 characters |
+    | `MEDIUMTEXT`   | ~16 MB             |
+    | `LONGTEXT`     | ~4 GB              |    //By Default all other string properties are LONGTEXT if you don't mention MaxLength(100)
+
+
+
+    DATETIME:
+    ---------------------------------------------------------
+     How DateTime is stored (IMPORTANT)
+    ⚠️ DateTime does NOT store timezone info by default
+    It only stores:   YYYY-MM-DD HH:mm:ss
+    So: DateTime.Now    stores server local time, not user time.
+
+    ✅ Always store UTC in database
+    public DateTime? dateOfJoining { get; set; }
+    When saving:
+    dateOfJoining = DateTime.UtcNow;
+
+    How API sends & receives DateTime
+    JSON request:
+    {
+      "dateOfJoining": "2026-02-01T00:00:00Z"
+    }
+    C# receives:  DateTime dateOfJoining;
+    Z → UTC
+
+    👉 Force DB column to DATE -> If you only want to store date
+    [Column(TypeName = "DATE")]
+    public DateTime? dateOfJoining { get; set; }
+    Result:
+    C# → DateTime
+    DB → DATE   
+    Time part is not stored at all
+    API Request Example
+    {
+      "dateOfJoining": "2026-02-01"
+    }
 
      */
 }

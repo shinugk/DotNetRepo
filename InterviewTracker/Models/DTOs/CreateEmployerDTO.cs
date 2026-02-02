@@ -26,6 +26,14 @@ namespace InterviewTracker.Models.DTOs
 
         public string? location { get; set; }
 
+        public string? interviewLevel { get; set; }
+
+        public string? offeredRole { get; set; }
+
+        public string? notes { get; set; }
+
+        public DateTime? dateOfJoining { get; set; }
+
         // Optional HR info at creation time
         public HrDetailDTO? hrDetail { get; set; }
     }

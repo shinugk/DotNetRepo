@@ -26,6 +26,10 @@ export class EmployerGridComponent implements OnInit {
     'interviewStatus',
     'ctcOffered',
     'location',
+    'interviewLevel',
+    'offeredRole',
+    'dateOfJoining',
+    'notes',
     'actions'
   ];
 

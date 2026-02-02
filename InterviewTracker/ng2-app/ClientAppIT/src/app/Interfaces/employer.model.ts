@@ -8,10 +8,14 @@ export interface Employer {
   hrDetail: HRDetail;
   interviewStatus: string;
   location: string;
+  interviewLevel?: string;
+  offeredRole?: string;
+  dateOfJoining?: Date;
+  notes?: string;
   userId: number;
 }
 
-export interface HRDetail{
+export interface HRDetail {
   name: string;
   phoneNumber: string;
   emailId: string;

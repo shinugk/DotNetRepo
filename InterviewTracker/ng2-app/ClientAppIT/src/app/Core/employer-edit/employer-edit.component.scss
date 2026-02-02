@@ -33,3 +33,7 @@
     gap: 12px;
     margin-top: 20px;
 }
+
+.full-width {
+    grid-column: span 2;
+}

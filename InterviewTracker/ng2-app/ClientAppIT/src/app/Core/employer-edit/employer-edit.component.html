@@ -52,9 +52,33 @@
             <mat-label>Location</mat-label>
             <input matInput formControlName="location" />
           </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Interview Level</mat-label>
+            <input matInput formControlName="interviewLevel" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Offered Role</mat-label>
+            <input matInput formControlName="offeredRole" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Joining</mat-label>
+            <input matInput type="date" formControlName="dateOfJoining" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput rows="3" formControlName="notes"></textarea>
+          </mat-form-field>
+
         </div>
       </mat-card-content>
     </mat-card>
+
+
+
 
     <!-- HR Details -->
     <mat-card class="section-card" formGroupName="hrDetail">
@@ -65,11 +89,9 @@
           <mat-form-field appearance="outline">
             <mat-label>HR Name</mat-label>
             <input matInput formControlName="name" />
-            <mat-error
-              *ngIf="
+            <mat-error *ngIf="
                 employerForm.get('hrDetail')?.get('name')?.hasError('required')
-              "
-            >
+              ">
               HR Name is required
             </mat-error>
           </mat-form-field>
@@ -89,12 +111,7 @@
 
     <!-- Action Buttons -->
     <div class="action-bar">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="update()"
-        [disabled]="employerForm.invalid"
-      >
+      <button mat-raised-button color="primary" (click)="update()" [disabled]="employerForm.invalid">
         Update
       </button>
 

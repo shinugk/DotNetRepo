@@ -14,15 +14,15 @@ import { Employer } from '../../Interfaces/employer.model';
 export class EmployerEditComponent {
   types = ['Service Based', 'Product Based', 'Consulting'];
   statuses = ['Selected', 'Not Selected', 'In-Progress'];
-  
-   employerForm!: FormGroup;
+
+  employerForm!: FormGroup;
   employerId!: number;
 
   constructor(
     private route: ActivatedRoute,
     private employerService: EmployerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.employerId = Number(this.route.snapshot.paramMap.get('id'));
@@ -39,9 +39,12 @@ export class EmployerEditComponent {
           interviewStatus: new FormControl(data.interviewStatus),
           ctcOffered: new FormControl(data.ctcOffered),
           location: new FormControl(data.location),
-
+          interviewLevel: new FormControl(data.interviewLevel),
+          offeredRole: new FormControl(data.offeredRole),
+          dateOfJoining: new FormControl(data.dateOfJoining),
+          notes: new FormControl(data.notes),
           hrDetail: new FormGroup({
-            name: new FormControl(data.hrDetail?.name,Validators.required),
+            name: new FormControl(data.hrDetail?.name, Validators.required),
             phoneNumber: new FormControl(data.hrDetail?.phoneNumber),
             emailId: new FormControl(data.hrDetail?.emailId)
           })

@@ -11,25 +11,28 @@ import { EmployerService } from 'src/app/Services/employer.service';
   styleUrl: './employer-add.component.scss',
 })
 export class EmployerAddComponent {
-   employerForm = new FormGroup({
+  employerForm = new FormGroup({
     companyName: new FormControl('', Validators.required),
-    websiteLink: new FormControl(''),
-    type: new FormControl(''),
-    interviewStatus: new FormControl(''),
+    websiteLink: new FormControl(null),
+    type: new FormControl(null, Validators.required),
+    interviewStatus: new FormControl(null),
     ctcOffered: new FormControl(null),
     location: new FormControl(''),
-
+    interviewLevel: new FormControl(''),
+    offeredRole: new FormControl(''),
+    notes: new FormControl(''),
+    dateOfJoining: new FormControl(null),
     hrDetail: new FormGroup({
-      name: new FormControl('',Validators.required),
-      phoneNumber: new FormControl(''),
-      emailId: new FormControl('')
+      name: new FormControl('', Validators.required),
+      phoneNumber: new FormControl(null),
+      emailId: new FormControl(null)
     })
   });
 
   constructor(
     private employerService: EmployerService,
     private router: Router
-  ) {}
+  ) { }
 
   save() {
     if (this.employerForm.invalid) return;

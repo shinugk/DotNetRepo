@@ -108,6 +108,18 @@ namespace InterviewTracker.Controllers
             if (dto.location != null)
                 employer.location = dto.location;
 
+            if (dto.interviewLevel != null)
+                employer.interviewLevel = dto.interviewLevel;
+
+            if (dto.offeredRole != null)
+                employer.offeredRole = dto.offeredRole;
+
+            if (dto.notes != null)
+                employer.notes = dto.notes;
+
+            if (dto.dateOfJoining != null)
+                employer.dateOfJoining = dto.dateOfJoining;
+
             // 4️ Patch HR details (create if missing)
             if (dto.hrDetail != null)
             {
@@ -162,6 +174,10 @@ namespace InterviewTracker.Controllers
                 ctcOffered = employerdto.ctcOffered,
                 interviewStatus = employerdto.interviewStatus,
                 location = employerdto.location,
+                interviewLevel = employerdto.interviewLevel,
+                offeredRole = employerdto.offeredRole,
+                notes = employerdto.notes,
+                dateOfJoining = employerdto.dateOfJoining,
                 userId = user.id
             };
 
