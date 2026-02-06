@@ -65,7 +65,13 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Date of Joining</mat-label>
-            <input matInput type="date" formControlName="dateOfJoining" />
+
+            <input matInput [matDatepicker]="dojPicker" formControlName="dateOfJoining" readonly />
+
+            <mat-datepicker-toggle matSuffix [for]="dojPicker">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #dojPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">

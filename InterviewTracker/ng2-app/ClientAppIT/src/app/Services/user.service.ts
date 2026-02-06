@@ -10,7 +10,7 @@ import { environment } from 'src/environment';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMyProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(`${environment.apiBaseUrl}/api/user/me`);
@@ -20,15 +20,25 @@ export class UserService {
     return this.http.get<Employer[]>(`${environment.apiBaseUrl}/api/user/${userId}`);
   }
 
-   updateUser(id: number, payload: any): Observable<UserProfile> {
+  updateUser(id: number, payload: any): Observable<UserProfile> {
     return this.http.patch<UserProfile>(`${environment.apiBaseUrl}/api/user/${id}`, payload);
   }
 
   downloadResume() {
-  return this.http.get(
-    `${environment.apiBaseUrl}/api/user/me/resume/download`,
-    { responseType: 'blob' }
-  );
-}
+    return this.http.get(
+      `${environment.apiBaseUrl}/api/user/me/resume/download`,
+      { responseType: 'blob' }
+    );
+  }
+
+  uploadResume(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<{ fileName: string }>(
+      `${environment.apiBaseUrl}/api/user/me/resume/upload`,
+      formData
+    );
+  }
 
 }

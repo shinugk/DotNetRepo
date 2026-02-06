@@ -16,6 +16,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogActions,
     MatSelectModule,
     MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 

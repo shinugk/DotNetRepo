@@ -13,7 +13,7 @@ import { AuthService } from './Auth/auth.service';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HomeComponent } from './Core/home/home.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
+import { NavbarComponent } from './Core/navbar/navbar.component';
 import { ProfileComponent } from './Core/profile/profile.component';
 import { UserService } from './Services/user.service';
 

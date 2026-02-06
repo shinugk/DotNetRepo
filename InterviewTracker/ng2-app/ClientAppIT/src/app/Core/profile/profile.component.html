@@ -6,11 +6,7 @@
 
   <!-- 🔷 PROFILE HEADER -->
   <mat-card class="profile-header">
-    <img
-      [src]="userProfile.profilePictureUrl"
-      alt="Profile Picture"
-      class="profile-avatar"
-    />
+    <img [src]="userProfile.profilePictureUrl" alt="Profile Picture" class="profile-avatar" />
 
     <div class="profile-title">
       <h2>{{ userProfile.name }}</h2>
@@ -46,11 +42,11 @@
 
       <div class="label">Skills</div>
       <div class="value">
-      <mat-chip-listbox class="skills-chips">
-        <mat-chip *ngFor="let skill of skillList">
-          {{ skill }}
-        </mat-chip>
-      </mat-chip-listbox>
+        <mat-chip-listbox class="skills-chips">
+          <mat-chip *ngFor="let skill of skillList">
+            {{ skill }}
+          </mat-chip>
+        </mat-chip-listbox>
       </div>
 
       <div class="label">Resume</div>
@@ -60,15 +56,18 @@
           Preview
         </button>
 
-        <button
-          mat-stroked-button
-          color="accent"
-          (click)="downloadResume()"
-          [disabled]="isDownloading"
-        >
+        <button mat-stroked-button color="accent" (click)="downloadResume()" [disabled]="isDownloading">
           <mat-icon>download</mat-icon>
           Download
         </button>
+
+        <!-- Upload / Replace -->
+        <button mat-stroked-button color="warn" (click)="fileInput.click()">
+          <mat-icon>upload</mat-icon>
+          {{ hasResume() ? 'Replace' : 'Upload' }}
+        </button>
+
+        <input #fileInput type="file" accept=".pdf" hidden (change)="onResumeSelected($event)" />
       </div>
 
     </div>

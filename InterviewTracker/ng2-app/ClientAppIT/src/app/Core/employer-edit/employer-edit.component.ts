@@ -43,7 +43,12 @@ export class EmployerEditComponent {
           location: new FormControl(data.location),
           interviewLevel: new FormControl(data.interviewLevel),
           offeredRole: new FormControl(data.offeredRole),
-          dateOfJoining: new FormControl(data.dateOfJoining),
+
+          // 👇 IMPORTANT: convert string → Date
+          dateOfJoining: new FormControl(
+            data.dateOfJoining ? new Date(data.dateOfJoining) : null
+          ),
+
           notes: new FormControl(data.notes),
           hrDetail: new FormGroup({
             name: new FormControl(data.hrDetail?.name, Validators.required),
@@ -60,8 +65,16 @@ export class EmployerEditComponent {
       return;
     }
 
+    const raw = this.employerForm.getRawValue();
+    const payload = {
+      ...raw,
+      dateOfJoining: raw.dateOfJoining
+        ? this.formatDateOnly(raw.dateOfJoining)
+        : null
+    };
+
     this.employerService
-      .updateEmployer(this.employerId, this.employerForm.value)
+      .updateEmployer(this.employerId, payload)
       .subscribe({
         next: () => {
           this.notification.success('Employer updated successfully');
@@ -76,5 +89,13 @@ export class EmployerEditComponent {
 
   cancel() {
     this.router.navigate(['/home']);
+  }
+
+  private formatDateOnly(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 }

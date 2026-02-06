@@ -108,7 +108,7 @@ namespace InterviewTracker.Controllers
 
             await _dbcontext.SaveChangesAsync();
 
-            return Ok("Resume uploaded successfully");
+            return NoContent();
         }
 
         // GET: api/user/me/resume/download

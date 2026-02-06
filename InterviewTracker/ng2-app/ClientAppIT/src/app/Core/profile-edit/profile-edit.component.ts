@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/Interfaces/profile.model';
 import { UserService } from 'src/app/Services/user.service';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/Services/user.service';
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss',
 })
-  
+
 export class ProfileEditComponent {
   form!: FormGroup;
   user!: UserProfile;
@@ -20,8 +21,9 @@ export class ProfileEditComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private notification: NotificationService
+  ) { }
 
   ngOnInit(): void {
     this.loadProfile();
@@ -60,8 +62,14 @@ export class ProfileEditComponent {
     };
 
     this.userService.updateUser(this.user.id, payload).subscribe({
-      next: () => this.router.navigate(['/profile']),
-      error: (err) => console.error('Update failed', err),
+      next: () => {
+        this.notification.success("Profile details updated successfully!!");
+        this.router.navigate(['/profile']);
+      },
+      error: (err) => {
+        this.notification.error("Profile Update Failed!!");
+        console.error('Update failed', err)
+      }
     });
   }
 
