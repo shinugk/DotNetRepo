@@ -113,4 +113,55 @@ export class EmployerGridComponent implements OnInit {
       data: { notes }
     });
   }
+
+
+  exportToExcel(): void {
+    const headers = [
+      'Company',
+      'Type',
+      'HR',
+      'Status',
+      'CTC',
+      'Location',
+      'Interview Level',
+      'Offered Role',
+      'Date Of Joining',
+      'Notes'
+    ];
+
+    const rows = this.dataSource.data.map(row => [
+      row.companyName,
+      row.type,
+      row.hrDetail?.name || '-',
+      row.interviewStatus,
+      row.ctcOffered || '-',
+      row.location,
+      row.interviewLevel,
+      row.offeredRole,
+      row.dateOfJoining
+        ? new Date(row.dateOfJoining).toLocaleDateString('en-GB')
+        : '-',
+      row.notes?.replace(/,/g, ' ') || '-'
+    ]);
+
+    let csvContent = headers.join(',') + '\n';
+
+    rows.forEach(row => {
+      csvContent += row.map(value => `"${value}"`).join(',') + '\n';
+    });
+
+    const blob = new Blob([csvContent], {
+      type: 'text/csv;charset=utf-8;'
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Employer_List_${Date.now()}.csv`;
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+  }
+
 }
