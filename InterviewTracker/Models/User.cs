@@ -39,8 +39,11 @@ namespace InterviewTracker.Models
 
 
 
-        // 🔗 Navigation: One User → Many Employers
+        // 🔗 Navigation: One User -> Many Employers
         public ICollection<Employer> employers { get; set; }  //(child collection)
+
+        // 🔗 Navigation: One User -> Many Notes
+        public ICollection<Note> notes { get; set; }
     }
 }
 

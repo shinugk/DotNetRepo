@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
 
-import { MaterialModule } from 'src/material/material.module';
+import { MaterialModule } from 'src/app/material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,12 +17,12 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ProfileComponent } from './Core/profile/profile.component';
 import { UserService } from './Services/user.service';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component';
 import { EmployerEditComponent } from './Core/employer-edit/employer-edit.component';
 import { EmployerGridComponent } from './Core/employer-grid/employer-grid.component';
-import { HrDialogViewComponent } from './Core/hr-dialog-view/hr-dialog-view.component'; 
+import { HrDialogViewComponent } from './Core/hr-dialog-view/hr-dialog-view.component';
 import { EmployerAddComponent } from './Core/employer-add/employer-add.component';
 // import { AgGridModule } from 'ag-grid-angular';
 // import 'ag-grid-enterprise';
@@ -30,6 +30,13 @@ import { EmployerAddComponent } from './Core/employer-add/employer-add.component
 
 import { EmployerService } from './Services/employer.service';
 import { ResumePreviewDialogComponent } from './Core/resume-preview-dialog/resume-preview-dialog.component';
+import { NoteDialogComponent } from './Core/note-dialog/note-dialog.component';
+import { UserNotesComponent } from './Core/user-notes/user-notes.component';
+import { NoteService } from './Services/note.service';
+import { NotificationService } from './Services/notification.service';
+import { ConfirmDialogComponent } from './Core/confirm-dialog/confirm-dialog.component';
+import { ConfirmationService } from './Services/confirm-dialog.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 
@@ -44,7 +51,10 @@ import { ResumePreviewDialogComponent } from './Core/resume-preview-dialog/resum
     EmployerGridComponent,
     HrDialogViewComponent,
     EmployerAddComponent,
-    ResumePreviewDialogComponent
+    ResumePreviewDialogComponent,
+    UserNotesComponent,
+    NoteDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     //  AgGridModule,               //for building Ag Grid
@@ -55,7 +65,10 @@ import { ResumePreviewDialogComponent } from './Core/resume-preview-dialog/resum
     JsonPipe,
     MaterialModule, //keeping this module separate and then importing here
     ReactiveFormsModule,
-],
+    FormsModule,
+    MarkdownModule.forRoot()
+
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -64,7 +77,10 @@ import { ResumePreviewDialogComponent } from './Core/resume-preview-dialog/resum
     },
     AuthService,
     UserService,
-    EmployerService
+    EmployerService,
+    NoteService,
+    NotificationService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

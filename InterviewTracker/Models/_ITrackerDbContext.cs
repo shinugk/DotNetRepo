@@ -31,6 +31,12 @@ namespace InterviewTracker.Models
                 .HasIndex(u => u.email)
                 .IsUnique();
 
+            modelBuilder.Entity<Note>()
+                .HasOne(n => n.user)
+                .WithMany(u => u.notes)
+                .HasForeignKey(n => n.userId)
+                .OnDelete(DeleteBehavior.Cascade);   //When the parent(User) is deleted, all related child records(Notes) are automatically deleted.
+
 
             /* ---------------- USER -> EMPLOYER (One-to-Many) ---------------- */
             modelBuilder.Entity<Employer>()
@@ -65,6 +71,7 @@ namespace InterviewTracker.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Employer> Employers { get; set; }
         public DbSet<HRDetail> HrDetails { get; set; }
+        public DbSet<Note> Notes { get; set; }
     }
 }
 

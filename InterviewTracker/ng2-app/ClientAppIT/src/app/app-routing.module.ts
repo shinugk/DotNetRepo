@@ -8,6 +8,7 @@ import { ProfileComponent } from './Core/profile/profile.component';
 import { ProfileEditComponent } from './Core/profile-edit/profile-edit.component';
 import { EmployerAddComponent } from './Core/employer-add/employer-add.component';
 import { EmployerEditComponent } from './Core/employer-edit/employer-edit.component';
+import { UserNotesComponent } from './Core/user-notes/user-notes.component';
 
 const routes: Routes = [
   {
@@ -27,11 +28,16 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notes',
+    component: UserNotesComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -56,5 +62,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-  
+
 export class AppRoutingModule { }

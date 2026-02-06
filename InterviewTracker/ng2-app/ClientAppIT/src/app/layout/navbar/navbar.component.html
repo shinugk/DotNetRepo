@@ -14,12 +14,7 @@
 
   <!-- Profile image button -->
   <button mat-icon-button [matMenuTriggerFor]="menu" class="avatar-button">
-    <img
-      *ngIf="profileImageUrl; else defaultIcon"
-      [src]="profileImageUrl"
-      alt="Profile"
-      class="avatar"
-    />
+    <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Profile" class="avatar" />
 
     <ng-template #defaultIcon>
       <mat-icon>account_circle</mat-icon>
@@ -30,6 +25,11 @@
     <button mat-menu-item routerLink="/profile">
       <mat-icon>person</mat-icon>
       Profile
+    </button>
+
+    <button mat-menu-item routerLink="/notes">
+      <mat-icon>event_note</mat-icon>
+      Notes
     </button>
 
     <button mat-menu-item (click)="logout()">

@@ -1,0 +1,62 @@
+<!-- Header -->
+<div class="notes-header">
+    <h2>📝 Notes</h2>
+
+    <button mat-raised-button color="primary" (click)="addNote()">
+        <mat-icon>add</mat-icon>
+        Add Note
+    </button>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="notes.length === 0" class="empty-state">
+    <mat-icon>add</mat-icon>
+    <h3>No notes yet</h3>
+    <p>Start by adding your first note</p>
+    <button mat-raised-button color="primary" (click)="addNote()">
+        Add Note
+    </button>
+</div>
+
+<!-- Notes Grid -->
+<div class="notes-grid" *ngIf="notes.length > 0">
+
+    <mat-card class="note-card" *ngFor="let note of notes">
+        <mat-card-header>
+            <mat-card-title>
+                {{ note.title || 'Untitled' }}
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p class="content-preview">
+                {{ note.content }}
+                <!-- <markdown [data]="note.content"></markdown> -->
+                <!--use this if you want to make it support markdown-->
+            </p>
+
+            <span class="created-date">
+                {{ note.createdAt | date:'mediumDate' }}
+            </span>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-icon-button color="primary" (click)="editNote(note)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="deleteNote(note)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Add Note Card -->
+    <mat-card class="note-card add-card" (click)="addNote()">
+        <div class="add-card-content">
+            <mat-icon>add</mat-icon>
+            <span>Add Note</span>
+        </div>
+    </mat-card>
+
+</div>

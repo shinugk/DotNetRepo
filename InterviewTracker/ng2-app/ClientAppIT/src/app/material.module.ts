@@ -40,7 +40,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogContent,
     MatDialogActions,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
   ]
 })
 
