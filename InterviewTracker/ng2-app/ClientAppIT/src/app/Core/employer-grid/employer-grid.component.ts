@@ -9,6 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { HrDialogViewComponent } from '../hr-dialog-view/hr-dialog-view.component';
 import { Employer } from 'src/app/Interfaces/employer.model';
 import { Router } from '@angular/router';
+import { EmpNoteDialogComponent } from './note-dialog-component';
 
 @Component({
   selector: 'app-employer-grid',
@@ -106,4 +107,10 @@ export class EmployerGridComponent implements OnInit {
     }
   }
 
+  openNotesDialog(notes: string) {
+    this.dialog.open(EmpNoteDialogComponent, {
+      width: '500px',
+      data: { notes }
+    });
+  }
 }

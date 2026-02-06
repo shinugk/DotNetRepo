@@ -37,6 +37,7 @@ import { NotificationService } from './Services/notification.service';
 import { ConfirmDialogComponent } from './Core/confirm-dialog/confirm-dialog.component';
 import { ConfirmationService } from './Services/confirm-dialog.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { EmpNoteDialogComponent } from './Core/employer-grid/note-dialog-component';
 
 
 
@@ -54,7 +55,8 @@ import { MarkdownModule } from 'ngx-markdown';
     ResumePreviewDialogComponent,
     UserNotesComponent,
     NoteDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EmpNoteDialogComponent
   ],
   imports: [
     //  AgGridModule,               //for building Ag Grid

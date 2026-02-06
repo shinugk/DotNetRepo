@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployerService } from 'src/app/Services/employer.service';
 import { Employer } from '../../Interfaces/employer.model';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'app-employer-edit',
@@ -21,7 +22,8 @@ export class EmployerEditComponent {
   constructor(
     private route: ActivatedRoute,
     private employerService: EmployerService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService
   ) { }
 
   ngOnInit() {
@@ -53,8 +55,23 @@ export class EmployerEditComponent {
   }
 
   update() {
-    this.employerService.updateEmployer(this.employerId, this.employerForm.value)
-      .subscribe(() => this.router.navigate(['/home']));
+    if (this.employerForm.invalid) {
+      this.notification.error('Please fill all required fields');
+      return;
+    }
+
+    this.employerService
+      .updateEmployer(this.employerId, this.employerForm.value)
+      .subscribe({
+        next: () => {
+          this.notification.success('Employer updated successfully');
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.notification.error('Failed to update employer. Please try again.');
+        }
+      });
   }
 
   cancel() {

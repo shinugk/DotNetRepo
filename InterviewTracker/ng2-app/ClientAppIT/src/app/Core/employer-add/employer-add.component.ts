@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployerService } from 'src/app/Services/employer.service';
+import { NotificationService } from 'src/app/Services/notification.service';
 
 @Component({
   selector: 'app-employer-add',
@@ -31,14 +32,27 @@ export class EmployerAddComponent {
 
   constructor(
     private employerService: EmployerService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService
   ) { }
 
   save() {
-    if (this.employerForm.invalid) return;
+    if (this.employerForm.invalid) {
+      this.notification.error('Please fill all required fields');
+      return;
+    }
 
     this.employerService.addEmployer(this.employerForm.value)
-      .subscribe(() => this.router.navigate(['/home']));
+      .subscribe({
+        next: () => {
+          this.notification.success('Employer added successfully!!');
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.notification.error('Failed to add employer. Please try again.');
+        }
+      });
   }
 
   cancel() {

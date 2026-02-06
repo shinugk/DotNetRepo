@@ -110,10 +110,15 @@
     <td mat-cell *matCellDef="let row">{{ row.dateOfJoining }}</td>
   </ng-container>
 
-  <!-- Notes -->
+  <!--Notes-->
   <ng-container matColumnDef="notes">
     <th mat-header-cell *matHeaderCellDef>Notes</th>
-    <td mat-cell *matCellDef="let row">{{ row.notes }}</td>
+    <td mat-cell *matCellDef="let row">
+      <span class="notes-preview" (click)="openNotesDialog(row.notes); $event.stopPropagation()"
+        matTooltip="Click to view full notes">
+        {{ row.notes || '-' }}
+      </span>
+    </td>
   </ng-container>
 
   <!-- Actions -->
