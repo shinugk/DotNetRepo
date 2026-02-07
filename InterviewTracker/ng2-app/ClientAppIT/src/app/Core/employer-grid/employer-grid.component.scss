@@ -18,9 +18,6 @@
 
 
 
-
-
-
 .status-pill {
     padding: 4px 10px;
     border-radius: 12px;
@@ -123,4 +120,28 @@
 
 .notes-preview:hover {
     text-decoration: underline;
+}
+
+
+
+
+.ai-drawer {
+    width: 380px;
+    max-width: 90vw;
+    background: linear-gradient(180deg, #ffffff, #f7f9fc);
+    box-shadow: -6px 0 16px rgba(0, 0, 0, 0.12);
+    border-left: 1px solid #e0e0e0;
+    padding: 16px;
+}
+
+mat-drawer-content {
+    overflow: auto;
+}
+
+.data-row {
+    transition: background-color 0.2s ease;
+}
+
+.data-row:hover {
+    background-color: #eef2f7;
 }

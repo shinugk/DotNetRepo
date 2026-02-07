@@ -1,0 +1,48 @@
+<!-- HEADER -->
+<div class="ai-header">
+    <div class="title">
+        <span class="bot">🤖</span>
+        <span class="text">AI Assistant</span>
+    </div>
+
+    <button mat-icon-button aria-label="Close" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<!-- EMPLOYER CONTEXT -->
+<div class="employer-summary">
+    <h4>{{ employer.companyName }}</h4>
+
+    <div class="meta">
+        <span>{{ employer.offeredRole || '—' }}</span>
+        <span class="dot">•</span>
+        <span class="status">{{ employer.interviewStatus }}</span>
+    </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-window">
+    <div *ngFor="let msg of messages" class="message-wrapper" [ngClass]="msg.role">
+
+        <!-- Chat bubble -->
+        <markdown class="bubble" [ngClass]="msg.role" [data]="msg.text">
+        </markdown>
+
+        <!-- Timestamp -->
+        <div class="timestamp">
+            {{ msg.time | date:'hh:mm a' }}
+        </div>
+
+    </div>
+</div>
+
+<!-- INPUT -->
+<div class="chat-input">
+    <input matInput placeholder="Ask something about this employer…" [(ngModel)]="userQuestion"
+        (keyup.enter)="askAI()" />
+
+    <button mat-icon-button color="primary" aria-label="Send" (click)="askAI()">
+        <mat-icon>send</mat-icon>
+    </button>
+</div>

@@ -10,6 +10,8 @@ import { HrDialogViewComponent } from '../hr-dialog-view/hr-dialog-view.componen
 import { Employer } from 'src/app/Interfaces/employer.model';
 import { Router } from '@angular/router';
 import { EmpNoteDialogComponent } from './note-dialog-component';
+import { MatDrawer } from '@angular/material/sidenav';
+import { AiAssistantComponent } from './AI-Assistant/ai-assistant.component';
 
 @Component({
   selector: 'app-employer-grid',
@@ -37,6 +39,10 @@ export class EmployerGridComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   statusList = ['All', 'Selected', 'Not Selected', 'In-Progress'];
   selectedStatus = 'All';
+
+  // selectedEmployer: any;
+  // @ViewChild('aiDrawer') aiDrawer!: MatDrawer;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -162,6 +168,21 @@ export class EmployerGridComponent implements OnInit {
     link.click();
 
     window.URL.revokeObjectURL(url);
+  }
+
+  // openAiAssistant(row: any) {
+  //   this.selectedEmployer = row;
+  //   this.aiDrawer.open();
+  // }
+
+  openAiDialog(employer: any) {
+    this.dialog.open(AiAssistantComponent, {
+      width: '420px',
+      maxWidth: '95vw',
+      height: '600px',
+      panelClass: 'ai-dialog',
+      data: employer
+    });
   }
 
 }

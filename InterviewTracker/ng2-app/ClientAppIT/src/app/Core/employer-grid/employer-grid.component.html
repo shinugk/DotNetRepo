@@ -1,147 +1,170 @@
-<div class="page-toolbar">
+<mat-drawer-container class="drawer-container">
 
-  <!-- LEFT: Status Filters -->
-  <mat-chip-listbox class="status-filters">
-    <mat-chip *ngFor="let status of statusList" (click)="filterByStatus(status)"
-      [class.active]="selectedStatus === status">
-      {{ status }}
-    </mat-chip>
-  </mat-chip-listbox>
+  <!-- ===== MAIN CONTENT ===== -->
+  <mat-drawer-content>
 
-  <!-- CENTER: Search (flex-grow) -->
-  <!-- <mat-form-field appearance="outline" class="search-field">
+    <div class="page-toolbar">
+
+      <!-- LEFT: Status Filters -->
+      <mat-chip-listbox class="status-filters">
+        <mat-chip *ngFor="let status of statusList" (click)="filterByStatus(status)"
+          [class.active]="selectedStatus === status">
+          {{ status }}
+        </mat-chip>
+      </mat-chip-listbox>
+
+      <!-- CENTER: Search (flex-grow) -->
+      <!-- <mat-form-field appearance="outline" class="search-field">
     <mat-label>Search</mat-label>
     <mat-icon matPrefix>search</mat-icon>
     <input matInput placeholder="Company, location, HR..." (keyup)="applyFilter($event)" />
   </mat-form-field> -->
 
-  <!-- RIGHT: Add Employer -->
-  <div class="toolbar-actions">
-    <button mat-raised-button color="primary" (click)="addEmployer()">
-      <mat-icon>add</mat-icon>
-      Add Employer
-    </button>
-  </div>
+      <!-- RIGHT: Add Employer -->
+      <div class="toolbar-actions">
+        <button mat-raised-button color="primary" (click)="addEmployer()">
+          <mat-icon>add</mat-icon>
+          Add Employer
+        </button>
+      </div>
 
-  <button mat-stroked-button color="accent" (click)="exportToExcel()">
-    <mat-icon>post_add</mat-icon>
-    Export to Excel
-  </button>
-
-
-
-</div>
-
-
-
-
-
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 full-width-table">
-
-  <!-- Company -->
-  <ng-container matColumnDef="companyName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
-    <td mat-cell *matCellDef="let row">
-      <a *ngIf="row.websiteLink; else noWebsite" [href]="row.websiteLink" target="_blank" class="company-link"
-        (click)="$event.stopPropagation()">
-        {{ row.companyName }}
-      </a>
-
-      <ng-template #noWebsite>
-        <span class="company-text">{{ row.companyName }}</span>
-      </ng-template>
-    </td>
-  </ng-container>
-
-
-  <!-- Type -->
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef>Type</th>
-    <td mat-cell *matCellDef="let row">
-      <mat-chip>{{ row.type }}</mat-chip>
-    </td>
-  </ng-container>
-
-  <!-- HR -->
-  <ng-container matColumnDef="hrDetails">
-    <th mat-header-cell *matHeaderCellDef>HR</th>
-    <td mat-cell *matCellDef="let row">
-      <button mat-button color="accent" *ngIf="row.hrDetail"
-        (click)="viewHrDetails(row.hrDetail); $event.stopPropagation()">
-        {{ row.hrDetail.name }}
+      <button mat-stroked-button color="accent" (click)="exportToExcel()">
+        <mat-icon>post_add</mat-icon>
+        Export to Excel
       </button>
-      <span *ngIf="!row.hrDetail">-</span>
-    </td>
-  </ng-container>
 
-  <!-- Status -->
-  <ng-container matColumnDef="interviewStatus">
-    <th mat-header-cell *matHeaderCellDef>Status</th>
-    <td mat-cell *matCellDef="let row">
-      <span class="status-pill" [ngClass]="getStatusClass(row.interviewStatus)">
-        <!-- Not using direct values bcoz "Not Selected" is with a space and css breaks-->
-        {{ row.interviewStatus }}
-      </span>
-    </td>
-  </ng-container>
 
-  <!-- CTC -->
-  <ng-container matColumnDef="ctcOffered">
-    <th mat-header-cell *matHeaderCellDef>CTC</th>
-    <td mat-cell *matCellDef="let row">
-      ₹ {{ row.ctcOffered || "-" }}
-    </td>
-  </ng-container>
 
-  <!-- Location -->
-  <ng-container matColumnDef="location">
-    <th mat-header-cell *matHeaderCellDef>Location</th>
-    <td mat-cell *matCellDef="let row">{{ row.location }}</td>
-  </ng-container>
+    </div>
 
-  <!-- InterviewLevel -->
-  <ng-container matColumnDef="interviewLevel">
-    <th mat-header-cell *matHeaderCellDef>Interview Level</th>
-    <td mat-cell *matCellDef="let row">{{ row.interviewLevel }}</td>
-  </ng-container>
 
-  <!-- Offered Role -->
-  <ng-container matColumnDef="offeredRole">
-    <th mat-header-cell *matHeaderCellDef>Offered Role</th>
-    <td mat-cell *matCellDef="let row">{{ row.offeredRole }}</td>
-  </ng-container>
 
-  <!-- Date of Joining -->
-  <ng-container matColumnDef="dateOfJoining">
-    <th mat-header-cell *matHeaderCellDef>Date-Of-Joining</th>
-    <td mat-cell *matCellDef="let row">
-      {{ row.dateOfJoining ? (row.dateOfJoining | date:'dd-MM-yyyy') : '-' }}
-    </td>
-  </ng-container>
 
-  <!--Notes-->
-  <ng-container matColumnDef="notes">
-    <th mat-header-cell *matHeaderCellDef>Notes</th>
-    <td mat-cell *matCellDef="let row">
-      <span class="notes-preview" (click)="openNotesDialog(row.notes); $event.stopPropagation()"
-        matTooltip="Click to view full notes">
-        {{ row.notes || '-' }}
-      </span>
-    </td>
-  </ng-container>
 
-  <!-- Actions -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let row">
-      <button mat-icon-button color="primary" matTooltip="Edit" (click)="editEmployer(row)">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 full-width-table">
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" sticky></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns" class="data-row"></tr>
-</table>
+      <!-- Company -->
+      <ng-container matColumnDef="companyName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+        <td mat-cell *matCellDef="let row">
+          <a *ngIf="row.websiteLink; else noWebsite" [href]="row.websiteLink" target="_blank" class="company-link"
+            (click)="$event.stopPropagation()">
+            {{ row.companyName }}
+          </a>
 
-<mat-paginator [pageSize]="10"></mat-paginator>
+          <ng-template #noWebsite>
+            <span class="company-text">{{ row.companyName }}</span>
+          </ng-template>
+        </td>
+      </ng-container>
+
+
+      <!-- Type -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-chip>{{ row.type }}</mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- HR -->
+      <ng-container matColumnDef="hrDetails">
+        <th mat-header-cell *matHeaderCellDef>HR</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button color="accent" *ngIf="row.hrDetail"
+            (click)="viewHrDetails(row.hrDetail); $event.stopPropagation()">
+            {{ row.hrDetail.name }}
+          </button>
+          <span *ngIf="!row.hrDetail">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="interviewStatus">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="status-pill" [ngClass]="getStatusClass(row.interviewStatus)">
+            <!-- Not using direct values bcoz "Not Selected" is with a space and css breaks-->
+            {{ row.interviewStatus }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- CTC -->
+      <ng-container matColumnDef="ctcOffered">
+        <th mat-header-cell *matHeaderCellDef>CTC</th>
+        <td mat-cell *matCellDef="let row">
+          ₹ {{ row.ctcOffered || "-" }}
+        </td>
+      </ng-container>
+
+      <!-- Location -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let row">{{ row.location }}</td>
+      </ng-container>
+
+      <!-- InterviewLevel -->
+      <ng-container matColumnDef="interviewLevel">
+        <th mat-header-cell *matHeaderCellDef>Interview Level</th>
+        <td mat-cell *matCellDef="let row">{{ row.interviewLevel }}</td>
+      </ng-container>
+
+      <!-- Offered Role -->
+      <ng-container matColumnDef="offeredRole">
+        <th mat-header-cell *matHeaderCellDef>Offered Role</th>
+        <td mat-cell *matCellDef="let row">{{ row.offeredRole }}</td>
+      </ng-container>
+
+      <!-- Date of Joining -->
+      <ng-container matColumnDef="dateOfJoining">
+        <th mat-header-cell *matHeaderCellDef>Date-Of-Joining</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.dateOfJoining ? (row.dateOfJoining | date:'dd-MM-yyyy') : '-' }}
+        </td>
+      </ng-container>
+
+      <!--Notes-->
+      <ng-container matColumnDef="notes">
+        <th mat-header-cell *matHeaderCellDef>Notes</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="notes-preview" (click)="openNotesDialog(row.notes); $event.stopPropagation()"
+            matTooltip="Click to view full notes">
+            {{ row.notes || '-' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" matTooltip="Edit" (click)="editEmployer(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <!-- AI Assistant -->
+          <button mat-icon-button color="accent" matTooltip="Ask AI"
+            (click)="openAiDialog(row); $event.stopPropagation()">
+            <mat-icon>smart_toy</mat-icon>
+          </button>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" sticky></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="data-row">
+      </tr>
+    </table>
+
+    <mat-paginator [pageSize]="10"></mat-paginator>
+
+  </mat-drawer-content>
+
+  <!-- ===== AI ASSISTANT SIDE TAB =====
+  <mat-drawer #aiDrawer mode="over" position="end" class="ai-drawer" [autoFocus]="false">
+    <app-ai-assistant [employer]="selectedEmployer" (close)="aiDrawer.close()">
+    </app-ai-assistant>
+  </mat-drawer> -->
+
+</mat-drawer-container>
