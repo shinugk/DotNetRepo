@@ -69,6 +69,10 @@ public class Notification
     }
 }
 ```
+This is registered in Program.cs:
+```
+builder.services.AddScoped<IEmailService, EmailService>();
+```
 --------------------------------------------------------
 
 
