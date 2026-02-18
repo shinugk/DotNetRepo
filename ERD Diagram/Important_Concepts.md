@@ -27,14 +27,26 @@ public class Hider : Base {
     public new void Show() => Console.WriteLine("Hider Show");
 }
 
-// --- Execution ---
-Base obj1 = new Overrider();
-obj1.Show(); // Output: "Overrider Show" (Polymorphism)
+---------Method Overriding--------------(Run-time / late bidning)
+//If the instance is child class then it will override whatever variable type is
+//Calls the instance/object version
+Base obj = new Overrider();
+         or
+Overrider obj = new Overrider();
+obj.Show(); // Output: "Overrider Show" (Polymorphism) 
 
-Base obj2 = new Hider();
-obj2.Show(); // Output: "Base Show" (The child's method is hidden)
+//If the instance is base class then it is straight forward
+Base obj2 = new Base();
+obj2.Show(); // output: "Base Show" 
+
+
+--------------Method Hiding-----------------(compile-time / early binding)
+//It does not matter instance. it will always executes the variable version method
+//calls the variable version
+Base obj4 = new Hider();
+obj4.Show(); // Output: "Base Show" (The child's method is hidden)
 ```
-<img width="670" height="280" alt="image" src="https://github.com/user-attachments/assets/8f5dcc19-2714-4883-9136-e407ac953b3f" />
+<img width="750" height="350" alt="image" src="https://github.com/user-attachments/assets/8f5dcc19-2714-4883-9136-e407ac953b3f" />
 
 
 
