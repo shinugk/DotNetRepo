@@ -73,7 +73,8 @@ builder.Services
     })
 ```
 
-
+Other specific Built-in Filters: which are interfaces which we can inherit & implement Methods directly
+-------------------------------------------
 - (Inheriting from interfaces IActionFilter, IResultFilter, etc.. which has OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted method template and we must implement both if we inherit one of them) https://share.google/aimode/c2z1cnM7sDEyYdqnn
 - In ASP.NET Core, filters allow you to run code at specific stages of the request processing pipeline. They are typically used for "cross-cutting concerns" like security, logging, or caching to keep your controller actions clean. 
 
@@ -109,10 +110,6 @@ Built-in Filter Types and methods they provide:
 | **Exception Filter**     | `IExceptionFilter`<br>• `OnException()`                                    | `IAsyncExceptionFilter`<br>• `OnExceptionAsync()`         | When exception occurs                     | Handle errors globally                               |
 | **Result Filter**        | `IResultFilter`<br>• `OnResultExecuting()`<br>• `OnResultExecuted()`       | `IAsyncResultFilter`<br>• `OnResultExecutionAsync()`      | Before and after action result execution  | Modify response before sending to client             |
 
-
-Other specific Built-in middlewares: which are interfaces which we can inherit & implement Methods directly
--------------------------------------------
-https://share.google/aimode/LSNu0vvvBU1fNzKUf 
 
 How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory: https://share.google/aimode/cZYh8JgyfbvE5UZgL
 -----------------------------------------------------------------------
