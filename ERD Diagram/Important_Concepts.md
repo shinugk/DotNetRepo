@@ -51,6 +51,32 @@ Scalability, Idempotancy, Concurrency
 Async and await:
 -------------------
 
+How Garbage Collection works in the.NET CLR:
+--------------------------------------------
+
+Difference between ref, out, and in parameters in C#.
+-------------------------------------------------------
+
+Explain Value types vs Reference types in C#:
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+SQL:
+--------------------
+- Difference between Stored Procedure vs Function.
+- Explain ACID properties in databases with real examples.
+- What are Indexes and how do they improve performance?
+- Difference between DELETE vs TRUNCATE vs DROP.
+
 
 
 
