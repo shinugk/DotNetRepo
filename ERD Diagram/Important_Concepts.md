@@ -111,6 +111,15 @@ public async Task SaveDataAsync()
     Console.WriteLine("Data saved successfully!");
 }
 ```
+.Net WebAPI Example:
+```
+[HttpPost]
+public async Task<IActionResult> SaveUser(User user)
+{
+    await _service.SaveAsync(user);
+    return Ok();                       //No value returned from service → Task
+}
+```
 2. Task (The "Return" Version)
 A Task<T> represents an asynchronous operation that returns a value of type T. It is the asynchronous equivalent of a method that returns a specific type (like int, string, or a custom object). 
 Common uses:
@@ -127,12 +136,38 @@ public async Task<string> FetchWeatherAsync()
     return "Sunny, 25°C"; // The 'string' inside Task<string>
 }
 ```
-Key Differences at a Glance
-Feature 	Task	Task<T>
-Return Value	None (Void)	Returns a value of type T
-Analogy	A receipt for a delivered package.	A ticket for a pizza you'll pick up.
-Usage	await DoWork();	string result = await GetData();
-Focus	Execution status (Success/Fail)	The resulting data
+.Net WebAPI Example:
+```
+[HttpGet]
+public async Task<User> GetUser(int id)
+{
+    return await _service.GetUserAsync(id);   //Returns User → Task<User>
+}
+```
+| Feature                  | **Task**                                                | **Task<T>**                                                        |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------ |
+| **Return Value**         | ❌ No return value (like `void`)                         | ✅ Returns a value of type `T`                                      |
+| **Analogy**              | 📦 Receipt for a delivered package (confirms work done) | 🍕 Ticket for a pizza you will pick up (you expect something back) |
+| **Usage**                | `await DoWork();`                                       | `string result = await GetData();`                                 |
+| **Focus**                | Execution status (Success / Fail / Completed)           | The resulting data + execution status                              |
+| **When to Use**          | When you only need to perform an operation              | When you need a result from the operation                          |
+| **Example Return Type**  | `Task`                                                  | `Task<int>`, `Task<string>`, `Task<User>`                          |
+| **ASP.NET Core Example** | `Task<IActionResult>` when no data returned             | `Task<User>` when returning data                                   |
+| **Result Property**      | Not available                                           | Available → `.Result`                                              |
+| **Common Scenario**      | Saving data, sending email, logging                     | Fetching data, calculations, API calls                             |
+
+🔥 Task vs Thread (Interview Question)
+| Task             | Thread               |
+| ---------------- | -------------------- |
+| Lightweight      | Heavy                |
+| Managed by .NET  | Managed by OS        |
+| Uses thread pool | Creates new thread   |
+| Recommended      | Rarely used directly |
+
+Why We Use Task?
+- Because async operations like: Database calls, API calls, File operations, Network requests take time.
+- Without Task → thread gets blocked ❌
+- With Task → thread is free while waiting ✅
 
 How Garbage Collection works in the.NET CLR:
 --------------------------------------------
