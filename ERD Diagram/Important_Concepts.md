@@ -1,6 +1,43 @@
 Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
 -----------------------------------------------------------
 
+What is difference between Method Overriding and Method Hiding:
+----------------------------------------------------------------
+While both override and new allow a child class to have a method with the same name as its parent, they behave very differently when you treat a child object as if it were a parent. 
+1. Method Overriding (override):
+- What it does: It replaces the parent's logic with the child's logic.
+- Polymorphism: This is "true" polymorphism. No matter how you reference the object (as a parent or a child), the child's version always runs.
+- Requirement: The parent method must be marked as virtual or abstract.
+  <br>
+2. Method Hiding (new)
+- What it does: It hides the parent's method from the child class but keeps the original parent method intact.
+- Behavior: The method that runs depends on the variable type, not the actual object.
+- If the variable is the Parent type, the Parent's method runs.
+- If the variable is the Child type, the Child's method runs.
+```
+public class Base {
+    public virtual void Show() => Console.WriteLine("Base Show");
+}
+
+public class Overrider : Base {
+    public override void Show() => Console.WriteLine("Overrider Show");
+}
+
+public class Hider : Base {
+    public new void Show() => Console.WriteLine("Hider Show");
+}
+
+// --- Execution ---
+Base obj1 = new Overrider();
+obj1.Show(); // Output: "Overrider Show" (Polymorphism)
+
+Base obj2 = new Hider();
+obj2.Show(); // Output: "Base Show" (The child's method is hidden)
+```
+<img width="670" height="280" alt="image" src="https://github.com/user-attachments/assets/8f5dcc19-2714-4883-9136-e407ac953b3f" />
+
+
+
 How to create a custom Middleware (how to register it in Program.cs):
 ------------------------------------------------------
 
