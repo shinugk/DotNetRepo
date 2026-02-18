@@ -12,8 +12,69 @@ How to write extension method and how to use it:
 
 How to write custom action filter and use it on Action Methods(Controllers):
 -----------------------------------------------------------------------------------------------------------------------------------------
-- Inheriting from ActionFilterAttributes (provides virtual methods OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted which we can override and use it like [CsrfFilter] attribute directly on Action method(Controller)) or (Inheriting from interfaces IActionFilter, IResultFilter, etc.. which has OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted method template and we must implement both if we inherit one of them) https://share.google/aimode/c2z1cnM7sDEyYdqnn
-- 
+- Inheriting from ActionFilterAttributes (provides virtual methods OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted which we can override and use it like attribute directly on Action method(Controller)) or
+```
+ public class ValidationActionFilter : ActionFilterAttribute
+ {
+     public override void OnActionExecuting(ActionExecutingContext context)
+     {
+         if (!context.ModelState.IsValid)
+         {
+             var path = context?.HttpContext?.Request?.Path.Value ?? "";
+             bool isPublic = path.StartsWith("/public/api/", StringComparison.OrdinalIgnoreCase);
+             
+             if(isPublic)
+             {
+                 var errorDetails = context.ModelState.PublicAllErrors();
+                 var publicResp = new
+                 {
+                     type = "BIO400",
+                     title = "Bad Request",
+                     status = "400",
+                     detail = "One or more fields did not pass validation.",
+                     errors = errorDetails
+                 };
+                 context.Result = new BadRequestObjectResult(publicResp);
+             }             
+         }
+     }
+ }
+```
+How To Use This Filter
+Option 1 — Apply on Controller -> Filter runs for all actions in controller.
+```
+[ValidationActionFilter]
+[ApiController]
+[Route("api/[controller]")]
+public class UsersController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Create(UserDto dto)
+    {
+        return Ok();
+    }
+}
+```
+Option 2 — Apply on Specific Action -> Only this action uses filter.
+```
+[HttpPost]
+[ValidationActionFilter]
+public IActionResult Create(UserDto dto)
+{
+    return Ok();
+}
+```
+Option 3 — Register Globally (Best Practice) in Program.cs controller section-> Now filter runs for every controller automatically
+```
+builder.Services
+    .AddControllers(options =>
+    {
+        options.Filters.Add(new ValidationActionFilter()); //Validate incoming requests, return a BadRequest status if the model state does not pass
+    })
+```
+
+
+- (Inheriting from interfaces IActionFilter, IResultFilter, etc.. which has OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted method template and we must implement both if we inherit one of them) https://share.google/aimode/c2z1cnM7sDEyYdqnn
 - In ASP.NET Core, filters allow you to run code at specific stages of the request processing pipeline. They are typically used for "cross-cutting concerns" like security, logging, or caching to keep your controller actions clean. 
 
 Primary Built-in Filter Types 
