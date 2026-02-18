@@ -42,6 +42,9 @@ How strings are immutable in C#:
 ----------------------------------
 
 
+Explain Caching strategies in .NET
+--------------------------------------------------------------------
+
 Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race conditions,
 --------------------------------------------------------------------
 
