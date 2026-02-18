@@ -64,6 +64,23 @@ Explain Value types vs Reference types in C#:
 ------------------------------------------
 
 
+What is the difference between String and StringBuilder in C#;
+------------------------------------------------------------
+
+
+what is difference between static, const, readonly variables:
+---------------------------------------------------
+Constants are static by default
+
+Difference between the Equality Operator (==) and Equals() Method in C#:
+-----------------------------------------------------------------
+
+what is boxing and Unboxing in C#:
+------------------------------------
+
+
+
+
 
 
 
