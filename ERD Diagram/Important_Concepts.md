@@ -1,5 +1,6 @@
 Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
 -----------------------------------------------------------
+C# is a programming language, .NET is the platform that runs C# code, .NET Core is the modern cross-platform version of .NET, and ASP.NET Web API is a framework within .NET used to build RESTful APIs.
 
 What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
