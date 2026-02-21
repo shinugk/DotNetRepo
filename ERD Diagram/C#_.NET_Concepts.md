@@ -2,6 +2,43 @@ Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
 -----------------------------------------------------------
 C# is a programming language, .NET is the platform that runs C# code, .NET Core is the modern cross-platform version of .NET, and ASP.NET Web API is a framework within .NET used to build RESTful APIs.
 
+<br>
+
+Lifecycle of C# Code Execution
+------------------------------------
+Your C# Code (.cs files)
+        ↓
+C# Compiler (Roslyn)
+        ↓
+Intermediate Language (IL) + Metadata
+        ↓
+Assembly (.dll / .exe)
+        ↓
+CLR (Common Language Runtime)
+        ↓
+JIT Compiler
+        ↓
+Native Machine Code
+        ↓
+Execution by CPU
+
+1) You write code in C#: This is called Managed Code.
+2) Compilation by C# Compiler (Roslyn) 
+    - When you build the project <dotnet build> 
+    - The compiler converts C# into ➜ Intermediate Language (IL / MSIL / CIL) outputfiles (program.dll/program.exe)
+    - Assemblies contain:
+        - IL Code
+        - Metadata (types, methods, references)
+        - Manifest (assembly info)
+3) CLR Loads the Assembly
+   - When you run: <dotnet run> . The CLR (Common Language Runtime) starts working.
+4) JIT Compilation (Just-In-Time Compiler)
+  - CLR does NOT directly execute IL.
+  - Instead: <IL → JIT Compiler → Native Machine Code>
+5) Execution by CPU
+  - Now native machine code runs directly on the OS and CPU.
+
+
 What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
 While both override and new allow a child class to have a method with the same name as its parent, they behave very differently when you treat a child object as if it were a parent. 
