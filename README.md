@@ -1,12 +1,5 @@
 🎯 Project Use Case: [Interview-Tracker](https://it-clientapp.onrender.com/login)
 -----------------------------------------------------------------------------------
-- A user logs in using Google GIS and also using own jwt token for secure API
-- After login:
-	- User profile is stored in our database
-	- That user can create / view / update employers
-	- Each employer belongs only to the logged-in user
-	- No other user can access it
-
  - Project URL: https://it-clientapp.onrender.com/login
  - Swagger: https://dotnetrepo.onrender.com/swagger/index.html
 
