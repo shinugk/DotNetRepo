@@ -99,6 +99,8 @@ how to create inline middleware:
 How to write extension method and how to use it:
 --------------------------------------------------
 
+<br>
+
 How to write custom action filter and use it on Action Methods(Controllers):
 -----------------------------------------------------------------------------------------------------------------------------------------
 - Inheriting from ActionFilterAttributes (provides virtual methods OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted which we can override and use it like attribute directly on Action method(Controller)) or
@@ -162,6 +164,8 @@ builder.Services
     })
 ```
 
+<br>
+
 Other specific Built-in Filters: which are interfaces which we can inherit & implement Methods directly
 -------------------------------------------
 - (Inheriting from interfaces IActionFilter, IResultFilter, etc.. which has OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted method template and we must implement both if we inherit one of them) https://share.google/aimode/c2z1cnM7sDEyYdqnn
@@ -199,6 +203,7 @@ Built-in Filter Types and methods they provide:
 | **Exception Filter**     | `IExceptionFilter`<br>• `OnException()`                                    | `IAsyncExceptionFilter`<br>• `OnExceptionAsync()`         | When exception occurs                     | Handle errors globally                               |
 | **Result Filter**        | `IResultFilter`<br>• `OnResultExecuting()`<br>• `OnResultExecuted()`       | `IAsyncResultFilter`<br>• `OnResultExecutionAsync()`      | Before and after action result execution  | Modify response before sending to client             |
 
+<br>
 
 How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory: https://share.google/aimode/cZYh8JgyfbvE5UZgL
 -----------------------------------------------------------------------
@@ -236,6 +241,8 @@ Scalability, Idempotancy, Concurrency
 
 Async and await:
 -------------------
+
+<br>
 
 Task and Task<T>:
 --------------------
@@ -311,6 +318,8 @@ Why We Use Task?
 - Because async operations like: Database calls, API calls, File operations, Network requests take time.
 - Without Task → thread gets blocked ❌
 - With Task → thread is free while waiting ✅
+
+<br>
 
 How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
 ---------------------------------------------------------------
