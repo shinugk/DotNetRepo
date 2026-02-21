@@ -6,6 +6,7 @@ C# is a programming language, .NET is the platform that runs C# code, .NET Core 
 
 Lifecycle of C# Code Execution
 ------------------------------------
+```
 Your C# Code (.cs files)
         ↓
 C# Compiler (Roslyn)
@@ -21,7 +22,7 @@ JIT Compiler
 Native Machine Code
         ↓
 Execution by CPU
-
+```
 1) You write code in C#: This is called Managed Code.
 2) Compilation by C# Compiler (Roslyn) 
     - When you build the project <dotnet build> 
@@ -31,12 +32,12 @@ Execution by CPU
         - Metadata (types, methods, references)
         - Manifest (assembly info)
 3) CLR Loads the Assembly
-   - When you run: <dotnet run> . The CLR (Common Language Runtime) starts working.
+    - When you run: <dotnet run> . The CLR (Common Language Runtime) starts working.
 4) JIT Compilation (Just-In-Time Compiler)
-  - CLR does NOT directly execute IL.
-  - Instead: <IL → JIT Compiler → Native Machine Code>
+    - CLR does NOT directly execute IL.
+    - Instead: <IL → JIT Compiler → Native Machine Code>
 5) Execution by CPU
-  - Now native machine code runs directly on the OS and CPU.
+    - Now native machine code runs directly on the OS and CPU.
 
 
 What is difference between Method Overriding and Method Hiding:
