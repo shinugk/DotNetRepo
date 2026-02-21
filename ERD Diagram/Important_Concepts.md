@@ -273,8 +273,8 @@ Why We Use Task?
 - Without Task → thread gets blocked ❌
 - With Task → thread is free while waiting ✅
 
-How Garbage Collection works in the.NET CLR:
---------------------------------------------
+How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
+---------------------------------------------------------------
 
 Difference between ref, out, and in parameters in C#.
 -------------------------------------------------------
