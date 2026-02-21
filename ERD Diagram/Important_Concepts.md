@@ -309,15 +309,5 @@ what is boxing and Unboxing in C#:
 
 
 
-SQL:
---------------------
-- Difference between Stored Procedure vs Function.
-- Explain ACID properties in databases with real examples.
-- What are Indexes and how do they improve performance?
-- Difference between DELETE vs TRUNCATE vs DROP.
-
-
-
-
 
 
