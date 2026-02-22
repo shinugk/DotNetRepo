@@ -530,6 +530,68 @@ Here we are creating a new exception, not rethrowing.
 <br>
 <br>
 
+what are Nullable types in .Net:
+---------------------------------------
+- In .NET, nullable data types allow value types (like int, bool, DateTime, etc.) to hold a null value.
+- Normally:
+   - Value types cannot be null
+   - Reference types can be null
+- Nullable types solve this limitation for value types.
+
+✅ 1. Why Nullable Types Are Needed
+```
+int age = null;   // ❌ Compile-time error
+```
+- Because int is a value type.
+- But sometimes we need:
+   - Database values (NULL from DB)
+   - Optional fields
+   - Missing data
+   - User input not provided
+- So .NET provides Nullable<T>
+
+✅ 2. Syntax of Nullable Types
+Method 1 — Using ? (Most Common)
+```
+int? age = null;
+bool? isActive = null;
+DateTime? joiningDate = null;
+```
+Method 2 — Using Nullable<T>
+```
+Nullable<int> age = null;
+```
+- Both are the same. int? is just shorthand for Nullable<int>.
+
+✅ 3. Null Coalescing Operator : ??
+```
+int? age = null;
+int result = age ?? 18;  
+Console.WriteLine(result); // 18
+```
+- Provides default value if null.
+
+✅ 4. Null Conditional Operator ?.
+```
+int? number = null;
+Console.WriteLine(number?.ToString());
+```
+- Used with reference or nullable types. Prevents exception.
+
+summary:
+| Operator | Name                       | Example   |
+| -------- | -------------------------- | --------- |
+| ?        | Nullable type              | int?      |
+| ??       | Null coalescing            | x ?? 0    |
+| ?.       | Null conditional           | obj?.Name |
+| ??=      | Null coalescing assignment | x ??= 5   |
+
+
+
+<br>
+<br>
+
+
 
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
