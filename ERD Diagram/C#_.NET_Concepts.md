@@ -222,9 +222,6 @@ How to implement logging (built-in request&response logging using ILogger interf
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/http-logging/?view=aspnetcore-8.0
 
 
-Explain SQL Query execution plan:
--------------------------------------------
-
 How strings are immutable in C#:
 ----------------------------------
 
