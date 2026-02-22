@@ -451,6 +451,44 @@ Do NOT use when:
 Why do we use using in .NET?
 - We use using to ensure that unmanaged resources are released properly by automatically calling Dispose(). It prevents memory leaks and resource locking issues, especially for objects like file streams, database connections, and network resources.
 
+<br>
+
+what is difference between throw and throe ex:
+-----------------------------------------------------
+- The difference between throw and throw ex is about stack trace preservation.
+- throw; → preserves the original stack trace ✅ (Best practice)
+- throw ex; → resets the stack trace ❌ (Bad practice)
+
+✅ Example — Using throw (Correct Way)
+```
+try
+{
+    Method1();
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Error occurred");
+    throw; // rethrow original exception   
+}
+```
+
+Interview Trick Question: 👉 What happens if we use throw outside catch?
+- throw; // compile error
+- only valid inside catch block.
+
+When Should You Use throw ex? Almost never.
+- Only rare case: When you want to wrap exception into a new one
+```
+catch (Exception ex)
+{
+    throw new ApplicationException("Custom message", ex);
+}
+```
+Here we are creating a new exception, not rethrowing.
+
+<br>
+
+
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
 
