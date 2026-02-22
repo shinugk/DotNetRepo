@@ -393,6 +393,65 @@ Do you use using with HttpClient?
 <br>
 <br>
 
+What is 'using' in .Net:
+---------------------------------
+- using is used to automatically release unmanaged resources when you are done using an object.
+- It ensures that Dispose() method is called.
+- Why do we need using?
+- Some objects use external resources like: Files, Database connections, Network connections, Streams, HttpResponseMessage, Graphics objects
+- These are NOT cleaned immediately by Garbage Collector (GC).
+- So we manually release them using: IDisposable → Dispose() → using
+
+Basic Example — File Handling without 'using'
+```
+FileStream file = new FileStream("test.txt", FileMode.Open);
+
+// work with file
+file.Dispose(); // Must remember to call
+```
+Problem ❌: If exception occurs → Dispose never runs → file lock remains.
+
+With using (Safe ✅):
+```
+using (FileStream file = new FileStream("test.txt", FileMode.Open))
+{
+    // work with file
+}
+// Dispose automatically called here
+```
+Even if exception occurs → Dispose still runs ✅
+
+- Modern C# Syntax (Best): <var file = new FileStream("test.txt", FileMode.Open);> -> Dispose happens automatically at end of scope.
+
+What Happens Internally? using converts into:
+```
+var resource = new Resource();
+try
+{
+    // work
+}
+finally
+{
+    resource.Dispose();   
+}
+```
+-> So even if exception occurs → Dispose runs.
+
+✅ When Should You Use using?
+- Use when object implements: IDisposable
+- Examples: FileStream, StreamReader, SqlConnection, HttpResponseMessage, MemoryStream, Graphics, CancellationTokenSource
+
+✅ When NOT to Use using?
+Do NOT use when:
+- Object lifetime managed by Dependency Injection
+- Singleton services
+- IHttpClientFactory HttpClient
+- Controller / Service classes
+- Example ❌ : <using var service = new MyService(); // wrong if DI managed>
+
+Why do we use using in .NET?
+We use using to ensure that unmanaged resources are released properly by automatically calling Dispose(). It prevents memory leaks and resource locking issues, especially for objects like file streams, database connections, and network resources.
+
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
 
