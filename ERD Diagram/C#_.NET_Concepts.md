@@ -44,6 +44,7 @@ Execution by CPU
 Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 ------------------------------------------------------------
 
+<br>
 
 What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
@@ -114,12 +115,12 @@ public class MyCustomMiddleware : IMiddleware
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         // Before controller
-        Console.WriteLine("Request Path: " + context.Request.Path);
+        Console.WriteLine("Request Path: " + context.Request.Path);   //Executes before controller
 
         await next(context); // Call next middleware
 
         // After controller
-        Console.WriteLine("Response Status: " + context.Response.StatusCode);
+        Console.WriteLine("Response Status: " + context.Response.StatusCode);    //Executes after controller
     }
 }
 ```
@@ -143,8 +144,42 @@ app.UseMiddleware<MyCustomMiddleware>();
 | RequestDelegate next | Next middleware in pipeline     |
 - The line that controls flow: await next(context); . If you remove this → pipeline stops. This is called short-circuiting.
 
+<br>
+
 how to create inline middleware:
 --------------------------------------
+- Inline middleware is middleware written directly inside Program.cs using a lambda expression instead of creating a separate class file.
+- We use the app.Use() method.
+```
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// Inline Middleware
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Request Path: " + context.Request.Path);   // Code BEFORE next middleware
+
+    await next(); // Pass request to next middleware
+
+    Console.WriteLine("Response Status: " + context.Response.StatusCode);   // Code AFTER next middleware
+});
+
+app.MapGet("/", () => "Hello World");
+app.Run();
+```
+Execution flow
+```
+Client Request
+      ↓
+Inline Middleware (Before)
+      ↓
+Endpoint / Controller
+      ↓
+Inline Middleware (After)
+      ↓
+Client Response
+```
+<br>
 
 How to write extension method and how to use it:
 --------------------------------------------------
