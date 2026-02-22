@@ -180,11 +180,9 @@ Each filter runs in a strictly defined order:
 1) IAuthorizationFilter:
 - When it runs: First in the pipeline, immediately after routing.
 - Purpose: Determines if the user is permitted to access the resource. It can short-circuit the request (stop it immediately) if the user is unauthorized.
-- Common Use: Implementing custom access rules or integrating with external identity providers.
 2) IResourceFilter:
 - When it runs: Right after authorization and before model binding.
 - Purpose: Wraps most of the pipeline. Since it runs before model binding, it is ideal for response caching because it can return a cached result before the system does the expensive work of processing the request body.
-- Common Use: Performance monitoring or bypassing the action entirely for cached data.
 3) IActionFilter:
 - When it runs: Immediately before and after a controller action executes.
 - Purpose: Allows you to inspect or modify the parameters being passed into an action or the result returned from it.
@@ -192,20 +190,18 @@ Each filter runs in a strictly defined order:
 4) IExceptionFilter:
 - When it runs: Only when an unhandled exception occurs during action execution.
 - Purpose: Centralizes error handling logic. It is the last line of defense within the MVC pipeline.
-- Common Use: Logging errors to a database or returning standardized error responses like ProblemDetails.
 5) IResultFilter:
 - When it runs: Just before and after the execution of the final action result (e.g., while rendering a View or serializing JSON).
 - Purpose: Used for logic that must surround the formatting of the response.
-- Common Use: Adding custom HTTP headers to the final output.
 
 Built-in Filter Types and methods they provide:
 | Filter Type              | Synchronous Interface & Methods                                            | Asynchronous Interface & Methods                          | When It Runs                              | Purpose                                              |
 | ------------------------ | -------------------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------- | ---------------------------------------------------- |
 | **Authorization Filter** | `IAuthorizationFilter`<br>• `OnAuthorization()`                            | `IAsyncAuthorizationFilter`<br>• `OnAuthorizationAsync()` | **Before everything**                     | Checks whether user is authorized to access resource |
-| **Resource Filter**      | `IResourceFilter`<br>• `OnResourceExecuting()`<br>• `OnResourceExecuted()` | `IAsyncResourceFilter`<br>• `OnResourceExecutionAsync()`  | After authorization, before model binding | Used for caching, performance, setup logic           |
+| **Resource Filter**      | `IResourceFilter`<br>• `OnResourceExecuting()`<br>• `OnResourceExecuted()` | `IAsyncResourceFilter`<br>• `OnResourceExecutionAsync()`  | After authorization, before model binding | Used for caching, performance monitoring, setup logic           |
 | **Action Filter**        | `IActionFilter`<br>• `OnActionExecuting()`<br>• `OnActionExecuted()`       | `IAsyncActionFilter`<br>• `OnActionExecutionAsync()`      | Before and after controller action method | Validation, logging, modifying inputs/outputs        |
-| **Exception Filter**     | `IExceptionFilter`<br>• `OnException()`                                    | `IAsyncExceptionFilter`<br>• `OnExceptionAsync()`         | When exception occurs                     | Handle errors globally                               |
-| **Result Filter**        | `IResultFilter`<br>• `OnResultExecuting()`<br>• `OnResultExecuted()`       | `IAsyncResultFilter`<br>• `OnResultExecutionAsync()`      | Before and after action result execution  | Modify response before sending to client             |
+| **Exception Filter**     | `IExceptionFilter`<br>• `OnException()`                                    | `IAsyncExceptionFilter`<br>• `OnExceptionAsync()`         | When exception occurs                     | Handle errors globally (Logging errors to a database or returning standardized error responses like ProblemDetails)                              |
+| **Result Filter**        | `IResultFilter`<br>• `OnResultExecuting()`<br>• `OnResultExecuted()`       | `IAsyncResultFilter`<br>• `OnResultExecutionAsync()`      | Before and after action result execution  | Modify response before sending to client (Adding custom HTTP headers to the final output.)            |
 
 <br>
 
