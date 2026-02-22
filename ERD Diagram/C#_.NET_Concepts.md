@@ -354,11 +354,11 @@ Problem with this approach
 - DNS caching problems
 
 Example 2. Calling External API using IHttpClientFactory (Recommended)
-Register HttpClient in Program.cs:
+- Register HttpClient in Program.cs:
 ```
 builder.Services.AddHttpClient();
 ```
-Create Service
+- Create Service
 ```
 public class ExternalApiService
 {
@@ -379,7 +379,7 @@ public class ExternalApiService
     }
 }
 ```
-Register Service in DI
+- Register Service in DI
 ```
 builder.Services.AddScoped<ExternalApiService>();
 ```
