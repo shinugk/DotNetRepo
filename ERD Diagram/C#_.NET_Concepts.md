@@ -96,6 +96,13 @@ obj4.Show(); // Output: "Base Show" (The child's method is hidden)
 
 How to create a custom Middleware (how to register it in Program.cs):
 ------------------------------------------------------
+- Custom middleware is a user-defined component that runs inside the HTTP request pipeline to handle requests and responses.
+- It allows you to:
+        - Execute code before a request reaches the controller
+        - Execute code after the controller returns a response
+        - Modify request or response
+        - Stop the request completely if needed
+- In simple words: Middleware = Code that runs between Client → Server → Client
 Step 1: create middleware by inheriting IMiddleware
 ```
 using Microsoft.AspNetCore.Http;
