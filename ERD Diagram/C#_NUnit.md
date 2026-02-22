@@ -359,14 +359,71 @@ Interview Questions:
     - Answer: Repository contains EF Core logic. Mocking DbContext is complex and unreliable. InMemory provider allows testing actual EF behavior without real database.
   
 2) How do you unit test a service with dependencies?
-    - answer: Use Moq to mock dependencies and NUnit for assertions.
+    - Answer: Use Moq to mock dependencies and NUnit for assertions.
 
 3) When to Use Moq vs InMemory
-----------------------------------
 | Scenario            | Use                     |
 | ------------------- | ----------------------- |
 | Service testing     | Moq                     |
 | Repository testing  | InMemory                |
 | Controller testing  | Moq                     |
 | Integration testing | Real DB / TestContainer |
+
+4) Which assertion style do you prefer?
+    - Answer: I prefer Assert.That() because it is more readable and flexible than traditional assertions.
+  
+5) All Nunit Assert statements
+```
+Assert.AreEqual(expected, actual);              // Checks if expected value equals actual value
+Assert.AreNotEqual(notExpected, actual);        // Checks if value is NOT equal
+Assert.IsTrue(condition);                       // Passes if condition is true
+Assert.IsFalse(condition);                      // Passes if condition is false
+Assert.IsNull(objectValue);                     // Passes if object is null
+Assert.IsNotNull(objectValue);                  // Passes if object is NOT null
+Assert.AreSame(obj1, obj2);                     // Passes if both references point to same object in memory
+Assert.AreNotSame(obj1, obj2);                  // Passes if objects are different references
+Assert.IsInstanceOf<Type>(objectValue);         // Checks object is exact type
+Assert.IsAssignableFrom<Type>(objectValue);     // Checks object can be assigned to type (inheritance supported)
+Assert.Contains(item, collection);              // Checks collection contains item (simple contains)
+
+CollectionAssert.AreEqual(expectedList, actualList);  // Checks two collections are equal in order and values
+CollectionAssert.Contains(collection, item);   // Checks collection contains item
+CollectionAssert.IsEmpty(collection);          // Passes if collection is empty
+CollectionAssert.IsNotEmpty(collection);       // Passes if collection is NOT empty
+
+Assert.Greater(actual, threshold);             // Checks actual > threshold
+Assert.Less(actual, threshold);                // Checks actual < threshold
+Assert.GreaterOrEqual(actual, value);          // Checks actual >= value
+Assert.LessOrEqual(actual, value);             // Checks actual <= value
+Assert.Throws<ExceptionType>(() => method());  // Passes if method throws expected exception
+Assert.DoesNotThrow(() => method());           // Passes if method does NOT throw exception
+Assert.ThrowsAsync<ExceptionType>(async () => await method()); // Checks async method throws exception
+Assert.Pass("message");                        // Forces test to pass immediately
+Assert.Fail("message");                        // Forces test to fail immediately
+Assert.Warn("message");                        // Generates warning but does not fail test
+
+// ================= MODERN ASSERT.THAT STYLE (RECOMMENDED) =================
+Assert.That(actual, Is.EqualTo(expected));     // Modern equality check (recommended style)
+Assert.That(actual, Is.Not.EqualTo(value));    // Modern inequality check
+Assert.That(condition, Is.True);               // Modern true check
+Assert.That(condition, Is.False);              // Modern false check
+Assert.That(objectValue, Is.Null);             // Modern null check
+Assert.That(objectValue, Is.Not.Null);         // Modern not-null check
+Assert.That(objectValue, Is.InstanceOf<Type>()); // Checks object type
+Assert.That(number, Is.InRange(min, max));     // Checks number is inside range
+Assert.That(collection, Has.Count.EqualTo(n)); // Checks collection count
+Assert.That(collection, Does.Contain(item));   // Checks collection contains item
+Assert.That(stringValue, Does.StartWith(text)); // Checks string starts with text
+Assert.That(stringValue, Does.EndWith(text));   // Checks string ends with text
+Assert.That(stringValue, Does.Contain(text));   // Checks substring exists
+Assert.That(stringValue, Is.EqualTo(text).IgnoreCase); // Case-insensitive string comparison
+Assert.That(() => method(), Throws.TypeOf<ExceptionType>()); // Modern exception check
+
+// ================= MULTIPLE ASSERTIONS =================
+Assert.Multiple(() =>
+{
+Assert.AreEqual(expected1, actual1);       // First assertion inside multiple block
+Assert.AreEqual(expected2, actual2);       // Second assertion (all failures reported together)
+});
+```
 
