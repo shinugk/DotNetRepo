@@ -8,6 +8,13 @@ Why Moq?
 --------
 Moq is used to isolate unit tests by mocking dependencies so that tests do not rely on external systems like databases or APIs.
 
+- Isolation: Moq helps isolate the system under test (SUT) from its dependencies, allowing you to test the SUT's logic independently.
+- Dependency Injection: Moq works best when used with the Dependency Injection design pattern, allowing you to inject mocked interfaces or classes into the code being tested.
+- Arrange, Act, Assert (AAA) Pattern: Moq facilitates structuring your tests into the industry-standard AAA pattern:
+    - Arrange: Set up the initial state, test data, and configure your mock objects' behavior and expectations.
+    - Act: Execute the method on the system under test.
+    -Assert: Verify that the outcome is as expected, which often involves verifying interactions with the mock objects.
+
 Sample Example:
 -----------------------------------
 - We are testing a UserService that depends on a repository.
