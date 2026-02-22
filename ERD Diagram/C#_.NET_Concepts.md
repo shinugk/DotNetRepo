@@ -397,8 +397,7 @@ What is 'using' in .Net:
 ---------------------------------
 - using is used to automatically release unmanaged resources when you are done using an object.
 - It ensures that Dispose() method is called.
-- Why do we need using?
-- Some objects use external resources like: Files, Database connections, Network connections, Streams, HttpResponseMessage, Graphics objects
+- Why do we need using?: Some objects use external resources like: Files, Database connections, Network connections, Streams, HttpResponseMessage, Graphics objects
 - These are NOT cleaned immediately by Garbage Collector (GC).
 - So we manually release them using: IDisposable → Dispose() → using
 
@@ -421,7 +420,7 @@ using (FileStream file = new FileStream("test.txt", FileMode.Open))
 ```
 Even if exception occurs → Dispose still runs ✅
 
-- Modern C# Syntax (Best): <var file = new FileStream("test.txt", FileMode.Open);> -> Dispose happens automatically at end of scope.
+- Modern C# Syntax (Best) -> var file = new FileStream("test.txt", FileMode.Open); -> Dispose happens automatically at end of scope.
 
 What Happens Internally? using converts into:
 ```
@@ -447,10 +446,10 @@ Do NOT use when:
 - Singleton services
 - IHttpClientFactory HttpClient
 - Controller / Service classes
-- Example ❌ : <using var service = new MyService(); // wrong if DI managed>
+- Example ❌ -> using var service = new MyService(); // wrong if DI managed>
 
 Why do we use using in .NET?
-We use using to ensure that unmanaged resources are released properly by automatically calling Dispose(). It prevents memory leaks and resource locking issues, especially for objects like file streams, database connections, and network resources.
+- We use using to ensure that unmanaged resources are released properly by automatically calling Dispose(). It prevents memory leaks and resource locking issues, especially for objects like file streams, database connections, and network resources.
 
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
