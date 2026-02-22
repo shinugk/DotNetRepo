@@ -551,7 +551,7 @@ int age = null;   // ❌ Compile-time error
    - User input not provided
 - So .NET provides Nullable<T>
 
-✅ 2. Syntax of Nullable Types \n
+✅ 2. Syntax of Nullable Types   <br>
 Method 1 — Using ? (Most Common)
 ```
 int? age = null;
