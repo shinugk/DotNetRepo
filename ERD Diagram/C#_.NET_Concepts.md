@@ -41,6 +41,10 @@ Execution by CPU
 
 <br>
 
+Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
+------------------------------------------------------------
+
+
 What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
 While both override and new allow a child class to have a method with the same name as its parent, they behave very differently when you treat a child object as if it were a parent. 
