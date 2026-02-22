@@ -40,6 +40,15 @@ Execution by CPU
     - Now native machine code runs directly on the OS and CPU.
 
 <br>
+<br>
+Data Types in C# .Net:
+---------------------------
+
+
+
+
+<br>
+<br>
 
 Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 ------------------------------------------------------------
