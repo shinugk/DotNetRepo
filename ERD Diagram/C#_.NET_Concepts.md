@@ -95,6 +95,7 @@ obj4.Show(); // Output: "Base Show" (The child's method is hidden)
 <img width="750" height="350" alt="image" src="https://github.com/user-attachments/assets/8f5dcc19-2714-4883-9136-e407ac953b3f" />
 
 <br>
+<br>
 
 How to create a custom Middleware (how to register it in Program.cs):
 ------------------------------------------------------
@@ -550,7 +551,7 @@ int age = null;   // ❌ Compile-time error
    - User input not provided
 - So .NET provides Nullable<T>
 
-✅ 2. Syntax of Nullable Types
+✅ 2. Syntax of Nullable Types \n
 Method 1 — Using ? (Most Common)
 ```
 int? age = null;
