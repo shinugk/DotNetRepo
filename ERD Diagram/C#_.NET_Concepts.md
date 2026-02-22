@@ -183,6 +183,38 @@ Client Response
 
 How to write extension method and how to use it:
 --------------------------------------------------
+- In C#, extension methods allow you to “add” new methods to an existing class without modifying the original class or creating a derived class.
+- They are very commonly used in .NET (for example: string.IsNullOrEmpty(), LINQ methods like Where(), Select() etc.).
+- Basic Rules to Create Extension Method
+   - Must be inside a static class
+   - Method must be static
+   - First parameter must use the this keyword
+   - The this parameter represents the type you are extending
+Example 1 — Extension Method for int
+```
+public static class IntExtensions
+{
+    public static bool IsEven(this int number)
+    {
+        return number % 2 == 0;
+    }
+}
+```
+Step 2 — How to Use It
+```
+class Program
+{
+    static void Main()
+    {
+        int num = 10;
+        if (num.IsEven())   //using extension method -> returns true
+        {
+            Console.WriteLine("Even number");
+        }
+    }
+}
+```
+- you can create Extension Method with Multiple Parameters
 
 <br>
 
