@@ -186,7 +186,6 @@ Each filter runs in a strictly defined order:
 3) IActionFilter:
 - When it runs: Immediately before and after a controller action executes.
 - Purpose: Allows you to inspect or modify the parameters being passed into an action or the result returned from it.
-- Common Use: Validating ModelState automatically or logging incoming request payloads.
 4) IExceptionFilter:
 - When it runs: Only when an unhandled exception occurs during action execution.
 - Purpose: Centralizes error handling logic. It is the last line of defense within the MVC pipeline.
