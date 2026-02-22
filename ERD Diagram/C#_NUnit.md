@@ -191,6 +191,7 @@ namespace DemoTests
     }
 ```
 
+<br>
 
 Basics:
 ------------------
@@ -218,6 +219,7 @@ Basics:
 8) [TearDown] : Runs after each test. Used for cleanup.
 
 
+<br>
 
 
 How to test Repository using EF Core InMemory Database
@@ -348,7 +350,7 @@ public class UserRepositoryTests
 }
 ```
 
-
+<br>
 
 
 Interview Questions:
