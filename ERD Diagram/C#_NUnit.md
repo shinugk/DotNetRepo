@@ -13,7 +13,7 @@ Moq is used to isolate unit tests by mocking dependencies so that tests do not r
 - Arrange, Act, Assert (AAA) Pattern: Moq facilitates structuring your tests into the industry-standard AAA pattern:
     - Arrange: Set up the initial state, test data, and configure your mock objects' behavior and expectations.
     - Act: Execute the method on the system under test.
-    -Assert: Verify that the outcome is as expected, which often involves verifying interactions with the mock objects.
+    - Assert: Verify that the outcome is as expected, which often involves verifying interactions with the mock objects.
 
 Sample Example:
 -----------------------------------
