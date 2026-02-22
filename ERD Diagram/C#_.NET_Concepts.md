@@ -1,10 +1,10 @@
-1) Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
+Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
 -----------------------------------------------------------
 C# is a programming language, .NET is the platform that runs C# code, .NET Core is the modern cross-platform version of .NET, and ASP.NET Web API is a framework within .NET used to build RESTful APIs.
 
 <br>
 
-2) Lifecycle of C# Code Execution
+Lifecycle of C# Code Execution
 ------------------------------------
 ```
 Your C# Code (.cs files)
@@ -41,11 +41,11 @@ Execution by CPU
 
 <br>
 
-3) Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
+Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 ------------------------------------------------------------
 
 
-4) What is difference between Method Overriding and Method Hiding:
+What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
 While both override and new allow a child class to have a method with the same name as its parent, they behave very differently when you treat a child object as if it were a parent. 
 1. Method Overriding (override):
@@ -94,18 +94,18 @@ obj4.Show(); // Output: "Base Show" (The child's method is hidden)
 
 <br>
 
-5) How to create a custom Middleware (how to register it in Program.cs):
+How to create a custom Middleware (how to register it in Program.cs):
 ------------------------------------------------------
 
-6) how to create inline middleware:
+how to create inline middleware:
 --------------------------------------
 
-7) How to write extension method and how to use it:
+How to write extension method and how to use it:
 --------------------------------------------------
 
 <br>
 
-8) How to write custom action filter and use it on Action Methods(Controllers):
+How to write custom action filter and use it on Action Methods(Controllers):
 -----------------------------------------------------------------------------------------------------------------------------------------
 - Inheriting from ActionFilterAttributes (provides virtual methods OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted which we can override and use it like attribute directly on Action method(Controller)) or
 ```
@@ -170,7 +170,7 @@ builder.Services
 
 <br>
 
-9) Other specific Built-in Filters: which are interfaces which we can inherit & implement Methods directly
+Other specific Built-in Filters: which are interfaces which we can inherit & implement Methods directly
 -------------------------------------------
 - (Inheriting from interfaces IActionFilter, IResultFilter, etc.. which has OnActionExecuting, OnActionExecuted, OnResultExecuting, OnResultExecuted method template and we must implement both if we inherit one of them) https://share.google/aimode/c2z1cnM7sDEyYdqnn
 - In ASP.NET Core, filters allow you to run code at specific stages of the request processing pipeline. They are typically used for "cross-cutting concerns" like security, logging, or caching to keep your controller actions clean. 
@@ -204,7 +204,7 @@ Built-in Filter Types and methods they provide:
 
 <br>
 
-10) How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory: https://share.google/aimode/cZYh8JgyfbvE5UZgL
+How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory: https://share.google/aimode/cZYh8JgyfbvE5UZgL
 -----------------------------------------------------------------------
 
 
