@@ -318,9 +318,80 @@ Built-in Filter Types and methods they provide:
 
 <br>
 
-How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory: https://share.google/aimode/cZYh8JgyfbvE5UZgL
+How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory:
 -----------------------------------------------------------------------
+There are 2 main ways:
+- Direct HttpClient (not recommended for production) ❌
+- IHttpClientFactory (recommended — avoids socket exhaustion, better DI support) ✅
 
+Example 1. Calling External API using HttpClient (Basic Way)
+```
+public class ExternalApiService
+{
+    private readonly HttpClient _httpClient;
+
+    public ExternalApiService()
+    {
+        _httpClient = new HttpClient();
+    }
+
+    public async Task<string> GetDataAsync()
+    {
+        var response = await _httpClient.GetAsync("https://jsonplaceholder.typicode.com/posts/1");
+
+        response.EnsureSuccessStatusCode(); // Throws exception if status code is not 200-299
+
+        var result = await response.Content.ReadAsStringAsync();
+
+        return result;
+    }
+}
+```
+Problem with this approach
+- Creating HttpClient manually many times causes:
+- Socket exhaustion
+- Performance issues
+- DNS caching problems
+
+Example 2. Calling External API using IHttpClientFactory (Recommended)
+Register HttpClient in Program.cs:
+```
+builder.Services.AddHttpClient();
+```
+Create Service
+```
+public class ExternalApiService
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public ExternalApiService(IHttpClientFactory httpClientFactory)
+    {
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task<string> GetPostAsync()
+    {
+        var response = await _httpClientFactory.GetAsync("https://jsonplaceholder.typicode.com/posts/1");
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsStringAsync();
+    }
+}
+```
+Register Service in DI
+```
+builder.Services.AddScoped<ExternalApiService>();
+```
+
+Do you use using with HttpClient?
+- Answer:
+  - When using IHttpClientFactory or Typed Client, we should NOT use 'using' because the factory manages the lifetime.
+  - If we create HttpClient manually, using is possible but not recommended in ASP.NET Core.
+
+
+<br>
+<br>
 
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
