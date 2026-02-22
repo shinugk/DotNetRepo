@@ -190,6 +190,7 @@ How to write extension method and how to use it:
    - Method must be static
    - First parameter must use the this keyword
    - The this parameter represents the type you are extending
+
 Example 1 — Extension Method for int
 ```
 public static class IntExtensions
