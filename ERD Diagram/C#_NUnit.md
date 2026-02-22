@@ -417,7 +417,7 @@ Assert.That(stringValue, Does.StartWith(text)); // Checks string starts with tex
 Assert.That(stringValue, Does.EndWith(text));   // Checks string ends with text
 Assert.That(stringValue, Does.Contain(text));   // Checks substring exists
 Assert.That(stringValue, Is.EqualTo(text).IgnoreCase); // Case-insensitive string comparison
-Assert.That(() => method(), Throws.TypeOf<ExceptionType>()); // Modern exception check
+Assert.That(() => method(), Throws.TypeOf<ExceptionType>()); // Modern exception check 
 
 // ================= MULTIPLE ASSERTIONS =================
 Assert.Multiple(() =>
