@@ -460,7 +460,41 @@ Why do we use using in .NET?
 <br>
 <br>
 
-what is difference between throw and throe ex:
+what is Finalize and Dispose:
+--------------------------------------
+- In .NET, Finalize and Dispose are both related to memory/resource cleanup, but they serve different purposes and are used in different situations.
+- Think of it like this:
+    - Dispose → Manual cleanup (you do it)
+    - Finalize → Automatic cleanup (GC does it if you forget)
+
+✅ 1. Dispose in .NET
+- Dispose() is used to release unmanaged resources manually and immediately when you are done using an object.
+- It comes from the IDisposable interface.
+- Why Dispose is Needed?
+   - .NET Garbage Collector only manages managed memory.
+   - But some resources are unmanaged, like: File handles, Database connections, Network sockets, OS handles, Streams
+   - These must be released manually → using Dispose()
+
+✅ 2. Finalize in .NET (Destructor)
+- Finalize is called by Garbage Collector automatically before the object is removed from memory.
+- You cannot control when Finalize runs. GC decides.
+It is written using destructor syntax:
+```
+public class FileManager
+{
+    ~FileManager()
+    {
+        Console.WriteLine("Finalize called");
+    }
+}
+```
+Most Important Interview Point ⭐ : Finalizer should only be used when you have unmanaged resources and no safer alternative.
+
+<br>
+<br>
+
+
+what is difference between throw and throw ex:
 -----------------------------------------------------
 - The difference between throw and throw ex is about stack trace preservation.
 - throw; → preserves the original stack trace ✅ (Best practice)
