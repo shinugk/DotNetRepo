@@ -362,6 +362,7 @@ Interview Questions:
     - Answer: Use Moq to mock dependencies and NUnit for assertions.
 
 3) When to Use Moq vs InMemory
+--------------------------------------------------
 | Scenario            | Use                     |
 | ------------------- | ----------------------- |
 | Service testing     | Moq                     |
