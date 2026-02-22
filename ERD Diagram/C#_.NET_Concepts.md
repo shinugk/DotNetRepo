@@ -45,6 +45,7 @@ Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 ------------------------------------------------------------
 
 <br>
+<br>
 
 What is difference between Method Overriding and Method Hiding:
 ----------------------------------------------------------------
@@ -145,6 +146,7 @@ app.UseMiddleware<MyCustomMiddleware>();
 - The line that controls flow: await next(context); . If you remove this → pipeline stops. This is called short-circuiting.
 
 <br>
+<br>
 
 how to create inline middleware:
 --------------------------------------
@@ -179,6 +181,7 @@ Inline Middleware (After)
       ↓
 Client Response
 ```
+<br>
 <br>
 
 How to write extension method and how to use it:
@@ -217,6 +220,7 @@ class Program
 ```
 - you can create Extension Method with Multiple Parameters
 
+<br>
 <br>
 
 How to write custom action filter and use it on Action Methods(Controllers):
@@ -283,6 +287,7 @@ builder.Services
 ```
 
 <br>
+<br>
 
 Other specific Built-in Filters: which are interfaces which we can inherit & implement Methods directly
 -------------------------------------------
@@ -316,6 +321,7 @@ Built-in Filter Types and methods they provide:
 | **Exception Filter**     | `IExceptionFilter`<br>• `OnException()`                                    | `IAsyncExceptionFilter`<br>• `OnExceptionAsync()`         | When exception occurs                     | Handle errors globally (Logging errors to a database or returning standardized error responses like ProblemDetails)                              |
 | **Result Filter**        | `IResultFilter`<br>• `OnResultExecuting()`<br>• `OnResultExecuted()`       | `IAsyncResultFilter`<br>• `OnResultExecutionAsync()`      | Before and after action result execution  | Modify response before sending to client (Adding custom HTTP headers to the final output.)            |
 
+<br>
 <br>
 
 How do you call external endpoint from .net webapi using HttpClient or IHttpClientFactory:
@@ -452,6 +458,7 @@ Why do we use using in .NET?
 - We use using to ensure that unmanaged resources are released properly by automatically calling Dispose(). It prevents memory leaks and resource locking issues, especially for objects like file streams, database connections, and network resources.
 
 <br>
+<br>
 
 what is difference between throw and throe ex:
 -----------------------------------------------------
@@ -486,6 +493,7 @@ catch (Exception ex)
 ```
 Here we are creating a new exception, not rethrowing.
 
+<br>
 <br>
 
 
