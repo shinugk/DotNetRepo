@@ -96,6 +96,44 @@ obj4.Show(); // Output: "Base Show" (The child's method is hidden)
 
 How to create a custom Middleware (how to register it in Program.cs):
 ------------------------------------------------------
+Step 1: create middleware by inheriting IMiddleware
+```
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
+public class MyCustomMiddleware : IMiddleware
+{
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    {
+        // Before controller
+        Console.WriteLine("Request Path: " + context.Request.Path);
+
+        await next(context); // Call next middleware
+
+        // After controller
+        Console.WriteLine("Response Status: " + context.Response.StatusCode);
+    }
+}
+```
+Step 2: Register Middleware in DI Container
+```
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+
+// Register Middleware in DI
+builder.Services.AddScoped<MyCustomMiddleware>();
+
+var app = builder.Build();
+```
+Step 3: Add Middleware to Pipeline
+```
+app.UseMiddleware<MyCustomMiddleware>();
+```
+| Parameter            | Meaning                         |
+| -------------------- | ------------------------------- |
+| HttpContext          | Current HTTP request & response |
+| RequestDelegate next | Next middleware in pipeline     |
+- The line that controls flow: await next(context); . If you remove this → pipeline stops. This is called short-circuiting.
 
 how to create inline middleware:
 --------------------------------------
