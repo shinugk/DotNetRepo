@@ -165,6 +165,7 @@ How to create a custom Middleware (how to register it in Program.cs):
    - Stop the request completely if needed
 - In simple words: Middleware = Code that runs between Client → Server → Client.
 
+Example 1: Creating Custom Middleware (with IMiddleware)
 Step 1: create middleware by inheriting IMiddleware
 ```
 using Microsoft.AspNetCore.Http;
@@ -202,7 +203,37 @@ app.UseMiddleware<MyCustomMiddleware>();
 | -------------------- | ------------------------------- |
 | HttpContext          | Current HTTP request & response |
 | RequestDelegate next | Next middleware in pipeline     |
-- The line that controls flow: await next(context); . If you remove this → pipeline stops. This is called short-circuiting.
+- The line that controls flow: `await next(context);`. If you remove this → pipeline stops. This is called short-circuiting.
+
+<br>
+
+Example 2: Creating global Exception middleware (without IMiddleware)
+```
+public class GlobalExceptionMiddleware {
+  private readonly RequestDelegate _next;
+
+  public GlobalExceptionMiddleware(RequestDelegate next) {
+    _next = next;
+  }
+
+  public async Task InvokeAsync(HttpContext context) {
+    try {
+      await _next(context);     //Go to next middleware, anywhere exception happens in middleware flow, it catches in below and modifiies custom response
+    } catch (Exception ex) {
+      context.Response.StatusCode = 500;
+      await context.Response.WriteAsJsonAsync(
+          new { Message = "An error occurred", Error = ex.Message });
+    }
+  }
+}
+```
+- Register: `app.UseMiddleware<GlobalExceptionMiddleware>();`
+
+EXPLANATION:
+- RequestDelegate _next: This delegate represents the next middleware component in the pipeline. Calling _next(context) passes control to the subsequent middleware.
+- HttpContext context: This object provides access to the current HTTP request and response, allowing you to inspect and modify them within your middleware.
+- InvokeAsync: This is the entry point for your middleware's logic. You can perform actions before calling _next(context) (e.g., request validation, logging) and after (e.g., response modification, additional logging).
+- app.UseMiddleware<YourMiddlewareClassName>(): This method adds your custom middleware to the ASP.NET Core request pipeline. When a request comes in, it will flow through the middleware components in the order they are registered. 
 
 <br>
 <br>
