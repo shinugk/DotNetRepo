@@ -1,2 +1,0 @@
-﻿Abstarct Class: An abstract class is one that has some functionality, but that functionality is not complete without a class that inherits from it, implementing it.
-Concrete Class: A concrete class is one that can actually be instantiated, constructed and used.(like normal class)
