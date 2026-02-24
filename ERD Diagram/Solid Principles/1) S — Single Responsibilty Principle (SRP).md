@@ -101,8 +101,8 @@
  }
 ``` 
 
-3) Email Service (separate service which handles email sending responsibility)
-----------------------------------------------------------------------------
+3) Email Service 
+-----------------------------------------------------------------------------
 ✔ Only email responsibility.
 ```
  public interface IEmailService
