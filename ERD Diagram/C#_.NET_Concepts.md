@@ -68,23 +68,23 @@ Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 Important C# 12 Features: (.Net 8) (LTS: long-term support till 2026+) ✅
 1) Primary Constructors:
 - Before:
-        ```
-        public class Person
-        {
-            private readonly string _name;
-            public Person(string name)
-            {
-                _name = name;
-            }
-        }
-        ```
+```
+public class Person
+{
+    private readonly string _name;
+    public Person(string name)
+    {
+        _name = name;
+    }
+}
+```
 - C# 12:
-        ```
-        public class Person(string name)                      //Very useful in: Dependency Injection, Services, Controllers
-        {
-            public void Print() => Console.WriteLine(name);
-        }
-        ```
+```
+public class Person(string name)                      //Very useful in: Dependency Injection, Services, Controllers
+{
+     public void Print() => Console.WriteLine(name);
+}
+```
 
 2) Collection Expressions:
 - Before: `int[] numbers = new int[] { 1, 2, 3 };`
