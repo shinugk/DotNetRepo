@@ -53,6 +53,48 @@ Data Types in C# .Net:
 
 Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 ------------------------------------------------------------
+| Category          | .NET 6 (C# 10)     | .NET 8 (C# 12)                      | .NET 10 (C# 14)                   |
+| ----------------- | ------------------ | ----------------------------------- | --------------------------------- |
+| Performance       | Good               | Much faster (JIT + GC improvements) | Even faster runtime optimizations |
+| Minimal APIs      | Introduced         | Mature + Filters + Better routing   | More enhancements                 |
+| Native AOT        | Experimental       | Production Ready                    | Improved further                  |
+| AI Integration    | None               | AI libraries introduced             | Deep AI ecosystem                 |
+| Memory Usage      | Moderate           | Lower memory footprint              | Further optimized                 |
+| Startup Time      | Good               | Very fast                           | Faster                            |
+| Observability     | Basic logging      | OpenTelemetry support               | Better monitoring                 |
+| ASP.NET Core      | Stable             | More scalable & faster              | More optimizations                |
+| Language Features | C# 10 improvements | Modern C# features                  | Advanced language features        |
+
+Important C# 12 Features:
+1) Primary Constructors:
+Before:
+```
+public class Person
+{
+    private readonly string _name;
+    public Person(string name)
+    {
+        _name = name;
+    }
+}
+```
+C# 12:
+```
+public class Person(string name)                      //Very useful in: Dependency Injection, Services, Controllers
+{
+    public void Print() => Console.WriteLine(name);
+}
+```
+
+2) Collection Expressions:
+Before: `int[] numbers = new int[] { 1, 2, 3 };`
+After: `int[] numbers = [1, 2, 3];`    //Works with: Arrays, Lists, Spans
+
+3) Default Parameters in Lambdas:
+```
+var add = (int a, int b = 10) => a + b;
+Console.WriteLine(add(5)); // 15
+```
 
 <br>
 <br>
