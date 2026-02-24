@@ -99,10 +99,13 @@
          _logger.Log($"User registered: {user.Email}");
      }
  }
-``` 
+```
+- jojd 
 
-3) Email Service 
------------------------------------------------------------------------------
+
+
+3) Email Service:
+-----------------------------------------------------
 ✔ Only email responsibility.
 ```
  public interface IEmailService
