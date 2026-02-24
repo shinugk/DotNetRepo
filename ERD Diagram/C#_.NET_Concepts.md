@@ -1,6 +1,13 @@
 Explain difference between C#/.Net/.Net Core/.Net Web-API in table:
 -----------------------------------------------------------
-C# is a programming language, .NET is the platform that runs C# code, .NET Core is the modern cross-platform version of .NET, and ASP.NET Web API is a framework within .NET used to build RESTful APIs.
+- C# is a programming language,
+- .NET is the platform that runs C# code & It is a software development platform created by Microsoft.
+   - It includes: Runtime (CLR), Libraries, Languages (C#, F#, VB), Frameworks (ASP.NET, WinForms, WPF)
+   - It is used to build: Web apps, APIs, Desktop apps, Mobile apps
+- .NET Core is the modern cross-platform version of .NET.
+   - After 2020: .NET Core → merged into .NET 5+
+   - Now we just say .NET 6, .NET 7, .NET 8
+- ASP.NET Web API is a framework within .NET used to build RESTful APIs.
 
 <br>
 
@@ -57,7 +64,6 @@ Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 | ----------------- | ------------------ | ----------------------------------- | --------------------------------- |
 | Performance       | Good               | Much faster (JIT + GC improvements) | Even faster runtime optimizations |
 | Minimal APIs      | Introduced         | Mature + Filters + Better routing   | More enhancements                 |
-| Native AOT        | Experimental       | Production Ready                    | Improved further                  |
 | AI Integration    | None               | AI libraries introduced             | Deep AI ecosystem                 |
 | Memory Usage      | Moderate           | Lower memory footprint              | Further optimized                 |
 | Startup Time      | Good               | Very fast                           | Faster                            |
