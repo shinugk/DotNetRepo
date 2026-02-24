@@ -65,9 +65,9 @@ Difference between .Net6(C#10), .Net7(C#11), .Net8(C#12)
 | ASP.NET Core      | Stable             | More scalable & faster              | More optimizations                |
 | Language Features | C# 10 improvements | Modern C# features                  | Advanced language features        |
 
-Important C# 12 Features:
+Important C# 12 Features: (.Net 8) (LTS: long-term support till 2026+) ✅
 1) Primary Constructors:
-Before:
+- Before:
 ```
 public class Person
 {
@@ -87,8 +87,8 @@ public class Person(string name)                      //Very useful in: Dependen
 ```
 
 2) Collection Expressions:
-Before: `int[] numbers = new int[] { 1, 2, 3 };`
-After: `int[] numbers = [1, 2, 3];`    //Works with: Arrays, Lists, Spans
+- Before: `int[] numbers = new int[] { 1, 2, 3 };`
+- After: `int[] numbers = [1, 2, 3];`    //Works with: Arrays, Lists, Spans
 
 3) Default Parameters in Lambdas:
 ```
