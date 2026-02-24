@@ -1,26 +1,9 @@
 
- - A class should have only one reason to change. Meaning → A class should do one job and do it well.
- - In a Web API project, SRP helps keep controllers, services, repositories, and helpers clean, testable, and easy to maintain.
+- Meaning → A class should do only one job. it should not include all logic in one class.
+- It improves maintainability, testability, and reduces coupling by separating concerns into different classes such as controllers, services, and repositories.
+- In a Web API project, SRP helps keep controllers, services, repositories, and helpers clean, testable, and easy to maintain.
 
-
- 🔥 WHY SRP IS IMPORTANT IN WEBAPI?
- -----------------------------------------------------
- - Because it prevents:
-     - ❌ God classes
-     - ❌ Fat controllers
-     - ❌ Business logic inside controllers
-     - ❌ Difficult-to-test code
-     - ❌ Code duplication
-
- - Instead, it promotes:
-     - ✔ Clean architecture
-     - ✔ Better testability
-     - ✔ Easier debugging
-     - ✔ Reusable services
-
-
-
- ❌ BAD EXAMPLE: SRP VIOLATION IN WEBAPI
+ ❌ BAD EXAMPLE: SRP VIOLATION IN WEBAPI (all logic in one controller)
  ---------------------------------------------------------------
  ```
  [ApiController]
@@ -51,18 +34,9 @@
  }
 ```
  ----------------------------------------------------------------------
- - ❌ Problems:
-   - Validation logic
-   - Database logic
-   - Email sending logic
-   - File logging
-   - Hard to test
-   - Hard to maintain <br>
- 💥 Violates SRP badly.
 
 
-
- ✅ GOOD EXAMPLE: APPLYING SRP IN WEBAPI
+ ✅ GOOD EXAMPLE: APPLYING SRP IN WEBAPI 
  -------------------------------------------------------------------------------
  - We split responsibilities into:
      - Controller → Accept requests
@@ -127,8 +101,7 @@
  }
 ``` 
 
-
-**3) Email Service**
+3) Email Service
 ----------------------------------------------------------------------
 ✔ Only email responsibility.
 ```
