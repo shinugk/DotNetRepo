@@ -3,7 +3,7 @@
 - It improves maintainability, testability, and reduces coupling by separating concerns into different classes such as controllers, services, and repositories.
 - In a Web API project, SRP helps keep controllers, services, repositories, and helpers clean, testable, and easy to maintain.
 
- ❌ BAD EXAMPLE: SRP VIOLATION IN WEBAPI (all logic in one controller)
+BAD EXAMPLE: SRP VIOLATION IN WEBAPI (all logic in one controller)  ❌ 
  ---------------------------------------------------------------
  ```
  [ApiController]
@@ -36,7 +36,7 @@
 
 <br>
 
- ✅ GOOD EXAMPLE: APPLYING SRP IN WEBAPI 
+GOOD EXAMPLE: APPLYING SRP IN WEBAPI   ✅
  -------------------------------------------------------------------------------
  - We split responsibilities into:
      - Controller → Accept requests
@@ -100,8 +100,6 @@
      }
  }
 ```
-- jojd 
-
 
 
 **3) Email Service:**
