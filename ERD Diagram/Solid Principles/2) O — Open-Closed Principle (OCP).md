@@ -4,16 +4,7 @@
     ❌ Without changing existing working code
 
 - This prevents bugs and makes the app scalable.
-
-
-
-🎯 WHY OCP IS IMPORTANT IN .NET?
---------------------------------------------------
-- Avoids modifying stable, tested code
-- Helps add new features safely
-- Avoids if/else, switch explosions
 - Works perfectly with interfaces + dependency injection
-
 
 
 ❌ BAD EXAMPLE (VIOLATES OCP)
@@ -39,20 +30,15 @@ public class Logger
     }
 }
 ```
-❌ PROBLEMS:
-------------------------------------------------------
-- Every time we add a new log type (SMS, Azure, Kafka),
-- we must modify this class → breaks OCP.
-- Hard to maintain
-- Hard to test
-- Too many conditions
+- Every time we add a new log type (SMS, Azure, Kafka), we must modify this class → breaks OCP.
+
 
 
 <br>
 
 ✅ GOOD EXAMPLE (FOLLOWS OCP)  (We use interfaces and polymorphism.)
 ----------------------------------------------- 
-STEP 1: CREATE AN ABSTRACTION
+STEP 1: CREATE INTERFACE
 ----------------------------------------
 ```
 public interface ILogger
@@ -61,10 +47,10 @@ public interface ILogger
 }
 ```
 
-STEP 2: CREATE SEPARATE IMPLEMENTATIONS
+STEP 2: CREATE SEPARATE IMPLEMENTATIONS BY INHERITING INTERFACE
 --------------------------------------------
 ```
-FILE LOGGER:
+//FILE LOGGER:
 public class FileLogger : ILogger
 {
     public void Log(string message)
@@ -73,7 +59,7 @@ public class FileLogger : ILogger
     }
 }
 
-DATABASE LOGGER:
+//DATABASE LOGGER:
 public class DbLogger : ILogger
 {
     public void Log(string message)
@@ -82,7 +68,7 @@ public class DbLogger : ILogger
     }
 }
 
-EMAIL LOGGER (NEW FEATURE ADDED LATER):
+//EMAIL LOGGER (NEW FEATURE ADDED LATER):
 public class EmailLogger : ILogger
 {
     public void Log(string message)
@@ -91,13 +77,12 @@ public class EmailLogger : ILogger
     }
 }
 ```
-➡ NOTICE: WE ADDED A NEW LOGGER WITHOUT MODIFYING ANY OLD CODE.
-           THIS IS EXACTLY OCP.
+➡ NOTICE: WE ADDED A NEW LOGGER WITHOUT MODIFYING ANY OLD CODE. THIS IS EXACTLY OCP.
 
 
-STEP 3: USE THE ABSTRACTION IN THE WEBAPI CONTROLLER
+STEP 3: USE THE ABSTRACTION IN THE WEBAPI CONTROLLER. (USE INTERFACE TYPE FOR LOGGER VARIABLE)
 ----------------------------------------------------------     
-The controller does not care which logger is used.
+- So The controller does not care which logger is used.
 ```
 [ApiController]
 [Route("api/[controller]")]
@@ -122,24 +107,14 @@ public class OrdersController : ControllerBase
 STEP 4: CONFIGURE DEPENDENCY INJECTION (PROGRAM.CS)
 -----------------------------------------------------
 - `builder.Services.AddScoped<ILogger, FileLogger>();`
-- ➡ Use DB logger instead:
-   - `builder.Services.AddScoped<ILogger, DbLogger>();`
-- ➡ Add the new Email Logger: 
-   - `builder.Services.AddScoped<ILogger, EmailLogger>();`
+- ➡ Use DB logger instead: `builder.Services.AddScoped<ILogger, DbLogger>();`
+- ➡ Add the new Email Logger: `builder.Services.AddScoped<ILogger, EmailLogger>();`
 - NO CHANGES to the controller or existing loggers.
-**- This is Open for extension, Closed for modification.**
 
 <br>
 
-**🎯SO WHICH LOGGER GETS CALLED?**
--------------------------------------------------------
-It depends on what is registered: If you register FileLogger -> it gets called
+So which logger gets called:
+---------------------------
+- It depends on what is registered: If you register FileLogger -> it gets called
 
-<br>
 
-**SUMMARY:**
------------------------------------------------------------------
-| Concept    | Meaning                                       |
-| ---------- | --------------------------------------------- |
-| Open       | You can extend behavior by adding new classes |
-| Closed     | You don't modify existing code                |
