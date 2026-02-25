@@ -1,23 +1,6 @@
 Definition:
 - Don’t force a class to implement methods it does not need. Instead, create smaller, specific interfaces.
-
-🎯 Why ISP Matters in C# .NET?
-------------------------------------------------------
-- Because:
-    - ❌ Large interfaces force classes to implement unused methods
-    - ❌ Violates SRP
-    - ❌ Makes testing harder
-    - ❌ Makes code fragile
-    - ❌ Breaks LSP
-
-- ISP keeps interfaces:
-    - ✔ Small
-    - ✔ Focused
-    - ✔ Easy to implement
-    - ✔ Easy to test
-    - ✔ Easy to extend
-
-
+- Large interfaces force classes to implement unused methods, Makes code fragile
 
 ❌ BAD EXAMPLE (VIOLATES ISP)
 -------------------------------------------    
@@ -31,31 +14,24 @@ public interface INotificationService
 }
 
 
-public class EmailService : INotificationService      Now a class that only sends email is forced to implement methods it does NOT need
+public class EmailService : INotificationService      -->Now a class that only sends email is forced to implement methods it does NOT need
 {
     public void SendEmail(string email)
     {
         // send email
     }
 
-    public void SendSms(string phoneNumber)
+    public void SendSms(string phoneNumber)          -->forced to implement this method
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException();   
     }
 
-    public void SendPush(string deviceId)
+    public void SendPush(string deviceId)            -->forced to implement this method
     {
         throw new NotImplementedException();
     }
 }
 ```
-❌ Problems:
-- Unused methods
-- Throws exceptions → violates LSP
-- Hard to test
-- Hard to maintain
-
-
 
 <br>
 
