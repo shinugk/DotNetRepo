@@ -1131,10 +1131,6 @@ What is Shallow copy and deep copy in C#:
 --------------------------------------------------
 
 
-How strings are immutable in C#:
-----------------------------------
-
-
 Explain Caching strategies in .NET
 --------------------------------------------------------------------
 
@@ -1144,14 +1140,11 @@ Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race cond
 Scalability, Idempotancy, Concurrency
 -----------------------------------------------
 
-
-
-Difference between ref, out, and in parameters in C#.
--------------------------------------------------------
-
 Explain Value types vs Reference types in C#:
 ------------------------------------------
 
+How strings are immutable in C#:
+----------------------------------
 
 What is the difference between String and StringBuilder in C#;
 ------------------------------------------------------------
