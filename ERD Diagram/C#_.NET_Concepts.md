@@ -813,13 +813,13 @@ Async and await:
 <br>
 <br>
 
-Task and Task<T>:
---------------------
+**Task and Task<T>:**
+----------------------------
 - In C#, Task and Task<T> are the cornerstones of Asynchronous Programming. They represent an operation that will finish in the future, allowing your application to stay responsive (like keeping a UI from freezing or a server from idling) while waiting for long-running work to complete.
   
-1). Task (The "Void" Version)
-A Task represents a single operation that does not return a value. It is the asynchronous equivalent of a void method. You use it when you care that the work finished, but you don't need data back. 
-Common uses:
+**1). Task (The "Void" Version)**
+- A Task represents a single operation that does not return a value. It is the asynchronous equivalent of a void method. You use it when you care that the work finished, but you don't need data back. 
+- Common uses:
   - Saving a file to disk.
   - Sending an email.
   - Updating a database record.
@@ -843,9 +843,10 @@ public async Task<IActionResult> SaveUser(User user)
     return Ok();                       //No value returned from service → Task
 }
 ```
-2). Task (The "Return" Version)
-A Task<T> represents an asynchronous operation that returns a value of type T. It is the asynchronous equivalent of a method that returns a specific type (like int, string, or a custom object). 
-Common uses:
+
+**2). Task<T> (The "Return" Version)**
+- A Task<T> represents an asynchronous operation that returns a value of type T. It is the asynchronous equivalent of a method that returns a specific type (like int, string, or a custom object). 
+- Common uses:
   - Fetching data from an API.
   - Reading text from a file.
   - Calculating a complex formula
