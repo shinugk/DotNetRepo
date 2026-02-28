@@ -566,8 +566,7 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
     - ✅ Removing them
     - ✅ Reclaiming memory
  
-2) Memory Types in .NET:
-There are two main memory areas:
+2) Memory Types in .NET, There are two main memory areas:
 | Memory | Stores                    |
 | ------ | ------------------------- |
 | Stack  | Value types, method calls |
@@ -598,6 +597,7 @@ Garbage collector runs automatically when:
 5) How Garbage Collection Works (Important)
 - GC uses a concept called Generations.
 - Objects are grouped based on age.
+
 | Generation | Description               |
 | ---------- | ------------------------- |
 | Gen 0      | New objects (short-lived) |
