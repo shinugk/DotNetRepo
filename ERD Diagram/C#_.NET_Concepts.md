@@ -557,7 +557,7 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
     - GC automatically deletes unused objects from memory. 
     - So, developers do not need to manually free memory like in C/C++.
  
-1) Why Garbage Collection is Needed:
+**1) Why Garbage Collection is Needed:**
 - When we create objects: `var person = new Person();`
 - Memory is allocated in Heap.
 - If objects are never removed → memory becomes full → application crashes.
@@ -568,10 +568,10 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
  
 2) Memory Types in .NET, There are two main memory areas:
 
-| Memory | Stores                    |
-| ------ | ------------------------- |
-| Stack  | Value types, method calls |
-| Heap   | Reference types (objects) |
+   | Memory | Stores                    |
+   | ------ | ------------------------- |
+   | Stack  | Value types, method calls |
+   | Heap   | Reference types (objects) |
 
 - NOTE: Garbage Collector works only on Heap memory.
 
@@ -599,11 +599,11 @@ Garbage collector runs automatically when:
 - GC uses a concept called Generations.
 - Objects are grouped based on age.
 
-| Generation | Description               |
-| ---------- | ------------------------- |
-| Gen 0      | New objects (short-lived) |
-| Gen 1      | Medium lifetime           |
-| Gen 2      | Long-lived objects        |
+   | Generation | Description               |
+   | ---------- | ------------------------- |
+   | Gen 0      | New objects (short-lived) |
+   | Gen 1      | Medium lifetime           |
+   | Gen 2      | Long-lived objects        |
 
 - Most objects die young → Gen 0 is collected frequently.
 <br>
