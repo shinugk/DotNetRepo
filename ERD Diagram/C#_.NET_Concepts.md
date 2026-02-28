@@ -567,6 +567,7 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
     - ✅ Reclaiming memory
  
 2) Memory Types in .NET, There are two main memory areas:
+
 | Memory | Stores                    |
 | ------ | ------------------------- |
 | Stack  | Value types, method calls |
