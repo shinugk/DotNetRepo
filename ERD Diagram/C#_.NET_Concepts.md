@@ -550,6 +550,65 @@ Why do we use using in .NET?
 <br>
 <br>
 
+How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
+--------------------------------------------------------------------------------
+- Garbage Collection is an automatic memory management system in .NET that frees memory occupied by objects that are no longer in use.
+- In simple words:
+    - GC automatically deletes unused objects from memory. 
+    - So, developers do not need to manually free memory like in C/C++.
+ 
+1) Why Garbage Collection is Needed:
+- When we create objects: `var person = new Person();`
+- Memory is allocated in Heap.
+- If objects are never removed → memory becomes full → application crashes.
+- GC solves this by:
+    - ✅ Finding unused objects
+    - ✅ Removing them
+    - ✅ Reclaiming memory
+ 
+2) Memory Types in .NET:
+There are two main memory areas:
+| Memory | Stores                    |
+| ------ | ------------------------- |
+| Stack  | Value types, method calls |
+| Heap   | Reference types (objects) |
+
+- NOTE: Garbage Collector works only on Heap memory.
+
+3) Example:
+```
+public void CreateObjects()
+{
+    var obj = new Person();
+}
+```
+After method ends:
+- obj has no reference
+- GC will remove it later
+- We do NOT delete manually.
+
+4) When Does GC Run?
+Garbage collector runs automatically when:
+- Memory is low
+- Many objects created
+- System idle
+- Gen threshold reached
+- You can also force: `GC.Collect();` But Not recommended in production ❌
+
+5) How Garbage Collection Works (Important)
+- GC uses a concept called Generations.
+- Objects are grouped based on age.
+| Generation | Description               |
+| ---------- | ------------------------- |
+| Gen 0      | New objects (short-lived) |
+| Gen 1      | Medium lifetime           |
+| Gen 2      | Long-lived objects        |
+
+- Most objects die young → Gen 0 is collected frequently.
+<br>
+<br>
+
+
 what is Finalize and Dispose:
 --------------------------------------
 - In .NET, Finalize and Dispose are both related to memory/resource cleanup, but they serve different purposes and are used in different situations.
@@ -791,9 +850,6 @@ Why We Use Task?
 - With Task → thread is free while waiting ✅
 
 <br>
-
-How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
----------------------------------------------------------------
 
 Difference between ref, out, and in parameters in C#.
 -------------------------------------------------------
