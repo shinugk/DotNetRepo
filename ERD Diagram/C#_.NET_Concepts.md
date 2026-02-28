@@ -489,6 +489,69 @@ Do you use using with HttpClient?
 <br>
 <br>
 
+How to implement logging (built-in request&response logging using ILogger interface) and how to use it:
+----------------------------------------------------------------------------------------------------
+- .NET already provides a built-in logging framework using the ILogger interface.
+- ILogger is an interface provided by .NET for logging messages from your application.
+- It supports log levels:
+   | Log Level   | Purpose                |
+   | ----------- | ---------------------- |
+   | Trace       | Very detailed          |
+   | Debug       | Debugging              |
+   | Information | Normal app flow        |
+   | Warning     | Unexpected but handled |
+   | Error       | Errors                 |
+   | Critical    | System failure         |
+
+Step 1: Built-in Logging Already Enabled (No extra setup needed in Program.cs)
+
+Step 2: Inject ILogger into Controller
+```
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Route("api/products")]
+public class ProductsController : ControllerBase
+{
+    private readonly ILogger<ProductsController> _logger;           //should be of type ILogger<T>
+
+    public ProductsController(ILogger<ProductsController> logger)
+    {
+        _logger = logger;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        _logger.LogInformation("Fetching all products");
+
+        return Ok(new[] { "Laptop", "Mobile" });
+    }
+}
+```
+Console:
+```
+info: ProductsController[0]
+      Fetching all products
+```
+
+Step 3: Configure Log Levels (appsettings.json)
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}
+```
+- You can change to: Debug, Trace, Error
+
+<br>
+<br>
+
 What is 'using' in .Net:
 ---------------------------------
 - using is used to automatically release unmanaged resources when you are done using an object.
@@ -741,38 +804,13 @@ summary:
 <br>
 <br>
 
-
-
-What is difference between IConfiguration & IOptions in .NET Core ?
------------------------------------------------------------
-
-What is Shallow copy and deep copy in C#:
---------------------------------------------------
-
-Difference between Dependency Injection and Dependency Inversion:
------------------------------------------------------------------
-
-How to implement logging (built-in request&response logging using ILogger interface) and how to use it:
-----------------------------------------------------------------------------------------------------
-https://learn.microsoft.com/en-us/aspnet/core/fundamentals/http-logging/?view=aspnetcore-8.0
-
-
-How strings are immutable in C#:
-----------------------------------
-
-
-Explain Caching strategies in .NET
---------------------------------------------------------------------
-
-Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race conditions,
---------------------------------------------------------------------
-
-Scalability, Idempotancy, Concurrency
------------------------------------------------
-
 Async and await:
 -------------------
 
+
+
+
+<br>
 <br>
 
 Task and Task<T>:
@@ -851,6 +889,37 @@ Why We Use Task?
 - With Task → thread is free while waiting ✅
 
 <br>
+<br>
+
+
+
+What is difference between IConfiguration & IOptions in .NET Core ?
+-----------------------------------------------------------
+
+
+
+Difference between Dependency Injection and Dependency Inversion:
+-----------------------------------------------------------------
+
+
+What is Shallow copy and deep copy in C#:
+--------------------------------------------------
+
+
+How strings are immutable in C#:
+----------------------------------
+
+
+Explain Caching strategies in .NET
+--------------------------------------------------------------------
+
+Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race conditions,
+--------------------------------------------------------------------
+
+Scalability, Idempotancy, Concurrency
+-----------------------------------------------
+
+
 
 Difference between ref, out, and in parameters in C#.
 -------------------------------------------------------
