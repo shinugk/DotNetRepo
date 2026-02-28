@@ -1,4 +1,4 @@
-
+```
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
@@ -172,3 +172,5 @@ using (var scope = app.Services.CreateScope())
 
 
 app.Run();
+
+```
