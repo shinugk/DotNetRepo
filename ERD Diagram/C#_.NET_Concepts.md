@@ -566,7 +566,7 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
     - ✅ Removing them
     - ✅ Reclaiming memory
  
-2) Memory Types in .NET, There are two main memory areas:
+**2) Memory Types in .NET, There are two main memory areas:**
 
    | Memory | Stores                    |
    | ------ | ------------------------- |
@@ -575,7 +575,7 @@ How Garbage Collection works in the.NET CLR: and How Finalize and Dispose works:
 
 - NOTE: Garbage Collector works only on Heap memory.
 
-3) Example:
+**3) Example:**
 ```
 public void CreateObjects()
 {
@@ -587,15 +587,15 @@ After method ends:
 - GC will remove it later
 - We do NOT delete manually.
 
-4) When Does GC Run?
-Garbage collector runs automatically when:
-- Memory is low
-- Many objects created
-- System idle
-- Gen threshold reached
-- You can also force: `GC.Collect();` But Not recommended in production ❌
+**4) When Does GC Run?**
+- Garbage collector runs automatically when:
+   - Memory is low
+   - Many objects created
+   - System idle
+   - Gen threshold reached
+   - You can also force: `GC.Collect();` But Not recommended in production ❌
 
-5) How Garbage Collection Works (Important)
+**5) How Garbage Collection Works (Important)**
 - GC uses a concept called Generations.
 - Objects are grouped based on age.
 
