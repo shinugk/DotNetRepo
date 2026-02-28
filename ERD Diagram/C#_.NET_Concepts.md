@@ -489,7 +489,7 @@ Do you use using with HttpClient?
 <br>
 <br>
 
-How to implement logging (built-in request&response logging using ILogger interface) and how to use it:
+How to implement logging and how to use it:
 ----------------------------------------------------------------------------------------------------
 - .NET already provides a built-in logging framework using the ILogger interface.
 - ILogger is an interface provided by .NET for logging messages from your application.
