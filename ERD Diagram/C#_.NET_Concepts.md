@@ -58,17 +58,17 @@ Data Types in C# .Net:
 | Pointer Types   | pointer (`*`)                                     | Used in unsafe code              | `int* ptr`                 |
 
 **1) Built-in Value Types Table:**
-   a) Integer Types:
-      | Type   | Size    | Range          | Example           | .NET Type     |
-      | ------ | ------- | -------------- | ----------------- | ------------- |
-      | byte   | 1 byte  | 0 to 255       | `byte b = 10;`    | System.Byte   |
-      | sbyte  | 1 byte  | -128 to 127    | `sbyte s = -5;`   | System.SByte  |
-      | short  | 2 bytes | ±32K           | `short s = 100;`  | System.Int16  |
-      | ushort | 2 bytes | 0 to 65K       | `ushort u = 200;` | System.UInt16 |
-      | int    | 4 bytes | ±2B            | `int x = 10;`     | System.Int32  |
-      | uint   | 4 bytes | positive       | `uint u = 10;`    | System.UInt32 |
-      | long   | 8 bytes | large          | `long l = 10L;`   | System.Int64  |
-      | ulong  | 8 bytes | large positive | `ulong u = 10UL;` | System.UInt64 |
+     a) Integer Types:
+         | Type   | Size    | Range          | Example           | .NET Type     |
+         | ------ | ------- | -------------- | ----------------- | ------------- |
+         | byte   | 1 byte  | 0 to 255       | `byte b = 10;`    | System.Byte   |
+         | sbyte  | 1 byte  | -128 to 127    | `sbyte s = -5;`   | System.SByte  |
+         | short  | 2 bytes | ±32K           | `short s = 100;`  | System.Int16  |
+         | ushort | 2 bytes | 0 to 65K       | `ushort u = 200;` | System.UInt16 |
+         | int    | 4 bytes | ±2B            | `int x = 10;`     | System.Int32  |
+         | uint   | 4 bytes | positive       | `uint u = 10;`    | System.UInt32 |
+         | long   | 8 bytes | large          | `long l = 10L;`   | System.Int64  |
+         | ulong  | 8 bytes | large positive | `ulong u = 10UL;` | System.UInt64 |
 
    b) Floating Point Types:
       | Type    | Size     | Precision    | Usage           | Example              |
