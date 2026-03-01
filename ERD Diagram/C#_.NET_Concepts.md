@@ -51,6 +51,86 @@ Execution by CPU
 
 Data Types in C# .Net:
 --------------------------------------------------------
+| Category        | Types Included                                    | Description                      | Examples                   |
+| --------------- | ------------------------------------------------- | -------------------------------- | -------------------------- |
+| Value Types     | int, float, bool, char, struct, enum              | Store actual data directly       | `int x = 10;`              |
+| Reference Types | string, class, object, array, interface, delegate | Store memory reference (address) | `Person p = new Person();` |
+| Pointer Types   | pointer (`*`)                                     | Used in unsafe code              | `int* ptr`                 |
+
+Built-in Value Types Table:
+Integer Types:
+| Type   | Size    | Range          | Example           | .NET Type     |
+| ------ | ------- | -------------- | ----------------- | ------------- |
+| byte   | 1 byte  | 0 to 255       | `byte b = 10;`    | System.Byte   |
+| sbyte  | 1 byte  | -128 to 127    | `sbyte s = -5;`   | System.SByte  |
+| short  | 2 bytes | ±32K           | `short s = 100;`  | System.Int16  |
+| ushort | 2 bytes | 0 to 65K       | `ushort u = 200;` | System.UInt16 |
+| int    | 4 bytes | ±2B            | `int x = 10;`     | System.Int32  |
+| uint   | 4 bytes | positive       | `uint u = 10;`    | System.UInt32 |
+| long   | 8 bytes | large          | `long l = 10L;`   | System.Int64  |
+| ulong  | 8 bytes | large positive | `ulong u = 10UL;` | System.UInt64 |
+
+Floating Point Types:
+| Type    | Size     | Precision    | Usage           | Example              |
+| ------- | -------- | ------------ | --------------- | -------------------- |
+| float   | 4 bytes  | 7 digits     | Scientific      | `float f = 10.5f;`   |
+| double  | 8 bytes  | 15–16 digits | Default decimal | `double d = 10.5;`   |
+| decimal | 16 bytes | 28–29 digits | Financial       | `decimal m = 10.5m;` |
+
+Other Primitive Value Types:
+| Type | Description              | Example                 |
+| ---- | ------------------------ | ----------------------- |
+| bool | true/false               | `bool isActive = true;` |
+| char | Single Unicode character | `char c = 'A';`         |
+
+User Defined Value Types:
+| Type   | Description       | Example                     |
+| ------ | ----------------- | --------------------------- |
+| struct | Custom value type | `struct Person { int Id; }` |
+| enum   | Named constants   | `enum Days { Mon, Tue }`    |
+
+Reference Types Table:
+| Type      | Description            | Example                  |
+| --------- | ---------------------- | ------------------------ |
+| class     | Blueprint for objects  | `class Person {}`        |
+| object    | Base type of all types | `object obj = 10;`       |
+| string    | Text data (immutable)  | `string name = "Jaith";` |
+| array     | Collection of items    | `int[] arr = {1,2};`     |
+| interface | Contract definition    | `interface IAnimal {}`   |
+| delegate  | Function pointer       | `delegate void MyDel();` |
+| dynamic   | Runtime type           | `dynamic d = 10;`        |
+
+
+Value Type vs Reference Type — Complete Comparison:
+| Feature            | Value Type                        | Reference Type       |
+| ------------------ | --------------------------------- | -------------------- |
+| Storage Location   | Stack (usually)                   | Heap                 |
+| Stores             | Actual Data                       | Memory Address       |
+| Copy Behavior      | New copy created                  | Same reference       |
+| Null Allowed       | No (except nullable)              | Yes                  |
+| Performance        | Faster                            | Slightly slower      |
+| Memory Allocation  | Inline                            | Separate object      |
+| Garbage Collection | Not required                      | Required             |
+| Inheritance        | No (except from System.ValueType) | Yes                  |
+| Examples           | int, bool, struct                 | class, string, array |
+
+
+Stack vs Heap Table:
+| Feature       | Stack                   | Heap              |
+| ------------- | ----------------------- | ----------------- |
+| Speed         | Very fast               | Slower            |
+| Size          | Small                   | Large             |
+| Stores        | Value types, references | Objects           |
+| Cleanup       | Automatic               | Garbage Collector |
+| Thread Safety | Yes                     | No                |
+
+
+Boxing and Unboxing:
+| Concept     | Description       | Example             |
+| ----------- | ----------------- | ------------------- |
+| Boxing      | Value → Reference | `object obj = 10;`  |
+| Unboxing    | Reference → Value | `int x = (int)obj;` |
+| Performance | Slower            | Because conversion  |
 
 
 
