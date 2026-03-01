@@ -57,7 +57,7 @@ Data Types in C# .Net:
 | Reference Types | string, class, object, array, interface, delegate | Store memory reference (address) | `Person p = new Person();` |
 | Pointer Types   | pointer (`*`)                                     | Used in unsafe code              | `int* ptr`                 |
 
-**1) Built-in Value Types Table:**
+**1) Built-in Value Types Table:** <br>
 **a) Integer Types:**
    | Type   | Size    | Range          | Example           | .NET Type     |
    | ------ | ------- | -------------- | ----------------- | ------------- |
@@ -70,24 +70,26 @@ Data Types in C# .Net:
    | long   | 8 bytes | large          | `long l = 10L;`   | System.Int64  |
    | ulong  | 8 bytes | large positive | `ulong u = 10UL;` | System.UInt64 |
 
-   b) Floating Point Types:
-      | Type    | Size     | Precision    | Usage           | Example              |
-      | ------- | -------- | ------------ | --------------- | -------------------- |
-      | float   | 4 bytes  | 7 digits     | Scientific      | `float f = 10.5f;`   |
-      | double  | 8 bytes  | 15–16 digits | Default decimal | `double d = 10.5;`   |
-      | decimal | 16 bytes | 28–29 digits | Financial       | `decimal m = 10.5m;` |
+**b) Floating Point Types:**
+   | Type    | Size     | Precision    | Usage           | Example              |
+   | ------- | -------- | ------------ | --------------- | -------------------- |
+   | float   | 4 bytes  | 7 digits     | Scientific      | `float f = 10.5f;`   |
+   | double  | 8 bytes  | 15–16 digits | Default decimal | `double d = 10.5;`   |
+   | decimal | 16 bytes | 28–29 digits | Financial       | `decimal m = 10.5m;` |
 
-   c) Other Primitive Value Types:
-      | Type | Description              | Example                 |
-      | ---- | ------------------------ | ----------------------- |
-      | bool | true/false               | `bool isActive = true;` |
-      | char | Single Unicode character | `char c = 'A';`         |
+**c) Other Primitive Value Types:**
+   | Type | Description              | Example                 |
+   | ---- | ------------------------ | ----------------------- |
+   | bool | true/false               | `bool isActive = true;` |
+   | char | Single Unicode character | `char c = 'A';`         |
 
-   d) User Defined Value Types:
-      | Type   | Description       | Example                     |
-      | ------ | ----------------- | --------------------------- |
-      | struct | Custom value type | `struct Person { int Id; }` |
-      | enum   | Named constants   | `enum Days { Mon, Tue }`    |
+**d) User Defined Value Types:**
+   | Type   | Description       | Example                     |
+   | ------ | ----------------- | --------------------------- |
+   | struct | Custom value type | `struct Person { int Id; }` |
+   | enum   | Named constants   | `enum Days { Mon, Tue }`    |
+
+<br>
 
 **2) Reference Types Table:**
    | Type      | Description            | Example                  |
