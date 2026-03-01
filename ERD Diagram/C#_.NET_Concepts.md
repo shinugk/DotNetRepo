@@ -58,7 +58,7 @@ Data Types in C# .Net:
 | Pointer Types   | pointer (`*`)                                     | Used in unsafe code              | `int* ptr`                 |
 
 **1) Built-in Value Types Table:**
-     a) Integer Types:
+  a) Integer Types:
          | Type   | Size    | Range          | Example           | .NET Type     |
          | ------ | ------- | -------------- | ----------------- | ------------- |
          | byte   | 1 byte  | 0 to 255       | `byte b = 10;`    | System.Byte   |
