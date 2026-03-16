@@ -1200,6 +1200,27 @@ Compiler converts this to:
                      .ToList();
 ```
 
+<br>
+<br>
+
+is .net webapi is a multithreading app if so explain
+----------------------------------------------------------
+Yes, .NET Web API is a multithreaded application by design. 
+- By default, the framework handles multiple incoming requests concurrently using a Thread Pool, which means you do not have to manually create threads for every new user request. 
+
+**How it Works:** <br>
+- Thread Pool Management: When an HTTP request reaches the server, the .NET runtime retrieves an available thread from a managed ThreadPool to process that specific request.
+- Request Independence: Each request is handled independently on its own thread. This allows the server to process many requests at once rather than one after another.
+- Scalability: The runtime automatically manages the size of this thread pool based on the workload and available CPU cores. 
+
+**Multithreading vs. Asynchronous Programming:** <br>
+While Web API is multithreaded, modern .NET development heavily relies on the Async/Await pattern to improve how these threads are used: 
+- Non-blocking I/O: When your code uses await for a database call or file operation, the thread handling that request is released back to the pool to handle other incoming requests while waiting for the operation to finish.
+- Efficiency: This allows a small number of threads to handle thousands of concurrent requests, preventing "thread pool exhaustion" where the server runs out of available threads. 
+
+**Key Considerations**
+- Thread Safety: Because multiple threads may execute your code at the same time, any shared state (like static variables or shared caches) must be handled carefully using synchronization techniques like lock to avoid race conditions.
+- Scoped Services: In most Web API projects, objects like database contexts are "scoped" to a single request, meaning they aren't shared across different threads by default, which simplifies thread safety
 
 What is difference between IConfiguration & IOptions in .NET Core ?
 -----------------------------------------------------------
