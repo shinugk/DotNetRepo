@@ -1274,11 +1274,12 @@ object boxedObj = myNumber; // Boxing: int is moved to the Heap
 object boxedObj = 10;       // Boxed value
 int unboxedNum = (int)boxedObj; // Unboxing: requires an explicit cast
 ```
-Feature 	  | Boxing	| Unboxing
-Direction  |Value Type to Object	| Object to Value Type
-Conversion | Implicit (automatic) | Explicit (requires casting)
-Memory	  |Moves data from Stack to Heap |	Moves data from Heap to Stack
-Performance| Very expensive (allocates memory) | Less expensive (requires type checking)
+|Feature 	  | Boxing	| Unboxing|
+|--------------|---------|---------|
+|Direction  |Value Type to Object	| Object to Value Type|
+|Conversion | Implicit (automatic) | Explicit (requires casting)|
+|Memory	  |Moves data from Stack to Heap |	Moves data from Heap to Stack|
+|Performance| Very expensive (allocates memory) | Less expensive (requires type checking)|
 
 
 
