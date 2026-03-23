@@ -1244,9 +1244,6 @@ Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race cond
 Scalability, Idempotancy, Concurrency
 -----------------------------------------------
 
-Explain Value types vs Reference types in C#:
-------------------------------------------
-
 How strings are immutable in C#:
 ----------------------------------
 
