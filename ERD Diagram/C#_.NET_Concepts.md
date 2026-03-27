@@ -1275,8 +1275,27 @@ class Program {
 ```
 
 what is difference between static, const, readonly variables:
----------------------------------------------------
-Constants are static by default
+-------------------------------------------------------
+- const are static by default
+```
+public class Example
+{
+    // Constant: Must be set here, never changes.
+    public const string AppName = "MySoftware";
+
+    // Static: Shared by all "Example" objects.
+    public static int InstanceCount = 0;
+
+    // Readonly: Set once (here or in constructor), then locked.
+    public readonly DateTime CreatedAt;
+
+    public Example()
+    {
+        CreatedAt = DateTime.Now; // Set at runtime
+        InstanceCount++;          // Update shared static variable
+    }
+}
+```
 
 Difference between the Equality Operator (==) and Equals() Method in C#:
 -----------------------------------------------------------------
