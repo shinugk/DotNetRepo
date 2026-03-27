@@ -1249,7 +1249,30 @@ How strings are immutable in C#:
 
 What is the difference between String and StringBuilder in C#;
 ------------------------------------------------------------
+- String is immutable,
+    - meaning once it is created, its value cannot be changed. Any modification (like appending or replacing) creates a completely new string object in memory and discards the old one.
+- StringBuilder is mutable,
+    - meaning it can be modified in-place without creating a new object. It uses an internal buffer to handle modifications efficiently.
+```
+using System;
+using System.Text;
 
+class Program {
+    static void Main() {
+        // String Example: Each '+' creates a NEW string object
+        string s = "Hello";
+        s += " World";
+        s += "!"; 
+        Console.WriteLine(s); // Output: Hello World!
+
+        // StringBuilder Example: Modifies the SAME object
+        StringBuilder sb = new StringBuilder("Hello");
+        sb.Append(" World");
+        sb.Append("!");
+        Console.WriteLine(sb.ToString()); // Output: Hello World!
+    }
+}
+```
 
 what is difference between static, const, readonly variables:
 ---------------------------------------------------
