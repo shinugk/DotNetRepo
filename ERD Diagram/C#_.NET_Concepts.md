@@ -1244,9 +1244,6 @@ Questions on Caching, Multi-Threading, Events and Delegates, deadlock, race cond
 Scalability, Idempotancy, Concurrency
 -----------------------------------------------
 
-How strings are immutable in C#:
-----------------------------------
-
 What is the difference between String and StringBuilder in C#;
 ------------------------------------------------------------
 - String is immutable,
@@ -1299,6 +1296,10 @@ public class Example
 
 Difference between the Equality Operator (==) and Equals() Method in C#:
 -----------------------------------------------------------------
+- Equals() Checks for actual value
+- == Checks for reference if both objects have same reference
+
+<br>
 
 what is boxing and Unboxing in C#:
 ------------------------------------
