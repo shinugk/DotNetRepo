@@ -1328,7 +1328,9 @@ int unboxedNum = (int)boxedObj; // Unboxing: requires an explicit cast
 
 Difference between IEnumerable and ICollection
 --------------------------------------------------------
-In C#, the primary difference is that IEnumerable is for reading and iterating through a collection, while ICollection is for modifying that collection. ICollection inherits from IEnumerable, so it includes all iteration capabilities but adds members for counting, adding, and removing items. 
+In C#, the primary difference is that 
+- IEnumerable is for reading and iterating through a collection,
+- while ICollection is for modifying that collection. ICollection inherits from IEnumerable, so it includes all iteration capabilities but adds members for counting, adding, and removing items. 
 
 Key Differences at a Glance
 Feature    |	IEnumerable<T>	                 |ICollection<T> |
