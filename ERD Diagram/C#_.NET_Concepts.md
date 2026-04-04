@@ -1352,21 +1352,41 @@ How to maintain clean architecture in .net - 4 Layers
 - The core business logic should never depend on external frameworks, databases, or the UI. 
 
 **The 4 Essential Layers:** <br>
-1) Domain Layer (Core): The innermost layer containing enterprise-level logic.
+**1) Domain Layer (Core):** This is the heart of your application
   - What's inside: Entities, value objects, domain services, and domain exceptions.
   - Rule: It must have zero dependencies on other layers or external libraries.
+  - Contains:
+    - Entities (Business Models)
+    - Enums
+    - Value Objects
+    - Domain Rules
 
-2) Application Layer: Orchestrates use cases and implements application-specific business rules.
+
+**2) Application Layer:** Contains business logic + use cases.
   - What's inside: Use cases (Commands/Queries), DTOs, mappers, and interfaces for infrastructure (e.g., IRepository).
   - Rule: Depends only on the Domain layer.
+  - Contains:
+    - Interfaces (Repositories, Services)
+    - DTOs
+    - Commands / Queries (CQRS)
+    - Validation logic
 
-3) Infrastructure Layer: Handles technical concerns and external systems.
+**3) Infrastructure Layer:** Handles external concerns.
   - What's inside: Database persistence (EF Core DbContext, Repositories), file systems, logging, and third-party API clients.
   - Rule: Implements interfaces defined in the Application or Domain layers.
+  - Contains:
+    - Database (EF Core)
+    - Repository implementations
+    - External APIs
+    - File systems
 
-4) Presentation Layer (Web API): The entry point for the application.
+**4) Presentation Layer (Web API):** The entry point for the application.
   - What's inside: Controllers, Middlewares, and the Composition Root (Program.cs).
-  - Rule: Responsible for handling HTTP requests and delegating work to the Application layer. 
+  - Rule: Responsible for handling HTTP requests and delegating work to the Application layer.
+  - Contains:
+    - Controllers
+    - Middleware
+    - API configurations
 
 **Core Principles for Maintenance:** <br>
   - Dependency Inversion (DIP): Instead of the core logic depending on the database, both depend on abstractions (interfaces). Define an interface in the Application layer and implement it in the Infrastructure layer.
