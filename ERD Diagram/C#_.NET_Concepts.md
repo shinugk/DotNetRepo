@@ -1343,7 +1343,41 @@ Lazy Loading|	Supports deferred/lazy execution.|	Generally represents data alrea
 
 
 
+<br>
+<br>
 
+How to maintain clean architecture in .net - 4 Layers
+-------------------------------------------------------------
+- To maintain Clean Architecture in a .NET Web API, you must adhere to the Dependency Rule, which states that dependencies always point inward.
+- The core business logic should never depend on external frameworks, databases, or the UI. 
+
+**The 4 Essential Layers:** <br>
+1) Domain Layer (Core): The innermost layer containing enterprise-level logic.
+- What's inside: Entities, value objects, domain services, and domain exceptions.
+- Rule: It must have zero dependencies on other layers or external libraries.
+
+2) Application Layer: Orchestrates use cases and implements application-specific business rules.
+- What's inside: Use cases (Commands/Queries), DTOs, mappers, and interfaces for infrastructure (e.g., IRepository).
+- Rule: Depends only on the Domain layer.
+
+3) Infrastructure Layer: Handles technical concerns and external systems.
+- What's inside: Database persistence (EF Core DbContext, Repositories), file systems, logging, and third-party API clients.
+- Rule: Implements interfaces defined in the Application or Domain layers.
+
+4) Presentation Layer (Web API): The entry point for the application.
+- What's inside: Controllers, Middlewares, and the Composition Root (Program.cs).
+- Rule: Responsible for handling HTTP requests and delegating work to the Application layer. 
+
+**Core Principles for Maintenance:** <br>
+- Dependency Inversion (DIP): Instead of the core logic depending on the database, both depend on abstractions (interfaces). Define an interface in the Application layer and implement it in the Infrastructure layer.
+- Thin Controllers: Keep your controllers minimal. They should only receive input and trigger a use case in the Application layer, often using patterns like MediatR for decoupling.
+- Independent Projects: Structure each layer as a separate Class Library project within your solution to strictly enforce reference boundaries.
+- Composition Root: Register all dependencies in the Presentation layer (usually Program.cs). This is the only place where the application "knows" about the concrete implementations in the Infrastructure layer. 
+
+**Benefits:** <br>
+- Testability: You can unit test business logic without a database or web server.
+- Flexibility: You can swap out a database (e.g., SQL Server to MongoDB) by only modifying the Infrastructure layer.
+- Maintainability: Changes in the UI or frameworks don't impact the stable core business logic. 
 
 
 
